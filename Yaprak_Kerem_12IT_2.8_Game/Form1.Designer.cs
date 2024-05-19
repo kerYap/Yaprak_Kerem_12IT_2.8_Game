@@ -28,8 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBoxPlayerModel = new System.Windows.Forms.PictureBox();
+            this.timerUpdatePos = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlayerModel)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -40,16 +44,33 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
+            // pictureBoxPlayerModel
+            // 
+            this.pictureBoxPlayerModel.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.pictureBoxPlayerModel.Location = new System.Drawing.Point(975, 12);
+            this.pictureBoxPlayerModel.Name = "pictureBoxPlayerModel";
+            this.pictureBoxPlayerModel.Size = new System.Drawing.Size(30, 30);
+            this.pictureBoxPlayerModel.TabIndex = 1;
+            this.pictureBoxPlayerModel.TabStop = false;
+            // 
+            // timerUpdatePos
+            // 
+            this.timerUpdatePos.Interval = 1;
+            this.timerUpdatePos.Tick += new System.EventHandler(this.timerUpdatePos_Tick);
+            // 
             // MVP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.WindowFrame;
-            this.ClientSize = new System.Drawing.Size(884, 561);
+            this.ClientSize = new System.Drawing.Size(1039, 561);
+            this.Controls.Add(this.pictureBoxPlayerModel);
             this.Controls.Add(this.pictureBox1);
             this.Name = "MVP";
             this.Text = "Cold War game";
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MVP_MouseDown);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlayerModel)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -57,6 +78,8 @@
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pictureBoxPlayerModel;
+        private System.Windows.Forms.Timer timerUpdatePos;
     }
 }
 
