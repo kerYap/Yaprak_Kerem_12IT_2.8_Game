@@ -15,7 +15,7 @@ namespace Yaprak_Kerem_12IT_2._8_Game
         const int GRID_WIDTH = 30;
         const int FORM_WIDTH_PLAYABLE_AREA = 900;
         const int FORM_HEIGHT_PLAYABLE_AREA = 600;
-        public List<List<Tuple<int,int>>> grid = new List<List<Tuple<int,int>>>();
+        public List<Tuple<Point, bool>> grid = new List<Tuple<Point, bool>>();
         public MVP()
         {
             InitializeComponent();
@@ -34,7 +34,7 @@ namespace Yaprak_Kerem_12IT_2._8_Game
             //initialize player model
 
         }
-
+        
         private void MVP_MouseDown(object sender, MouseEventArgs e)
         {
 
@@ -45,16 +45,19 @@ namespace Yaprak_Kerem_12IT_2._8_Game
 
         }
     }
+
     /// <summary>
     /// class for the shop model
     /// </summary>
     public class PlayerModel
     {
-        public PictureBox pb;
+        //vars
+        protected PictureBox pb;
         protected Rectangle bounds;
         protected Point loc;
         protected Size size;
 
+        
         public PlayerModel(PictureBox modelPB)
         {
             this.pb = modelPB;
@@ -62,25 +65,36 @@ namespace Yaprak_Kerem_12IT_2._8_Game
             this.size = pb.Size;
             this.bounds = new Rectangle(loc, size);
         }
-
+        
         bool CheckInBounds(MouseEventArgs e)
         {
             return this.bounds.Contains(e.Location);
         }
     }
+
     /// <summary>
     /// class for the in game player, inherited off of the shop model
     /// </summary>
     public class PlayerInGame : PlayerModel
     {
-        public PlayerInGame(PictureBox modelPB, bool isTracking) : base(modelPB)
+        public PlayerInGame(PictureBox modelPB) : base(modelPB)
         {
             this.pb = new PictureBox();
         }
+
         public void UpdatePos(MouseEventArgs e)
         {
             this.loc = e.Location;
-            this.pb
+            this.pb.Location = this.loc;
+        }
+        
+        public void SnapGrid()
+        {
+            //find closest 4 points
+
+            //create rectangle from the 4 closest points
+
+            //set picturebox location and size to rectange so it snaps to grid
         }
     }
 }
