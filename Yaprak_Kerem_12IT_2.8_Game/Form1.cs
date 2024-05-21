@@ -45,12 +45,15 @@ namespace Yaprak_Kerem_12IT_2._8_Game
 
         }
     }
+    /// <summary>
+    /// class for the shop model
+    /// </summary>
     public class PlayerModel
     {
         public PictureBox pb;
-        private Rectangle bounds;
-        private Point loc;
-        private Size size;
+        protected Rectangle bounds;
+        protected Point loc;
+        protected Size size;
 
         public PlayerModel(PictureBox modelPB)
         {
@@ -65,8 +68,19 @@ namespace Yaprak_Kerem_12IT_2._8_Game
             return this.bounds.Contains(e.Location);
         }
     }
+    /// <summary>
+    /// class for the in game player, inherited off of the shop model
+    /// </summary>
     public class PlayerInGame : PlayerModel
     {
-
+        public PlayerInGame(PictureBox modelPB, bool isTracking) : base(modelPB)
+        {
+            this.pb = new PictureBox();
+        }
+        public void UpdatePos(MouseEventArgs e)
+        {
+            this.loc = e.Location;
+            this.pb
+        }
     }
 }
