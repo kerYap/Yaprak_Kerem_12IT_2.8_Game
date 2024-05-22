@@ -52,9 +52,11 @@
             this.pictureBoxPlayerModel.Size = new System.Drawing.Size(30, 30);
             this.pictureBoxPlayerModel.TabIndex = 1;
             this.pictureBoxPlayerModel.TabStop = false;
+            this.pictureBoxPlayerModel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBoxPlayerModel_MouseClick);
             // 
             // timerUpdatePos
             // 
+            this.timerUpdatePos.Enabled = true;
             this.timerUpdatePos.Interval = 1;
             this.timerUpdatePos.Tick += new System.EventHandler(this.timerUpdatePos_Tick);
             // 
@@ -68,7 +70,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Name = "MVP";
             this.Text = "Cold War game";
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MVP_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MVP_MouseMove);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlayerModel)).EndInit();
             this.ResumeLayout(false);

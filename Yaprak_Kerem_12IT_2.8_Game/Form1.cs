@@ -15,7 +15,10 @@ namespace Yaprak_Kerem_12IT_2._8_Game
         const int GRID_WIDTH = 30;
         const int FORM_WIDTH_PLAYABLE_AREA = 900;
         const int FORM_HEIGHT_PLAYABLE_AREA = 600;
+
+        private MouseEventArgs mouseEventArgs;
         public List<Tuple<Point, bool>> grid = new List<Tuple<Point, bool>>();
+        bool trackMouse = false;
         public MVP()
         {
             InitializeComponent();
@@ -32,18 +35,29 @@ namespace Yaprak_Kerem_12IT_2._8_Game
                 }
             }
             //initialize player model
-
+            
         }
-        
-        private void MVP_MouseDown(object sender, MouseEventArgs e)
-        {
 
+        //set tracking to true
+        private void pictureBoxPlayerModel_MouseClick(object sender, MouseEventArgs e)
+        {
+                trackMouse = true;
         }
 
         private void timerUpdatePos_Tick(object sender, EventArgs e)
         {
-
+            if (trackMouse)
+            {
+                PlayerInGame player = new PlayerInGame(pictureBoxPlayerModel);
+                player.UpdatePos(mouseEventArgs);
+            }
         }
+
+        private void MVP_MouseMove(object sender, MouseEventArgs e)
+        {
+            mouseEventArgs = e;
+        }
+
     }
 
     /// <summary>
@@ -51,24 +65,22 @@ namespace Yaprak_Kerem_12IT_2._8_Game
     /// </summary>
     public class PlayerModel
     {
-        //vars
-        protected PictureBox pb;
+        public PictureBox pb;
         protected Rectangle bounds;
         protected Point loc;
         protected Size size;
 
-        
         public PlayerModel(PictureBox modelPB)
         {
-            this.pb = modelPB;
-            this.loc = pb.Bounds.Location;
-            this.size = pb.Size;
-            this.bounds = new Rectangle(loc, size);
+            pb = modelPB;
+            loc = modelPB.Bounds.Location;
+            size = modelPB.Size;
+            bounds = new Rectangle(loc, size);
         }
-        
-        bool CheckInBounds(MouseEventArgs e)
+
+        public bool CheckInBounds(Point e)
         {
-            return this.bounds.Contains(e.Location);
+            return bounds.Contains(e);
         }
     }
 
@@ -79,22 +91,18 @@ namespace Yaprak_Kerem_12IT_2._8_Game
     {
         public PlayerInGame(PictureBox modelPB) : base(modelPB)
         {
-            this.pb = new PictureBox();
+            pb = new PictureBox();
         }
 
         public void UpdatePos(MouseEventArgs e)
         {
-            this.loc = e.Location;
-            this.pb.Location = this.loc;
+            loc = e.Location;
+            pb.Location = loc;
         }
-        
+
         public void SnapGrid()
         {
-            //find closest 4 points
 
-            //create rectangle from the 4 closest points
-
-            //set picturebox location and size to rectange so it snaps to grid
         }
     }
 }
