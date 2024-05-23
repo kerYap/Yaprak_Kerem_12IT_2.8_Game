@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Yaprak_Kerem_12IT_2._8_Game
+namespace Yaprak_Kerem_12IT_2_8_Game
 {
     public partial class MVP : Form
     {
@@ -17,7 +17,7 @@ namespace Yaprak_Kerem_12IT_2._8_Game
         const int FORM_HEIGHT_PLAYABLE_AREA = 600;
 
         private MouseEventArgs mouseEventArgs;
-        public List<Tuple<Point, bool>> grid = new List<Tuple<Point, bool>>();
+        bool[,] placeablePoints = { };
         bool trackMouse = false;
         public MVP()
         {
@@ -60,49 +60,4 @@ namespace Yaprak_Kerem_12IT_2._8_Game
 
     }
 
-    /// <summary>
-    /// class for the shop model
-    /// </summary>
-    public class PlayerModel
-    {
-        public PictureBox pb;
-        protected Rectangle bounds;
-        protected Point loc;
-        protected Size size;
-
-        public PlayerModel(PictureBox modelPB)
-        {
-            pb = modelPB;
-            loc = modelPB.Bounds.Location;
-            size = modelPB.Size;
-            bounds = new Rectangle(loc, size);
-        }
-
-        public bool CheckInBounds(Point e)
-        {
-            return bounds.Contains(e);
-        }
-    }
-
-    /// <summary>
-    /// class for the in game player, inherited off of the shop model
-    /// </summary>
-    public class PlayerInGame : PlayerModel
-    {
-        public PlayerInGame(PictureBox modelPB) : base(modelPB)
-        {
-            pb = new PictureBox();
-        }
-
-        public void UpdatePos(MouseEventArgs e)
-        {
-            loc = e.Location;
-            pb.Location = loc;
-        }
-
-        public void SnapGrid()
-        {
-
-        }
-    }
 }

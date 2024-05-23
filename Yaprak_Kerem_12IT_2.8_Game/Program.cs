@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Yaprak_Kerem_12IT_2._8_Game
+namespace Yaprak_Kerem_12IT_2_8_Game
 {
     internal static class Program
     {
