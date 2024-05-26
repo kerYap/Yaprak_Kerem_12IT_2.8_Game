@@ -16,8 +16,8 @@ namespace Yaprak_Kerem_12IT_2_8_Game
         const int FORM_WIDTH_PLAYABLE_AREA = 900;
         const int FORM_HEIGHT_PLAYABLE_AREA = 600;
 
+        private bool[,] placeablePoints = new bool[900 / 30, 600 /30];
         private MouseEventArgs mouseEventArgs;
-        bool[,] placeablePoints = { };
         bool trackMouse = false;
         public MVP()
         {
@@ -25,13 +25,20 @@ namespace Yaprak_Kerem_12IT_2_8_Game
             //make form non re-sizeable
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            //calculate the grid points
+
+            //make the basic map
             for(int i = 0; i < FORM_WIDTH_PLAYABLE_AREA / GRID_WIDTH; i++)
             {
-                List<Tuple<int,int>> bufRow = new List<Tuple<int,int>>();
                 for(int j = 0; j < FORM_HEIGHT_PLAYABLE_AREA / GRID_WIDTH; j++)
                 {
-                    bufRow.Add(new Tuple<int,int>(i,j));
+                    if(i == 10)
+                    {
+                        placeablePoints[i, j] = false;
+                    }
+                    else
+                    {
+                        placeablePoints[i, j] = true;
+                    }
                 }
             }
             //initialize player model
@@ -41,15 +48,15 @@ namespace Yaprak_Kerem_12IT_2_8_Game
         //set tracking to true
         private void pictureBoxPlayerModel_MouseClick(object sender, MouseEventArgs e)
         {
-                trackMouse = true;
+                trackMouse = true;  
         }
 
         private void timerUpdatePos_Tick(object sender, EventArgs e)
         {
+            PlayerInGame player = new PlayerInGame(pictureBoxPlayerModel);
             if (trackMouse)
             {
-                PlayerInGame player = new PlayerInGame(pictureBoxPlayerModel);
-                player.UpdatePos(mouseEventArgs);
+                player.UpdatePos(mouseEventArgs, placeablePoints);
             }
         }
 
