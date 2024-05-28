@@ -28,10 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBoxPlayerModel = new System.Windows.Forms.PictureBox();
-            this.timerUpdatePos = new System.Windows.Forms.Timer(this.components);
+            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlayerModel)).BeginInit();
             this.SuspendLayout();
@@ -54,11 +53,12 @@
             this.pictureBoxPlayerModel.TabStop = false;
             this.pictureBoxPlayerModel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBoxPlayerModel_MouseClick);
             // 
-            // timerUpdatePos
+            // panel1
             // 
-            this.timerUpdatePos.Enabled = true;
-            this.timerUpdatePos.Interval = 1;
-            this.timerUpdatePos.Tick += new System.EventHandler(this.timerUpdatePos_Tick);
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(900, 600);
+            this.panel1.TabIndex = 2;
             // 
             // MVP
             // 
@@ -66,6 +66,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.WindowFrame;
             this.ClientSize = new System.Drawing.Size(1039, 561);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.pictureBoxPlayerModel);
             this.Controls.Add(this.pictureBox1);
             this.Name = "MVP";
@@ -81,7 +82,7 @@
 
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBoxPlayerModel;
-        private System.Windows.Forms.Timer timerUpdatePos;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 

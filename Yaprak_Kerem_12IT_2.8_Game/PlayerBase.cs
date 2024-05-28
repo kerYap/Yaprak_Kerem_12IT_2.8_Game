@@ -43,33 +43,33 @@ namespace Yaprak_Kerem_12IT_2_8_Game
         {
         }
 
-        public void UpdatePos(MouseEventArgs e, bool[,] stuff)
+        public void UpdatePos(MouseEventArgs e)
         {
             this.loc = e.Location;
             this.pb.Location = loc;
-            SnapGrid(stuff);
         }
 
+        /// <summary>
+        /// grid snapping for the player
+        /// </summary>
+        /// <param name="placeablePoints">this is a bool array of points where the player is placeable</param>
         public void SnapGrid(bool[,] placeablePoints)
         {
             int? x = null;
             int? y = null;
+
             //find closest point index
             if(loc.Y <= 600 && loc.X <= 900)
             {
-                x = (int)Math.Round((double)(loc.X / 30));
-                y = (int)Math.Round((double)(loc.Y / 30));
+                x = (int?)Math.Round((double)loc.X / 30);
+                y = (int?)Math.Round((double)loc.Y / 30);
             }
+
             //check if it is placeable
-            if(x != null)
+            if(x != null && y != null)
             {
-                if (placeablePoints[(int)x,(int)y] == true)
-                {
-                    int locX = (int)x * 30;
-                    int locY = (int)y * 30;
-                    loc.X = locX;
-                    loc.Y = locY;
-                }
+                Point buf = new Point(((int)x * 30), ((int)y * 30));
+                this.loc = buf;
             }
         }
     }

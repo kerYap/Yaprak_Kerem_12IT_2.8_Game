@@ -12,12 +12,14 @@ namespace Yaprak_Kerem_12IT_2_8_Game
 {
     public partial class MVP : Form
     {
+        //list of players
+        List<PlayerInGame> players = new List<PlayerInGame>();
+
         const int GRID_WIDTH = 30;
         const int FORM_WIDTH_PLAYABLE_AREA = 900;
         const int FORM_HEIGHT_PLAYABLE_AREA = 600;
 
         private bool[,] placeablePoints = new bool[900 / 30, 600 /30];
-        private MouseEventArgs mouseEventArgs;
         bool trackMouse = false;
         public MVP()
         {
@@ -27,17 +29,17 @@ namespace Yaprak_Kerem_12IT_2_8_Game
             this.MaximizeBox = false;
 
             //make the basic map
-            for(int i = 0; i < FORM_WIDTH_PLAYABLE_AREA / GRID_WIDTH; i++)
+            for(int c = 0; c < FORM_WIDTH_PLAYABLE_AREA / GRID_WIDTH; c++)
             {
-                for(int j = 0; j < FORM_HEIGHT_PLAYABLE_AREA / GRID_WIDTH; j++)
+                for(int js = 0; js < FORM_HEIGHT_PLAYABLE_AREA / GRID_WIDTH; js++)
                 {
-                    if(i == 10)
+                    if(c == 10)
                     {
-                        placeablePoints[i, j] = false;
+                        placeablePoints[c, js] = false;
                     }
                     else
                     {
-                        placeablePoints[i, j] = true;
+                        placeablePoints[c, js] = true;
                     }
                 }
             }
@@ -48,21 +50,26 @@ namespace Yaprak_Kerem_12IT_2_8_Game
         //set tracking to true
         private void pictureBoxPlayerModel_MouseClick(object sender, MouseEventArgs e)
         {
-                trackMouse = true;  
-        }
-
-        private void timerUpdatePos_Tick(object sender, EventArgs e)
-        {
-            PlayerInGame player = new PlayerInGame(pictureBoxPlayerModel);
+            players.Add(new PlayerInGame(pictureBoxPlayerModel));
             if (trackMouse)
             {
-                player.UpdatePos(mouseEventArgs, placeablePoints);
+                trackMouse = false;
+                
+            }
+            else
+            {
+                trackMouse = true;
             }
         }
 
         private void MVP_MouseMove(object sender, MouseEventArgs e)
         {
-            mouseEventArgs = e;
+            
+            if (trackMouse)
+            {
+                players[0].UpdatePos(e);
+                players[0].SnapGrid(placeablePoints);
+            }
         }
 
     }
