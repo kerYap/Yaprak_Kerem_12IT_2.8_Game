@@ -43,10 +43,19 @@ namespace Yaprak_Kerem_12IT_2_8_Game
         {
         }
 
-        public void UpdatePos(MouseEventArgs e)
+        public void UpdatePos(MouseEventArgs e, bool add)
         {
-            this.loc = e.Location;
-            this.pb.Location = loc;
+            if(!add)    //if the mouse moves on the form, we set to the location of the mouse
+            {
+                this.loc = e.Location;
+                this.pb.Location = loc;
+            }
+            else    //if the mouse moves on the picturebox, we set to the location of the picturebox + the location of the mouse on the picturebox
+            {
+                this.loc.X += e.Location.X;
+                this.loc.Y += e.Location.Y;
+                this.pb.Location = loc;
+            }
         }
 
         /// <summary>
@@ -70,6 +79,7 @@ namespace Yaprak_Kerem_12IT_2_8_Game
             {
                 Point buf = new Point(((int)x * 30), ((int)y * 30));
                 this.loc = buf;
+                this.pb.Location = loc;
             }
         }
     }
