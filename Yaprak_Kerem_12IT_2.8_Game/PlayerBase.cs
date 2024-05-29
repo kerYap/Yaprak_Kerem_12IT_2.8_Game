@@ -15,7 +15,7 @@ namespace Yaprak_Kerem_12IT_2_8_Game
     /// </summary>
     public class PlayerModel
     {
-        public PictureBox pb;
+        protected PictureBox pb;
         protected Rectangle bounds;
         protected Point loc;
         protected Size size;
@@ -26,36 +26,38 @@ namespace Yaprak_Kerem_12IT_2_8_Game
             this.loc = modelPB.Bounds.Location;
             this.size = modelPB.Size;
             this.bounds = new Rectangle(loc, size);
+            this.pb.Location = this.loc;
+            this.pb.Size = this.size;
+            this.pb.Bounds = this.bounds;
         }
 
         public bool CheckInBounds(Point e)
         {
             return bounds.Contains(e);
         }
-    }
-
-    /// <summary>
-    /// class for the in game player, inherited off of the shop model
-    /// </summary>
-    public class PlayerInGame : PlayerModel
-    {
-        public PlayerInGame(PictureBox modelPB) : base(modelPB)
-        {
-        }
 
         public void UpdatePos(MouseEventArgs e, bool add)
         {
-            if(!add)    //if the mouse moves on the form, we set to the location of the mouse
+
+            if (!add)    //if the mouse moves on the form, we set to the location of the mouse
             {
                 this.loc = e.Location;
+                //set the picturebox to the middle of the mouse
+                this.loc.X -= 15;
+                this.loc.Y -= 15;
+
                 this.pb.Location = loc;
+                return;
             }
-            else    //if the mouse moves on the picturebox, we set to the location of the picturebox + the location of the mouse on the picturebox
-            {
-                this.loc.X += e.Location.X;
-                this.loc.Y += e.Location.Y;
-                this.pb.Location = loc;
-            }
+            this.loc.X += e.Location.X;
+            this.loc.Y += e.Location.Y;
+
+            //set teh picturebox to the middle of the mouse
+            this.loc.X -= 15;
+            this.loc.Y -= 15;
+
+            this.pb.Location = loc;
+
         }
 
         /// <summary>
@@ -68,14 +70,14 @@ namespace Yaprak_Kerem_12IT_2_8_Game
             int? y = null;
 
             //find closest point index
-            if(loc.Y <= 600 && loc.X <= 900)
+            if (loc.Y <= 600 && loc.X <= 900)
             {
                 x = (int?)Math.Round((double)loc.X / 30);
                 y = (int?)Math.Round((double)loc.Y / 30);
             }
 
             //check if it is placeable
-            if(x != null && y != null)
+            if (x != null && y != null)
             {
                 Point buf = new Point(((int)x * 30), ((int)y * 30));
                 this.loc = buf;

@@ -24,11 +24,8 @@ namespace Yaprak_Kerem_12IT_2._8_Game
             this.size = modelPB.Size;
             this.bounds = new Rectangle(loc, size);
         }
+        
 
-        public bool CheckInBounds(Point e)
-        {
-            return bounds.Contains(e);
-        }
     }
     //public class EnemyPlayerInGame : EnemyModel
 }

@@ -13,7 +13,9 @@ namespace Yaprak_Kerem_12IT_2_8_Game
     public partial class MVP : Form
     {
         //list of players
-        List<PlayerInGame> players = new List<PlayerInGame>();
+        private List<PlayerModel> players = new List<PlayerModel>();
+
+        public PlayerModel playerModel;
 
         const int GRID_WIDTH = 30;
         const int FORM_WIDTH_PLAYABLE_AREA = 900;
@@ -23,10 +25,13 @@ namespace Yaprak_Kerem_12IT_2_8_Game
         bool trackMouse = false;
         public MVP()
         {
+            
             InitializeComponent();
             //make form non re-sizeable
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
+
+            playerModel = new PlayerModel(new PictureBox());
 
             //make the basic map
             for(int c = 0; c < FORM_WIDTH_PLAYABLE_AREA / GRID_WIDTH; c++)
@@ -50,11 +55,10 @@ namespace Yaprak_Kerem_12IT_2_8_Game
         //set tracking to true
         private void pictureBoxPlayerModel_MouseClick(object sender, MouseEventArgs e)
         {
-            players.Add(new PlayerInGame(pictureBoxPlayerModel));
+            players.Add(new PlayerModel(pictureBoxPlayerModel));
             if (trackMouse)
             {
                 trackMouse = false;
-                
             }
             else
             {
@@ -64,14 +68,21 @@ namespace Yaprak_Kerem_12IT_2_8_Game
 
         private void MVP_MouseMove(object sender, MouseEventArgs e)
         {
-            
             if (trackMouse)
             {
-                players[0].UpdatePos(e);
+                players[0].UpdatePos(e, false);
                 players[0].SnapGrid(placeablePoints);
             }
         }
 
+        private void pictureBoxPlayerModel_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (trackMouse)
+            {
+                players[0].UpdatePos(e, true);
+                players[0].SnapGrid(placeablePoints);
+            }
+        }
     }
 
 }
