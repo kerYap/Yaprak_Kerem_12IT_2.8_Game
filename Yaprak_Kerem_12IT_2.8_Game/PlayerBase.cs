@@ -22,13 +22,17 @@ namespace Yaprak_Kerem_12IT_2_8_Game
 
         public PlayerModel(PictureBox modelPB)
         {
-            this.pb = modelPB;
-            this.loc = modelPB.Bounds.Location;
-            this.size = modelPB.Size;
-            this.bounds = new Rectangle(loc, size);
-            this.pb.Location = this.loc;
-            this.pb.Size = this.size;
-            this.pb.Bounds = this.bounds;
+            pb = new PictureBox();
+            size = modelPB.Size;
+            bounds = new Rectangle(loc, size);
+            pb.Location = loc;
+            pb.Size = size;
+            pb.Bounds = bounds;
+            pb.Visible = false;
+            pb.BackColor = modelPB.BackColor;
+            pb.BindingContext = modelPB.BindingContext;
+            pb.Enabled = false;
+            
         }
 
         public bool CheckInBounds(Point e)
@@ -38,7 +42,8 @@ namespace Yaprak_Kerem_12IT_2_8_Game
 
         public void UpdatePos(MouseEventArgs e, bool add)
         {
-
+            pb.Enabled = true;
+            pb.Visible = true;
             if (!add)    //if the mouse moves on the form, we set to the location of the mouse
             {
                 this.loc = e.Location;

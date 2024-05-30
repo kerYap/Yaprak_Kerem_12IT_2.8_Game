@@ -19,10 +19,10 @@ namespace Yaprak_Kerem_12IT_2._8_Game
 
         public EnemyModel(PictureBox modelPB)
         {
-            this.pb = modelPB;
-            this.loc = modelPB.Bounds.Location;
-            this.size = modelPB.Size;
-            this.bounds = new Rectangle(loc, size);
+            pb = modelPB;
+            loc = modelPB.Bounds.Location;
+            size = modelPB.Size;
+            bounds = new Rectangle(loc, size);
         }
         
 

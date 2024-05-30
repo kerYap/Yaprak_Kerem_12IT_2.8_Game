@@ -15,8 +15,6 @@ namespace Yaprak_Kerem_12IT_2_8_Game
         //list of players
         private List<PlayerModel> players = new List<PlayerModel>();
 
-        public PlayerModel playerModel;
-
         const int GRID_WIDTH = 30;
         const int FORM_WIDTH_PLAYABLE_AREA = 900;
         const int FORM_HEIGHT_PLAYABLE_AREA = 600;
@@ -30,8 +28,6 @@ namespace Yaprak_Kerem_12IT_2_8_Game
             //make form non re-sizeable
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-
-            playerModel = new PlayerModel(new PictureBox());
 
             //make the basic map
             for(int c = 0; c < FORM_WIDTH_PLAYABLE_AREA / GRID_WIDTH; c++)
