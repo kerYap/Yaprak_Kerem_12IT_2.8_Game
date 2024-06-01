@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -15,7 +16,7 @@ namespace Yaprak_Kerem_12IT_2_8_Game
     /// </summary>
     public class PlayerModel
     {
-        protected PictureBox pb;
+        public PictureBox pb;
         protected Rectangle bounds;
         protected Point loc;
         protected Size size;
@@ -23,15 +24,24 @@ namespace Yaprak_Kerem_12IT_2_8_Game
         public PlayerModel(PictureBox modelPB)
         {
             pb = new PictureBox();
+
+            //set properties
+            pb.Image = modelPB.Image;
+            pb.Size = modelPB.Size;
+            pb.Location = modelPB.Location;
+            pb.SizeMode = modelPB.SizeMode;
+            pb.BackColor = modelPB.BackColor;
+            pb.BorderStyle = modelPB.BorderStyle;
+            pb.Anchor = modelPB.Anchor;
+            pb.Dock = modelPB.Dock;
+            pb.Margin = modelPB.Margin;
+            pb.Padding = modelPB.Padding;
+            pb.Visible = modelPB.Visible;
+            pb.Enabled = modelPB.Enabled;
+
+            loc = modelPB.Location;
             size = modelPB.Size;
             bounds = new Rectangle(loc, size);
-            pb.Location = loc;
-            pb.Size = size;
-            pb.Bounds = bounds;
-            pb.Visible = false;
-            pb.BackColor = modelPB.BackColor;
-            pb.BindingContext = modelPB.BindingContext;
-            pb.Enabled = false;
             
         }
 
@@ -42,8 +52,8 @@ namespace Yaprak_Kerem_12IT_2_8_Game
 
         public void UpdatePos(MouseEventArgs e, bool add)
         {
-            pb.Enabled = true;
-            pb.Visible = true;
+            this.pb.Enabled = true;
+            this.pb.Visible = true;
             if (!add)    //if the mouse moves on the form, we set to the location of the mouse
             {
                 this.loc = e.Location;

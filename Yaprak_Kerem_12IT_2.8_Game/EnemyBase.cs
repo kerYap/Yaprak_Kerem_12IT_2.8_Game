@@ -12,6 +12,12 @@ namespace Yaprak_Kerem_12IT_2._8_Game
 {
     public class EnemyModel
     {
+        //enemy information
+        public uint damage;
+        protected uint movementSpeed;
+        protected int horizontalMultiplier;
+        protected int verticalMultiplier;
+
         public PictureBox pb;
         protected Rectangle bounds;
         protected Point loc;

@@ -51,14 +51,21 @@ namespace Yaprak_Kerem_12IT_2_8_Game
         //set tracking to true
         private void pictureBoxPlayerModel_MouseClick(object sender, MouseEventArgs e)
         {
-            players.Add(new PlayerModel(pictureBoxPlayerModel));
+            
+
             if (trackMouse)
             {
-                trackMouse = false;
+                this.trackMouse = false;
             }
             else
             {
-                trackMouse = true;
+
+                players.Add(new PlayerModel(pictureBoxPlayerModel));
+                this.Controls.Add(players[0].pb);
+                players[0].pb.Visible = true;
+                players[0].pb.BringToFront();
+
+                this.trackMouse = true;
             }
         }
 
