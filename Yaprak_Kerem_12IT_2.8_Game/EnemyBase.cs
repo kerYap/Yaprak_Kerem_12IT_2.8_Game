@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Yaprak_Kerem_12IT_2._8_Game
+namespace Yaprak_Kerem_12IT_2_8_Game
 {
     public class EnemyModel
     {
@@ -17,6 +17,7 @@ namespace Yaprak_Kerem_12IT_2._8_Game
         protected uint movementSpeed;
         protected int horizontalMultiplier;
         protected int verticalMultiplier;
+        public int health;
 
         public PictureBox pb;
         protected Rectangle bounds;
@@ -30,8 +31,6 @@ namespace Yaprak_Kerem_12IT_2._8_Game
             size = modelPB.Size;
             bounds = new Rectangle(loc, size);
         }
-        
-
     }
     //public class EnemyPlayerInGame : EnemyModel
 }

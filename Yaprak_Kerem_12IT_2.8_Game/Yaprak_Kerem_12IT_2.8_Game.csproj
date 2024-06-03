@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EnemyBase.cs" />
+    <Compile Include="LevelBase.cs" />
     <Compile Include="PlayerBase.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
