@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBoxPlayerModel = new System.Windows.Forms.PictureBox();
+            this.gameTick = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlayerModel)).BeginInit();
             this.SuspendLayout();
@@ -53,6 +55,11 @@
             this.pictureBoxPlayerModel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBoxPlayerModel_MouseClick);
             this.pictureBoxPlayerModel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxPlayerModel_MouseMove);
             // 
+            // gameTick
+            // 
+            this.gameTick.Enabled = true;
+            this.gameTick.Interval = 10;
+            // 
             // MVP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -74,6 +81,7 @@
 
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBoxPlayerModel;
+        private System.Windows.Forms.Timer gameTick;
     }
 }
 

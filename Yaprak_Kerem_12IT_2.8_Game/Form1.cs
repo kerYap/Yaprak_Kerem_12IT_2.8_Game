@@ -14,13 +14,20 @@ namespace Yaprak_Kerem_12IT_2_8_Game
     {
         //list of players
         private List<PlayerModel> players = new List<PlayerModel>();
+        //index of the current player that is being moved
+        private uint playersIndex = 0;
+        //
 
+        //various constants for the grid
         const int GRID_WIDTH = 30;
         const int FORM_WIDTH_PLAYABLE_AREA = 900;
         const int FORM_HEIGHT_PLAYABLE_AREA = 600;
-
+        //
+        
         private bool[,] placeablePoints = new bool[900 / 30, 600 /30];
+
         bool trackMouse = false;
+
         public MVP()
         {
             
@@ -56,14 +63,15 @@ namespace Yaprak_Kerem_12IT_2_8_Game
             if (trackMouse)
             {
                 this.trackMouse = false;
+                players[(int)playersIndex - 1].EndPlacementSelection(pictureBoxPlayerModel_MouseClick, pictureBoxPlayerModel_MouseMove);
             }
             else
             {
-
-                players.Add(new PlayerModel(pictureBoxPlayerModel));
-                this.Controls.Add(players[0].pb);
-                players[0].pb.Visible = true;
-                players[0].pb.BringToFront();
+                playersIndex++;
+                players.Add(new PlayerModel(pictureBoxPlayerModel,pictureBoxPlayerModel_MouseClick, pictureBoxPlayerModel_MouseMove));
+                this.Controls.Add(players[(int)playersIndex - 1].pb);
+                players[(int)playersIndex - 1].pb.Visible = true;
+                players[(int)playersIndex - 1].pb.BringToFront();
 
                 this.trackMouse = true;
             }
@@ -73,8 +81,8 @@ namespace Yaprak_Kerem_12IT_2_8_Game
         {
             if (trackMouse)
             {
-                players[0].UpdatePos(e, false);
-                players[0].SnapGrid(placeablePoints);
+                players[(int)playersIndex - 1].UpdatePos(e, false);
+                players[(int)playersIndex - 1].SnapGrid(placeablePoints);
             }
         }
 
@@ -82,8 +90,8 @@ namespace Yaprak_Kerem_12IT_2_8_Game
         {
             if (trackMouse)
             {
-                players[0].UpdatePos(e, true);
-                players[0].SnapGrid(placeablePoints);
+                players[(int)playersIndex - 1].UpdatePos(e, true);
+                players[(int)playersIndex - 1].SnapGrid(placeablePoints);
             }
         }
     }
