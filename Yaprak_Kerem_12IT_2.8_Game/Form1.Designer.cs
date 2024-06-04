@@ -1,6 +1,6 @@
 ﻿namespace Yaprak_Kerem_12IT_2_8_Game
 {
-    partial class MVP
+    partial class LevelBase
     {
         /// <summary>
         /// Required designer variable.

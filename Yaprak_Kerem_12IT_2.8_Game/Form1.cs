@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Yaprak_Kerem_12IT_2_8_Game
 {
-    public partial class MVP : Form
+    public partial class LevelBase : Form
     {
         //list of players
         private List<PlayerModel> players = new List<PlayerModel>();
@@ -28,31 +28,13 @@ namespace Yaprak_Kerem_12IT_2_8_Game
 
         bool trackMouse = false;
 
-        public MVP()
+        public LevelBase()
         {
             
             InitializeComponent();
             //make form non re-sizeable
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-
-            //make the basic map
-            for(int c = 0; c < FORM_WIDTH_PLAYABLE_AREA / GRID_WIDTH; c++)
-            {
-                for(int js = 0; js < FORM_HEIGHT_PLAYABLE_AREA / GRID_WIDTH; js++)
-                {
-                    if(c == 10)
-                    {
-                        placeablePoints[c, js] = false;
-                    }
-                    else
-                    {
-                        placeablePoints[c, js] = true;
-                    }
-                }
-            }
-            //initialize player model
-            
         }
 
         //set tracking to true
