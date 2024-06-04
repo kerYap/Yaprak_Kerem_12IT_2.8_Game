@@ -23,6 +23,11 @@ namespace Yaprak_Kerem_12IT_2_8_Game
         const int FORM_WIDTH_PLAYABLE_AREA = 900;
         const int FORM_HEIGHT_PLAYABLE_AREA = 600;
         //
+
+        //game info
+        private uint coins = 0;
+        private uint waves
+        //
         
         private bool[,] placeablePoints = new bool[900 / 30, 600 /30];
 
@@ -30,7 +35,6 @@ namespace Yaprak_Kerem_12IT_2_8_Game
 
         public LevelBase()
         {
-            
             InitializeComponent();
             //make form non re-sizeable
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
