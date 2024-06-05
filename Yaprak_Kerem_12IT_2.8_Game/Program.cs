@@ -16,7 +16,7 @@ namespace Yaprak_Kerem_12IT_2_8_Game
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MVP());
+            Application.Run(new LevelBase());
         }
     }
 }

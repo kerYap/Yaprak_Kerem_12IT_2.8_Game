@@ -13,7 +13,11 @@ namespace Yaprak_Kerem_12IT_2_8_Game
     public partial class LevelBase : Form
     {
         //list of players
+        //need to do list for each type
         private List<PlayerModel> players = new List<PlayerModel>();
+        private uint indexPlayers = 0;
+        //
+
         //index of the current player that is being moved
         private uint playersIndex = 0;
         //
@@ -26,7 +30,9 @@ namespace Yaprak_Kerem_12IT_2_8_Game
 
         //game info
         private uint coins = 0;
-        private uint waves
+        private uint waves = 0;
+        private uint numOfEnemies = 0;
+        private uint difficulty = 0;
         //
         
         private bool[,] placeablePoints = new bool[900 / 30, 600 /30];
@@ -42,10 +48,9 @@ namespace Yaprak_Kerem_12IT_2_8_Game
         }
 
         //set tracking to true
+        //need to make each one for each type of enemy
         private void pictureBoxPlayerModel_MouseClick(object sender, MouseEventArgs e)
         {
-            
-
             if (trackMouse)
             {
                 this.trackMouse = false;
@@ -63,6 +68,7 @@ namespace Yaprak_Kerem_12IT_2_8_Game
             }
         }
 
+        //do for the current type as well
         private void MVP_MouseMove(object sender, MouseEventArgs e)
         {
             if (trackMouse)

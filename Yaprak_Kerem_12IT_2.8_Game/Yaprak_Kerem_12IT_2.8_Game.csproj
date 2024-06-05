@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EnemyBase.cs" />
+    <Compile Include="Grid.cs" />
     <Compile Include="Menu.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -24,6 +24,9 @@ namespace Yaprak_Kerem_12IT_2_8_Game
         protected Size size;
         //
 
+        //game data
+        public uint cost;
+
         private bool placed = false;
 
         public PlayerModel(PictureBox modelPB, MouseEventHandler clickEventHandler, MouseEventHandler moveEventHandler)
@@ -66,6 +69,16 @@ namespace Yaprak_Kerem_12IT_2_8_Game
         public bool CheckInBounds(Point e)
         {
             return bounds.Contains(e);
+        }
+
+        /// <summary>
+        /// checks collision with a picturebox
+        /// </summary>
+        /// <param name="p">the picturebox to detect collision</param>
+        /// <returns>boolean</returns>
+        public bool CheckInBounds(PictureBox p)
+        {
+            return pb.Bounds.IntersectsWith(p.Bounds);
         }
 
         /// <summary>
