@@ -9,7 +9,6 @@ namespace Yaprak_Kerem_12IT_2._8_Game
 {
     internal class Grid
     {
-        LinkedList<(int, int)> enemyPath;
         public int[,] grid;
         public Grid(string map)
         {
@@ -28,20 +27,28 @@ namespace Yaprak_Kerem_12IT_2._8_Game
                     count++;
                 }
             }
-            List<(int, int)> Path = new List<(int,int)>();
-            for(int i = 0; i < grid.GetLength(0); i++)
-            {
-                for(int j = 0; j < grid.GetLength(1); j++)
-                {
-                    Path.Insert(grid[i, j], (i, j));
-                }
-            }
-            enemyPath = new LinkedList<(int, int)>(Path);
         }
+
         public void placeTile((int,int) index)
         {
             grid[index.Item1, index.Item2] = -2;
         }
-        //public (int,int)
+
+        public (int, int) nextTile((int,int) currentTileIndex, (int,int) previousTileIndex)
+        {
+            //adjacent search for next 1
+            //up down search
+            //up search
+            if (grid[currentTileIndex.Item1 + 1, currentTileIndex.Item2] == 1 && ((currentTileIndex.Item1 + 1) != previousTileIndex.Item1))
+            {
+
+            }
+        }
+
+        public bool CanPlace((int,int) index)
+        {
+            if (grid[index.Item1,index.Item2] == -1) return true;
+            return false;
+        }
     }
 }
