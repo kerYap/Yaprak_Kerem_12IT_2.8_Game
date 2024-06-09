@@ -10,18 +10,11 @@ using System.Windows.Forms;
 
 namespace Yaprak_Kerem_12IT_2_8_Game
 {
-    public partial class Menu : Form
+    public partial class Tutorial : LevelBase
     {
-        public Menu()
+        public Tutorial()
         {
-            InitializeComponent();
-        }
-
-        private void buttonRunTutorial_Click(object sender, EventArgs e)
-        {
-            Tutorial tutorial = new Tutorial();
-            tutorial.Show();
-            this.Hide();
+            this.Name += ": Tutorial";
         }
     }
 }

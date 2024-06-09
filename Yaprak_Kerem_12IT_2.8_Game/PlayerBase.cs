@@ -135,7 +135,7 @@ namespace Yaprak_Kerem_12IT_2_8_Game
         /// grid snapping for the player, done by rounding division of location and the grid size. Also checks if the points are placeable.
         /// </summary>
         /// <param name="placeablePoints">this is a bool array of points where the player is placeable</param>
-        public void SnapGrid(bool[,] placeablePoints)
+        public void SnapGrid()
         {
             int? x = null;
             int? y = null;

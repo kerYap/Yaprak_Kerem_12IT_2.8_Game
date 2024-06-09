@@ -34,10 +34,16 @@ namespace Yaprak_Kerem_12IT_2_8_Game
         private uint numOfEnemies = 0;
         private uint difficulty = 0;
         //
-        
-        private bool[,] placeablePoints = new bool[900 / 30, 600 /30];
 
+        //for tracking
         bool trackMouse = false;
+        //
+
+        //player model picture boxes
+        PictureBox playerModelAir;
+        PictureBox playerModelVehicle;
+        PictureBox playerModelGround;
+        //
 
         public LevelBase()
         {
@@ -74,7 +80,7 @@ namespace Yaprak_Kerem_12IT_2_8_Game
             if (trackMouse)
             {
                 players[(int)playersIndex - 1].UpdatePos(e, false);
-                players[(int)playersIndex - 1].SnapGrid(placeablePoints);
+                players[(int)playersIndex - 1].SnapGrid();
             }
         }
 
@@ -83,7 +89,7 @@ namespace Yaprak_Kerem_12IT_2_8_Game
             if (trackMouse)
             {
                 players[(int)playersIndex - 1].UpdatePos(e, true);
-                players[(int)playersIndex - 1].SnapGrid(placeablePoints);
+                players[(int)playersIndex - 1].SnapGrid();
             }
         }
     }
