@@ -7,11 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Yaprak_Kerem_12IT_2._8_Game;
 
 namespace Yaprak_Kerem_12IT_2_8_Game
 {
     public partial class LevelBase : Form
     {
+        //grid manager
+        Grid grid;
+        //
+
         //list of players
         //need to do list for each type
         private List<PlayerModel> players = new List<PlayerModel>();
@@ -30,7 +35,6 @@ namespace Yaprak_Kerem_12IT_2_8_Game
 
         //game info
         private uint coins = 0;
-        private uint waves = 0;
         private uint numOfEnemies = 0;
         private uint difficulty = 0;
         //
