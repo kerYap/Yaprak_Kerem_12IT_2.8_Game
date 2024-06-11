@@ -12,7 +12,7 @@ namespace Yaprak_Kerem_12IT_2_8_Game
 {
     public partial class Tutorial : LevelBase
     {
-        public Tutorial()
+        public Tutorial(string map) : base(map)
         {
             this.Name += ": Tutorial";
         }

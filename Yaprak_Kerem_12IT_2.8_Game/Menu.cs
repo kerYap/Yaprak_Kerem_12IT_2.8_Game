@@ -19,9 +19,11 @@ namespace Yaprak_Kerem_12IT_2_8_Game
 
         private void buttonRunTutorial_Click(object sender, EventArgs e)
         {
-            Tutorial tutorial = new Tutorial();
-            tutorial.Show();
             this.Hide();
+            MessageBox.Show("Hello comrade! You are the new millitary commander for the USSR, your job is to protect significant locations for the Red Army from the American scum. Good Luck commander!");
+            Tutorial tutorial = new Tutorial("sus");
+            tutorial.Show();
+
         }
     }
 }

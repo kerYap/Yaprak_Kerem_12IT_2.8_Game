@@ -49,12 +49,14 @@ namespace Yaprak_Kerem_12IT_2_8_Game
         PictureBox playerModelGround;
         //
 
-        public LevelBase()
+        public LevelBase(string map)
         {
             InitializeComponent();
             //make form non re-sizeable
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
+
+            grid = new Grid(map);
         }
 
         //set tracking to true
@@ -84,7 +86,7 @@ namespace Yaprak_Kerem_12IT_2_8_Game
             if (trackMouse)
             {
                 players[(int)playersIndex - 1].UpdatePos(e, false);
-                players[(int)playersIndex - 1].SnapGrid();
+                players[(int)playersIndex - 1].SnapGrid(grid);
             }
         }
 
@@ -93,7 +95,7 @@ namespace Yaprak_Kerem_12IT_2_8_Game
             if (trackMouse)
             {
                 players[(int)playersIndex - 1].UpdatePos(e, true);
-                players[(int)playersIndex - 1].SnapGrid();
+                players[(int)playersIndex - 1].SnapGrid(grid);
             }
         }
     }

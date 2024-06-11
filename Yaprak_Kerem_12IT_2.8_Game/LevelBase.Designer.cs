@@ -60,15 +60,15 @@
             this.gameTick.Enabled = true;
             this.gameTick.Interval = 10;
             // 
-            // MVP
+            // LevelBase
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.WindowFrame;
-            this.ClientSize = new System.Drawing.Size(1039, 561);
+            this.ClientSize = new System.Drawing.Size(1039, 593);
             this.Controls.Add(this.pictureBoxPlayerModel);
             this.Controls.Add(this.pictureBox1);
-            this.Name = "MVP";
+            this.Name = "LevelBase";
             this.Text = "Cold War game";
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MVP_MouseMove);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

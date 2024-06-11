@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace Yaprak_Kerem_12IT_2._8_Game
+namespace Yaprak_Kerem_12IT_2_8_Game
 {
-    internal class Grid
+    public class Grid
     {
         public int[,] grid;
         public LinkedList<(int, int)> Path { get; private set; }

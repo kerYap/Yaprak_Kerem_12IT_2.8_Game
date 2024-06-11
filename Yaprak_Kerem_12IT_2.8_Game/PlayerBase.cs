@@ -26,8 +26,10 @@ namespace Yaprak_Kerem_12IT_2_8_Game
 
         //game data
         public uint cost;
-
-        private bool placed = false;
+        public uint attackSpeed;
+        public uint? tickCount = null;
+        public bool placed = false;
+        //
 
         public PlayerModel(PictureBox modelPB, MouseEventHandler clickEventHandler, MouseEventHandler moveEventHandler)
         {
@@ -135,7 +137,7 @@ namespace Yaprak_Kerem_12IT_2_8_Game
         /// grid snapping for the player, done by rounding division of location and the grid size. Also checks if the points are placeable.
         /// </summary>
         /// <param name="placeablePoints">this is a bool array of points where the player is placeable</param>
-        public void SnapGrid()
+        public void SnapGrid(Grid grid)
         {
             int? x = null;
             int? y = null;
@@ -150,6 +152,10 @@ namespace Yaprak_Kerem_12IT_2_8_Game
             //check if it is placeable
             if (x != null && y != null)
             {
+                if (!grid.CanPlace(((int)x, (int)y)))
+                {
+                    return;
+                }
                 Point buf = new Point(((int)x * 30), ((int)y * 30));
                 this.loc = buf;
                 this.pb.Location = loc;

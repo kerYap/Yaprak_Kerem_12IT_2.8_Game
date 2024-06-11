@@ -61,6 +61,7 @@
     <Compile Include="LevelBase.Designer.cs">
       <DependentUpon>LevelBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="PlayerVehicle.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tutorial.cs">
