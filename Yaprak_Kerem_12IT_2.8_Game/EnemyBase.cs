@@ -14,15 +14,13 @@ namespace Yaprak_Kerem_12IT_2_8_Game
     {
         //enemy information
         public uint damage;
-        protected uint movementSpeed;
-        protected int horizontalMultiplier;
-        protected int verticalMultiplier;
+        public uint movementSpeed;
         public int health;
 
         public PictureBox pb;
-        protected Rectangle bounds;
-        protected Point loc;
-        protected Size size;
+        public Rectangle bounds;
+        public Point loc;
+        public Size size;
 
         public EnemyModel(PictureBox modelPB)
         {
@@ -31,6 +29,9 @@ namespace Yaprak_Kerem_12IT_2_8_Game
             size = modelPB.Size;
             bounds = new Rectangle(loc, size);
         }
+        public void EnemyMove()
+        {
+
+        }
     }
-    //public class EnemyPlayerInGame : EnemyModel
 }

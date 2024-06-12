@@ -29,6 +29,8 @@ namespace Yaprak_Kerem_12IT_2_8_Game
         public uint attackSpeed;
         public uint? tickCount = null;
         public bool placed = false;
+        public uint enemiesToAttack;
+        public uint attackRadius;
         //
 
         public PlayerModel(PictureBox modelPB, MouseEventHandler clickEventHandler, MouseEventHandler moveEventHandler)
