@@ -11,6 +11,7 @@ namespace Yaprak_Kerem_12IT_2_8_Game
     {
         public int[,] grid;
         public LinkedList<(int, int)> Path { get; private set; }
+        private bool[,] visited;
         public Grid(string map)
         {
             LoadGrid(map);
@@ -38,6 +39,7 @@ namespace Yaprak_Kerem_12IT_2_8_Game
             Path = new LinkedList<(int, int)>();
             (int x, int y) start = FindStartPosition();
             Path.AddLast(start);
+            visited[start.x, start.y] = true;
             (int x, int y) currentPosition = start;
 
             while (true)
@@ -45,6 +47,7 @@ namespace Yaprak_Kerem_12IT_2_8_Game
                 (int x, int y) nextPosition = GetNextPathPosition(currentPosition);
                 if (nextPosition == (-1, -1)) break;
                 Path.AddLast(nextPosition);
+                visited[nextPosition.x, nextPosition.y] = true;
                 currentPosition = nextPosition;
             }
         }
@@ -70,10 +73,10 @@ namespace Yaprak_Kerem_12IT_2_8_Game
             int y = currentPosition.y;
 
             // Check all four possible directions: up, down, left, right
-            if (x > 0 && (grid[x - 1, y] == 1 || grid[x - 1, y] == 2)) return (x - 1, y); // Up
-            if (x < grid.GetLength(0) - 1 && (grid[x + 1, y] == 1 || grid[x + 1, y] == 2)) return (x + 1, y); // Down
-            if (y > 0 && (grid[x, y - 1] == 1 || grid[x, y - 1] == 2)) return (x, y - 1); // Left
-            if (y < grid.GetLength(1) - 1 && (grid[x, y + 1] == 1 || grid[x, y + 1] == 2)) return (x, y + 1); // Right
+            if (x > 0 && (grid[x - 1, y] == 1 || grid[x - 1, y] == 2) && !visited[x - 1, y]) return (x - 1, y); // Left
+            if (x < grid.GetLength(0) - 1 && (grid[x + 1, y] == 1 || grid[x + 1, y] == 2) && !visited[x + 1, y]) return (x + 1, y); // Right
+            if (y > 0 && (grid[x, y - 1] == 1 || grid[x, y - 1] == 2) && !visited[x, y - 1]) return (x, y - 1); // Down
+            if (y < grid.GetLength(1) - 1 && (grid[x, y + 1] == 1 || grid[x, y + 1] == 2) && !visited[x, y + 1]) return (x, y + 1); // Up
 
             return (-1, -1); // No more path positions
         }
