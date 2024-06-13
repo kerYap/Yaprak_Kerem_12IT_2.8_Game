@@ -11,9 +11,6 @@ using System.Windows.Forms;
 
 namespace Yaprak_Kerem_12IT_2_8_Game
 {
-    /// <summary>
-    /// class for the shop model
-    /// </summary>
     public class PlayerModel
     {
         //variables for the model
@@ -162,6 +159,20 @@ namespace Yaprak_Kerem_12IT_2_8_Game
                 this.loc = buf;
                 this.pb.Location = loc;
             }
+        }
+
+        /// <summary>
+        /// calculates distance between point using pythagoras
+        /// </summary>
+        /// <param name="point1">one point of comparison</param>
+        /// <param name="point2">second point of comparison</param>
+        /// <returns>float of the distance between the 2 points</returns>
+        protected float DistanceBetweenPoints(Point point1, Point point2)
+        {
+            return (float)Math.Sqrt(
+                (Math.Pow((double)(point1.X - point2.X), (double)2)
+                + Math.Pow((double)(point1.Y - point2.Y), (double)2)
+                ));
         }
     }
 }

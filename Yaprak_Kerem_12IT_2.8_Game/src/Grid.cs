@@ -9,14 +9,26 @@ namespace Yaprak_Kerem_12IT_2_8_Game
 {
     public class Grid
     {
+        //variables
         public int[,] grid;
         public LinkedList<(int, int)> Path { get; private set; }
         private bool[,] visited;
+        //
+
+        /// <summary>
+        /// constructor makes the map and path
+        /// </summary>
+        /// <param name="map">the filepath of the map</param>
         public Grid(string map)
         {
             LoadGrid(map);
             GeneratePath();
         }
+
+        /// <summary>
+        /// copys the data of a .csv into the integer grid
+        /// </summary>
+        /// <param name="filePath">filepath of the .csv</param>
         private void LoadGrid(string filePath)
         {
             string[] lines = File.ReadAllLines(filePath);
@@ -34,6 +46,9 @@ namespace Yaprak_Kerem_12IT_2_8_Game
             }
         }
 
+        /// <summary>
+        /// Generates the enemy path in the form of a linked list
+        /// </summary>
         private void GeneratePath()
         {
             Path = new LinkedList<(int, int)>();
@@ -52,6 +67,10 @@ namespace Yaprak_Kerem_12IT_2_8_Game
             }
         }
 
+        /// <summary>
+        /// finds the start position (the 0) in the integer array
+        /// </summary>
+        /// <returns>the index of the start position in the grid</returns>
         private (int, int) FindStartPosition()
         {
             for (int i = 0; i < grid.GetLength(0); i++)

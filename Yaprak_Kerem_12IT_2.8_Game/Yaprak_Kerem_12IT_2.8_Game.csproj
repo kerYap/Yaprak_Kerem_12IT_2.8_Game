@@ -46,40 +46,40 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EnemyAir.cs" />
-    <Compile Include="EnemyBase.cs" />
-    <Compile Include="EnemyGround.cs" />
-    <Compile Include="EnemyVehicle.cs" />
-    <Compile Include="Grid.cs" />
-    <Compile Include="Menu.cs">
+    <Compile Include="src\EnemyAir.cs" />
+    <Compile Include="src\EnemyBase.cs" />
+    <Compile Include="src\EnemyGround.cs" />
+    <Compile Include="src\EnemyVehicle.cs" />
+    <Compile Include="src\Grid.cs" />
+    <Compile Include="forms\Menu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Menu.Designer.cs">
+    <Compile Include="forms\Menu.Designer.cs">
       <DependentUpon>Menu.cs</DependentUpon>
     </Compile>
-    <Compile Include="PlayerAir.cs" />
-    <Compile Include="PlayerBase.cs" />
-    <Compile Include="LevelBase.cs">
+    <Compile Include="src\PlayerAir.cs" />
+    <Compile Include="src\PlayerBase.cs" />
+    <Compile Include="src\LevelBase.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LevelBase.Designer.cs">
+    <Compile Include="src\LevelBase.Designer.cs">
       <DependentUpon>LevelBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="PlayerGround.cs" />
-    <Compile Include="PlayerVehicle.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="src\PlayerGround.cs" />
+    <Compile Include="src\PlayerVehicle.cs" />
+    <Compile Include="src\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TrackingMissle.cs" />
-    <Compile Include="Tutorial.cs">
+    <Compile Include="src\TrackingMissle.cs" />
+    <Compile Include="forms\Tutorial.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Tutorial.Designer.cs">
+    <Compile Include="forms\Tutorial.Designer.cs">
       <DependentUpon>Tutorial.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="LevelBase.resx">
+    <EmbeddedResource Include="src\LevelBase.resx">
       <DependentUpon>LevelBase.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Menu.resx">
+    <EmbeddedResource Include="forms\Menu.resx">
       <DependentUpon>Menu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -103,6 +103,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="data\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -13,10 +13,16 @@ namespace Yaprak_Kerem_12IT_2_8_Game
 {
     internal class PlayerVehicle : PlayerModel
     {
+        List<TrackingMissile> Missiles;
         public PlayerVehicle(PictureBox modelPB, MouseEventHandler click, MouseEventHandler move) : base(modelPB, click, move) 
         {
             enemiesToAttack = 3;
         }
+
+        /// <summary>
+        /// this is called everytick, manages when to attack
+        /// </summary>
+        /// <param name="enemies">this is a list of targetable enemies</param>
         public void AttackTick(List<EnemyAir> enemies)
         {
             if(tickCount == null)
@@ -30,6 +36,11 @@ namespace Yaprak_Kerem_12IT_2_8_Game
                 tickCount = 0;
             }
         }
+
+        /// <summary>
+        /// this is the attack method, it handles creating new missiles and what enemies to target
+        /// </summary>
+        /// <param name="e">list of targetable enemies</param>
         private void Attack(List<EnemyAir> e)
         {
             List<EnemyAir> enemiesToAttack = new List<EnemyAir>();
@@ -43,14 +54,19 @@ namespace Yaprak_Kerem_12IT_2_8_Game
                 }
             }
             //send missiles
-            
+            foreach(EnemyAir enemy in enemiesToAttack)
+            {
+                Missiles.Add(new TrackingMissile(enemy));
+            }
         }
-        private float DistanceBetweenPoints(Point point1, Point point2)
+
+        /// <summary>
+        /// deletes target missile from the list, so it stops updating
+        /// </summary>
+        /// <param name="target"></param>
+        public void DeleteMissile(TrackingMissile target)
         {
-            return (float)Math.Sqrt(
-                (Math.Pow((double)(point1.X - point2.X), (double)2) 
-                + Math.Pow((double)(point1.Y - point2.Y), (double)2)
-                ));
+            Missiles.Remove(target);
         }
     }
 }
