@@ -11,8 +11,9 @@ using System.Windows.Forms;
 
 namespace Yaprak_Kerem_12IT_TD_Game
 {
-    internal class PlayerVehicle : PlayerModel
+    public class PlayerVehicle : PlayerModel
     {
+        uint damage = 100;
         List<TrackingMissile> Missiles;
         public PlayerVehicle(PictureBox modelPB, MouseEventHandler click, MouseEventHandler move) : base(modelPB, click, move) 
         {
@@ -56,7 +57,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
             //send missiles
             foreach(EnemyAir enemy in enemiesToAttack)
             {
-                Missiles.Add(new TrackingMissile(enemy));
+                Missiles.Add(new TrackingMissile(enemy, this, damage));
             }
         }
 

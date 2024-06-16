@@ -18,16 +18,18 @@ namespace Yaprak_Kerem_12IT_TD_Game
         private EnemyAir targetEnemy;
         private float speed;
         private PointF currentPosition;
+        private uint damage;
 
-        public TrackingMissile(EnemyAir targetEnemy)
+        public TrackingMissile(EnemyAir targetEnemy, PlayerVehicle calledPlayer, uint damage)
         {
             this.targetEnemy = targetEnemy;
 
-            InitializePictureBox();
+            InitializePictureBox(calledPlayer);
             InitializePosition();
+            this.damage = damage;
         }
 
-        private void InitializePictureBox()
+        private void InitializePictureBox(PlayerVehicle calledPlayer)
         {
             PictureBox = new PictureBox
             {
@@ -52,6 +54,8 @@ namespace Yaprak_Kerem_12IT_TD_Game
             if (distance <= speed)
             {
                 currentPosition = targetPosition;
+                //call damage
+                targetEnemy.takeDamage(damage);
             }
             else
             {

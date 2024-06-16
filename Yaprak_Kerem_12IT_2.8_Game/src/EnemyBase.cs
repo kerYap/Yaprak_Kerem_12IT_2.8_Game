@@ -16,6 +16,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         public uint damage;
         public float movementSpeed;
         public int health;
+        public uint reward;
 
         public PictureBox PictureBox { get; private set; }
         private LinkedList<(int, int)> path;
@@ -55,8 +56,14 @@ namespace Yaprak_Kerem_12IT_TD_Game
             }
         }
 
-        public void EnemyMove()
+        public void EnemyMove(LevelBase level)
         {
+            if(health >= 0)
+            {
+                this.pb.Dispose();
+                this.damage = 0;
+                level.RemoveEnemy(this, reward);
+            }
             if (currentTargetNode != null && currentTargetNode.Next != null)
             { 
                 PointF targetPosition = new PointF(currentTargetNode.Next.Value.Item1 * 30, currentTargetNode.Next.Value.Item2 * 30);

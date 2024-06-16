@@ -27,7 +27,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         public uint? tickCount = null;
         public bool placed = false;
         public uint enemiesToAttack;
-        public uint attackRadius;
+        public float attackRadius;
         //
 
         public PlayerModel(PictureBox modelPB, MouseEventHandler clickEventHandler, MouseEventHandler moveEventHandler)
@@ -125,6 +125,13 @@ namespace Yaprak_Kerem_12IT_TD_Game
             //
         }
 
+        /// <summary>
+        /// removes the event handlers from the picture box, and checks if it has placed inside of another pictrebox 
+        /// </summary>
+        /// <param name="click">mouse event handler for the click</param>
+        /// <param name="move">mose event handler for the movement</param>
+        /// <param name="g">grid manager of the level</param>
+        /// <param name="location">the location</param>
         private void EndPlacementSelection(MouseEventHandler click, MouseEventHandler move, Grid g, (int, int) location)
         {
             this.pb.MouseClick -= click;
@@ -133,7 +140,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
             if (!g.CanPlace(location))
             {
                 this.pb.Dispose();
-                
+                g.ReturnMoney(cost);
             }
         }
 

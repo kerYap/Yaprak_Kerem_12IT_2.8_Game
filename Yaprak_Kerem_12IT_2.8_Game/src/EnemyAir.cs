@@ -14,7 +14,12 @@ namespace Yaprak_Kerem_12IT_TD_Game
     {
         public EnemyAir(PictureBox pb, Grid g) : base(pb, g)
         {
-
+            movementSpeed = 10;
         }
+        public void takeDamage(int damage)
+        {
+            health -= damage;
+        }
+
     }
 }
