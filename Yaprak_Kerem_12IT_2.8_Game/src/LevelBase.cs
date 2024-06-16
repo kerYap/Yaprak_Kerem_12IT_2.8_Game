@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,7 +49,18 @@ namespace Yaprak_Kerem_12IT_TD_Game
         PictureBox playerModelGround;
         //
 
-        public LevelBase(string map)
+        //enemy model picture boxes
+        PictureBox enemyModelAir;
+        PictureBox enemyModelVehicle;
+        PictureBox enemyModelGround;
+        //
+
+        /// <summary>
+        /// constructor for the level
+        /// </summary>
+        /// <param name="map">specifies the filepath of the .csv file</param>
+        /// <param name="tutorial">specifies whether it is the tutorial or not, if it is not, it will read wave data from a file instead of running the tutorial</param>
+        public LevelBase(string map, bool tutorial)
         {
             InitializeComponent();
             //make form non re-sizeable
@@ -56,11 +68,28 @@ namespace Yaprak_Kerem_12IT_TD_Game
             this.MaximizeBox = false;
 
             grid = new Grid(map, this);
+            if (tutorial) { StartTutorial(); }
         }
 
+        /// <summary>
+        /// if the player places a picturebox in the same grid location, this should be called to return the wasted coins
+        /// </summary>
+        /// <param name="money">the amount of coins to return</param>
         public void ReturnMoney(uint money)
         {
             coins += money;
+        }
+        
+        /// <summary>
+        /// handles running the tutorial
+        /// </summary>
+        private void StartTutorial()
+        {
+            this.Name += "Korean War";
+            System.Threading.Thread.Sleep(1000);
+            MessageBox.Show("Welcome to the battle general! We are here in korea fighting the a proxy war against the americans, You must help hold off Incheon from american attack. This is a crucial peice of land in the war, dont fail!");
+            System.Threading.Thread.Sleep(1000);
+            MessageBox.Show("Here comes an enemy Lockheed XF-90, an early jet powered fighter jet. It is coming quick better place your anti-air missile to hold it off.");
         }
 
         //set tracking to true

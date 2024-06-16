@@ -19,24 +19,19 @@ namespace Yaprak_Kerem_12IT_TD_Game
         private float speed;
         private PointF currentPosition;
 
-        public TrackingMissile(EnemyAir targetEnemy, PictureBox modelPictureBox, float speed)
+        public TrackingMissile(EnemyAir targetEnemy)
         {
             this.targetEnemy = targetEnemy;
-            this.speed = speed;
 
-            InitializePictureBox(modelPictureBox);
+            InitializePictureBox();
             InitializePosition();
         }
 
-        private void InitializePictureBox(PictureBox modelPictureBox)
+        private void InitializePictureBox()
         {
             PictureBox = new PictureBox
             {
-                Size = modelPictureBox.Size,
-                Image = modelPictureBox.Image,
-                SizeMode = modelPictureBox.SizeMode,
-                BackColor = modelPictureBox.BackColor,
-                Location = modelPictureBox.Location
+                
             };
         }
 

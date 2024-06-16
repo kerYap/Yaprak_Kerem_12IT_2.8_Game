@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Forms;
+using System.Reflection.Emit;
 
 namespace Yaprak_Kerem_12IT_TD_Game
 {
@@ -42,7 +43,8 @@ namespace Yaprak_Kerem_12IT_TD_Game
         /// <param name="filePath">filepath of the .csv</param>
         private void LoadGrid(string filePath)
         {
-            string[] lines = File.ReadAllLines(filePath);
+            string[] files = Directory.GetFiles(filePath, "*.csv");
+            string[] lines = File.ReadAllLines(files[0]);
             int rowCount = lines.Length;
             int colCount = lines[0].Split(',').Length;
             grid = new int[rowCount, colCount];
