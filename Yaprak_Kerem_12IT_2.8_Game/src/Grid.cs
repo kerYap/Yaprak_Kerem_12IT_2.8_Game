@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Windows.Forms;
 
-namespace Yaprak_Kerem_12IT_2_8_Game
+namespace Yaprak_Kerem_12IT_TD_Game
 {
     public class Grid
     {
@@ -14,15 +15,25 @@ namespace Yaprak_Kerem_12IT_2_8_Game
         public LinkedList<(int, int)> Path { get; private set; }
         private bool[,] visited;
         //
+        LevelBase thisLevel; 
+
+        private uint returnMoney;
 
         /// <summary>
         /// constructor makes the map and path
         /// </summary>
         /// <param name="map">the filepath of the map</param>
-        public Grid(string map)
+        public Grid(string map, LevelBase thisLevel)
         {
             LoadGrid(map);
             GeneratePath();
+            this.thisLevel = thisLevel;
+        }
+
+        public void ReturnMoney(uint r)
+        {
+            returnMoney = r;
+            thisLevel.ReturnMoney(returnMoney);
         }
 
         /// <summary>
@@ -35,6 +46,7 @@ namespace Yaprak_Kerem_12IT_2_8_Game
             int rowCount = lines.Length;
             int colCount = lines[0].Split(',').Length;
             grid = new int[rowCount, colCount];
+            visited = new bool[rowCount, colCount];
 
             for (int i = 0; i < rowCount; i++)
             {
@@ -42,6 +54,7 @@ namespace Yaprak_Kerem_12IT_2_8_Game
                 for (int j = 0; j < colCount; j++)
                 {
                     grid[i, j] = int.Parse(values[j]);
+                    visited[i, j] = false;
                 }
             }
         }
@@ -83,7 +96,7 @@ namespace Yaprak_Kerem_12IT_2_8_Game
                     }
                 }
             }
-            return(0, 0);
+            throw new Exception("start pos not found");
         }
 
         private (int, int) GetNextPathPosition((int x, int y) currentPosition)
@@ -119,14 +132,13 @@ namespace Yaprak_Kerem_12IT_2_8_Game
             return null; // Return null if the current position is not in the path or is the last position
         }
 
-        public (int,int) startPos()
-        {
-            return Path.First();
-        }
-
         public bool CanPlace((int,int) index)
         {
-            if (grid[index.Item1,index.Item2] == -1) return true;
+            if (index.Item1 > grid.GetLength(1) || index.Item2 > grid.GetLength(0)) return false;
+            if(index.Item1 > 0 && index.Item2 > 0)
+            {
+                if (grid[index.Item2 - 1, index.Item1 - 1] == -1) return true;
+            }
             return false;
         }
     }

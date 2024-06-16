@@ -10,21 +10,62 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
-namespace Yaprak_Kerem_12IT_2_8_Game
+namespace Yaprak_Kerem_12IT_TD_Game
 {
     public class TrackingMissile
     {
-        private PictureBox pb;
-        private EnemyAir target;
-        private uint speed;
-        public TrackingMissile(EnemyAir targetEnemy)
-        {
-            target = targetEnemy;
-            //set picturebox image
-        }
-        public void Move()
-        {
+        public PictureBox PictureBox { get; private set; }
+        private EnemyAir targetEnemy;
+        private float speed;
+        private PointF currentPosition;
 
+        public TrackingMissile(EnemyAir targetEnemy, PictureBox modelPictureBox, float speed)
+        {
+            this.targetEnemy = targetEnemy;
+            this.speed = speed;
+
+            InitializePictureBox(modelPictureBox);
+            InitializePosition();
+        }
+
+        private void InitializePictureBox(PictureBox modelPictureBox)
+        {
+            PictureBox = new PictureBox
+            {
+                Size = modelPictureBox.Size,
+                Image = modelPictureBox.Image,
+                SizeMode = modelPictureBox.SizeMode,
+                BackColor = modelPictureBox.BackColor,
+                Location = modelPictureBox.Location
+            };
+        }
+
+        private void InitializePosition()
+        {
+            currentPosition = new PointF(PictureBox.Location.X, PictureBox.Location.Y);
+        }
+
+        public void Update()
+        {
+            if (targetEnemy == null || targetEnemy.PictureBox == null)
+                return;
+
+            var targetPosition = new PointF(targetEnemy.PictureBox.Location.X, targetEnemy.PictureBox.Location.Y);
+            var direction = new PointF(targetPosition.X - currentPosition.X, targetPosition.Y - currentPosition.Y);
+            var distance = Math.Sqrt(direction.X * direction.X + direction.Y * direction.Y);
+
+            if (distance <= speed)
+            {
+                currentPosition = targetPosition;
+            }
+            else
+            {
+                var normalizedDirection = new PointF(direction.X / (float)distance, direction.Y / (float)distance);
+                currentPosition.X += normalizedDirection.X * speed;
+                currentPosition.Y += normalizedDirection.Y * speed;
+            }
+
+            PictureBox.Location = new Point((int)currentPosition.X, (int)currentPosition.Y);
         }
     }
 }

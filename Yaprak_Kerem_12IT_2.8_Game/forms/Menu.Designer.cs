@@ -1,4 +1,4 @@
-﻿namespace Yaprak_Kerem_12IT_2_8_Game
+﻿namespace Yaprak_Kerem_12IT_TD_Game
 {
     partial class Menu
     {

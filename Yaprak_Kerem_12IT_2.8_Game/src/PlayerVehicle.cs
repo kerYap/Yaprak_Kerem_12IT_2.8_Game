@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Yaprak_Kerem_12IT_2_8_Game
+namespace Yaprak_Kerem_12IT_TD_Game
 {
     internal class PlayerVehicle : PlayerModel
     {

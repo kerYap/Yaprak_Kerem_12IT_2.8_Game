@@ -1,4 +1,4 @@
-﻿namespace Yaprak_Kerem_12IT_2_8_Game
+﻿namespace Yaprak_Kerem_12IT_TD_Game
 {
     partial class LevelBase
     {
@@ -59,6 +59,7 @@
             // 
             this.gameTick.Enabled = true;
             this.gameTick.Interval = 10;
+            this.gameTick.Tick += new System.EventHandler(this.Tick);
             // 
             // LevelBase
             // 

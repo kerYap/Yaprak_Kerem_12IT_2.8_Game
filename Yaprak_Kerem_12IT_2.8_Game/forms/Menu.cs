@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Yaprak_Kerem_12IT_2_8_Game
+namespace Yaprak_Kerem_12IT_TD_Game
 {
     public partial class Menu : Form
     {
@@ -21,7 +21,7 @@ namespace Yaprak_Kerem_12IT_2_8_Game
         {
             this.Hide();
             MessageBox.Show("Hello comrade! You are the new millitary commander for the USSR, your job is to protect significant locations for the Red Army from the American scum. Good Luck commander!");
-            Tutorial tutorial = new Tutorial("sus");
+            LevelBase tutorial = new LevelBase("..\\..\\data\\levels\\tutorialLevel.csv");
             tutorial.Show();
 
         }

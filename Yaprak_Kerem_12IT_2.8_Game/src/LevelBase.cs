@@ -7,9 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Yaprak_Kerem_12IT_2._8_Game;
 
-namespace Yaprak_Kerem_12IT_2_8_Game
+namespace Yaprak_Kerem_12IT_TD_Game
 {
     public partial class LevelBase : Form
     {
@@ -56,7 +55,12 @@ namespace Yaprak_Kerem_12IT_2_8_Game
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
 
-            grid = new Grid(map);
+            grid = new Grid(map, this);
+        }
+
+        public void ReturnMoney(uint money)
+        {
+            coins += money;
         }
 
         //set tracking to true
@@ -66,7 +70,7 @@ namespace Yaprak_Kerem_12IT_2_8_Game
             if (trackMouse)
             {
                 this.trackMouse = false;
-                players[(int)playersIndex - 1].EndPlacementSelection(pictureBoxPlayerModel_MouseClick, pictureBoxPlayerModel_MouseMove);
+                players[(int)playersIndex - 1].SnapGrid(pictureBoxPlayerModel_MouseClick, pictureBoxPlayerModel_MouseMove, grid, true);
             }
             else
             {
@@ -86,7 +90,7 @@ namespace Yaprak_Kerem_12IT_2_8_Game
             if (trackMouse)
             {
                 players[(int)playersIndex - 1].UpdatePos(e, false);
-                players[(int)playersIndex - 1].SnapGrid(grid);
+                players[(int)playersIndex - 1].SnapGrid(pictureBoxPlayerModel_MouseClick, pictureBoxPlayerModel_MouseMove, grid, false);
             }
         }
 
@@ -95,8 +99,13 @@ namespace Yaprak_Kerem_12IT_2_8_Game
             if (trackMouse)
             {
                 players[(int)playersIndex - 1].UpdatePos(e, true);
-                players[(int)playersIndex - 1].SnapGrid(grid);
+                players[(int)playersIndex - 1].SnapGrid(pictureBoxPlayerModel_MouseClick, pictureBoxPlayerModel_MouseMove, grid, false);
             }
+        }
+
+        private void Tick(object sender, EventArgs e)
+        {
+
         }
     }
 

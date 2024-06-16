@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{7244784B-ADDF-4593-88EE-FB4CDEF871AB}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Yaprak_Kerem_12IT_2._8_Game</RootNamespace>
-    <AssemblyName>Yaprak_Kerem_12IT_2.8_Game</AssemblyName>
+    <RootNamespace>Yaprak_Kerem_12IT_TD_Game</RootNamespace>
+    <AssemblyName>Yaprak_Kerem_12IT_TD_Game</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -70,12 +70,6 @@
     <Compile Include="src\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\TrackingMissle.cs" />
-    <Compile Include="forms\Tutorial.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="forms\Tutorial.Designer.cs">
-      <DependentUpon>Tutorial.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="src\LevelBase.resx">
       <DependentUpon>LevelBase.cs</DependentUpon>
     </EmbeddedResource>
@@ -90,7 +84,9 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="data\levels\tutorialLevel.csv" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -105,7 +101,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="data\" />
+    <Folder Include="data\images\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

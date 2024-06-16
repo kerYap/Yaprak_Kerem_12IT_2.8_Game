@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Yaprak_Kerem_12IT_2_8_Game
+namespace Yaprak_Kerem_12IT_TD_Game
 {
     public class PlayerModel
     {
@@ -125,18 +125,23 @@ namespace Yaprak_Kerem_12IT_2_8_Game
             //
         }
 
-        public void EndPlacementSelection(MouseEventHandler click, MouseEventHandler move)
+        private void EndPlacementSelection(MouseEventHandler click, MouseEventHandler move, Grid g, (int, int) location)
         {
             this.pb.MouseClick -= click;
             this.pb.MouseMove -= move;
             placed = true;
+            if (!g.CanPlace(location))
+            {
+                this.pb.Dispose();
+                
+            }
         }
 
         /// <summary>
         /// grid snapping for the player, done by rounding division of location and the grid size. Also checks if the points are placeable.
         /// </summary>
         /// <param name="placeablePoints">this is a bool array of points where the player is placeable</param>
-        public void SnapGrid(Grid grid)
+        public void SnapGrid(MouseEventHandler c, MouseEventHandler m, Grid grid, bool endOfPlacement)
         {
             int? x = null;
             int? y = null;
@@ -158,6 +163,10 @@ namespace Yaprak_Kerem_12IT_2_8_Game
                 Point buf = new Point(((int)x * 30), ((int)y * 30));
                 this.loc = buf;
                 this.pb.Location = loc;
+            }
+            if(endOfPlacement)
+            {
+                EndPlacementSelection(c, m, grid, ((int)x,(int)y));
             }
         }
 

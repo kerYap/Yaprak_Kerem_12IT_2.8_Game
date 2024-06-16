@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Yaprak_Kerem_12IT_2_8_Game
+namespace Yaprak_Kerem_12IT_TD_Game
 {
     public class EnemyVehicle : EnemyModel
     {
-        public EnemyVehicle(PictureBox pb) : base(pb)
+        public EnemyVehicle(PictureBox pb, Grid g) : base(pb, g)
         {
 
         }
