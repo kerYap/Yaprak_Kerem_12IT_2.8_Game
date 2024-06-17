@@ -12,45 +12,34 @@ namespace Yaprak_Kerem_12IT_TD_Game
     {
         public PlayerAir(PictureBox modelPB, MouseEventHandler click, MouseEventHandler move) : base(modelPB, click, move)
         {
-            enemiesToAttack = 3;
         }
     }
     public class PlayerVehicle : PlayerModel
     {
-        uint damage = 100;
         List<TrackingMissile> Missiles;
         public PlayerVehicle(PictureBox modelPB, MouseEventHandler click, MouseEventHandler move) : base(modelPB, click, move)
         {
-            enemiesToAttack = 3;
+            TargetableEnemies = 3;
         }
 
-        /// <summary>
-        /// this is called everytick, manages when to attack
-        /// </summary>
-        /// <param name="enemies">this is a list of targetable enemies</param>
-        public void AttackTick(List<EnemyAir> enemies)
+        public override void AttackTick(List<IEnemy> enemies)
         {
-            if (tickCount == null)
+            foreach (var missile in Missiles)
             {
-                tickCount = 0;
+                missile.Update(this);
             }
-            tickCount++;
-            if (tickCount >= attackSpeed && placed)
-            {
-                Attack(enemies);
-                tickCount = 0;
-            }
+            base.AttackTick(enemies);
         }
 
         /// <summary>
         /// this is the attack method, it handles creating new missiles and what enemies to target
         /// </summary>
         /// <param name="e">list of targetable enemies</param>
-        private void Attack(List<EnemyAir> e)
+        protected override void Attack(List<IEnemy> e)
         {
             List<EnemyAir> enemiesToAttack = new List<EnemyAir>();
             //find nearest air enemies
-            foreach (EnemyAir enemy in e)
+            foreach (EnemyAir enemy in e.OfType<EnemyAir>())
             {
                 if (enemiesToAttack.Count == 3) break;
                 if (DistanceBetweenPoints(enemy.loc, new Point(this.loc.X + 15, this.loc.Y + 15)) <= attackRadius)

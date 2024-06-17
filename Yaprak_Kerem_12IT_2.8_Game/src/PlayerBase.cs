@@ -27,8 +27,9 @@ namespace Yaprak_Kerem_12IT_TD_Game
         public uint attackSpeed;
         public uint? tickCount = null;
         public bool placed = false;
-        public uint enemiesToAttack;
+        public uint TargetableEnemies;
         public float attackRadius;
+        public uint damage;
         //
 
         public PlayerModel(PictureBox modelPB, MouseEventHandler clickEventHandler, MouseEventHandler moveEventHandler)
@@ -174,7 +175,17 @@ namespace Yaprak_Kerem_12IT_TD_Game
 
         public virtual void AttackTick(List<IEnemy> enemies)
         {
-
+            if (tickCount == null)
+            {
+                tickCount = 0;
+            }
+            tickCount++;
+            if (tickCount >= attackSpeed && placed)
+            {
+                Attack(enemies);
+                tickCount = 0;
+            }
         }
+        protected virtual void Attack(List<IEnemy> enemies) {}
     }
 }

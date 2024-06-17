@@ -18,18 +18,11 @@ namespace Yaprak_Kerem_12IT_TD_Game
         //
 
         //list of players
-        private List<PlayerAir> playersAir = new List<PlayerAir>();
-        private List<PlayerVehicle> playersVehicle = new List<PlayerVehicle>();
-        private List<PlayerGround> playersGround = new List<PlayerGround>();
+        List<IPlayer> players;
         //
 
         //list of enemies
         List<IEnemy> enemies;
-        //
-
-        //index of the current player that is being moved
-        private uint playersIndex = 0;
-        string typeIndex = "";
         //
 
         //various constants for the grid
@@ -114,7 +107,14 @@ namespace Yaprak_Kerem_12IT_TD_Game
         /// <param name="e"></param>
         private void Tick(object sender, EventArgs e)
         {
-
+            foreach(var player in players)
+            {
+                player.AttackTick(enemies);
+            }
+            foreach(var enemy in enemies)
+            {
+                enemy.Update(this);
+            }
         }
 
         //enemy handling
