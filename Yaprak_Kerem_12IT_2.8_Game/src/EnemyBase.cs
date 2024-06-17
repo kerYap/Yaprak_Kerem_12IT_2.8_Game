@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Yaprak_Kerem_12IT_TD_Game
 {
-    public class EnemyModel
+    public class EnemyModel : IEnemy
     {
         //enemy information
         public uint damage;
@@ -56,7 +56,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
             }
         }
 
-        public void EnemyMove(LevelBase level)
+        public virtual void Update(LevelBase level)
         {
             if(health >= 0)
             {
@@ -85,6 +85,12 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 //update picturebox
                 loc = new Point((int)currentPosition.X, (int) currentPosition.Y);
                 pb.Location = loc;
+            }
+            else if (currentTargetNode == null)
+            {
+                level.TakeDamage(damage);
+                this.pb.Dispose();
+                level.RemoveEnemy(this, 0);
             }
         }
     }

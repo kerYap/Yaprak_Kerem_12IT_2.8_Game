@@ -52,8 +52,8 @@
             this.pictureBoxPlayerModel.Size = new System.Drawing.Size(30, 30);
             this.pictureBoxPlayerModel.TabIndex = 1;
             this.pictureBoxPlayerModel.TabStop = false;
-            this.pictureBoxPlayerModel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBoxPlayerModel_MouseClick);
-            this.pictureBoxPlayerModel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxPlayerModel_MouseMove);
+            this.pictureBoxPlayerModel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PlayerModel_MouseClick);
+            this.pictureBoxPlayerModel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PlayerModel_MouseMove);
             // 
             // gameTick
             // 

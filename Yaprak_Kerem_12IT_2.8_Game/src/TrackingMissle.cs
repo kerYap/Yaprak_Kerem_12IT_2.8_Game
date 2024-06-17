@@ -55,7 +55,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
             {
                 currentPosition = targetPosition;
                 //call damage
-                targetEnemy.takeDamage(damage);
+                targetEnemy.takeDamage((int)damage);
             }
             else
             {

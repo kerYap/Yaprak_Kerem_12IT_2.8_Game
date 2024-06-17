@@ -8,14 +8,15 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Yaprak_Kerem_12IT_TD_Game.src;
 
 namespace Yaprak_Kerem_12IT_TD_Game
 {
-    public class PlayerModel
+    public class PlayerModel : IPlayer
     {
         //variables for the model
         public uint index;
-        public PictureBox pb;
+        public PictureBox pb {get; private set;}
         protected Rectangle bounds;
         protected Point loc;
         protected Size size;
@@ -60,26 +61,6 @@ namespace Yaprak_Kerem_12IT_TD_Game
             //add event handlers
             pb.MouseClick += clickEventHandler;
             pb.MouseMove += moveEventHandler;
-        }
-
-        /// <summary>
-        /// checks if a point is in the bounds of the picturebox
-        /// </summary>
-        /// <param name="e">the point to check</param>
-        /// <returns>whether the point e is within the bounds</returns>
-        public bool CheckInBounds(Point e)
-        {
-            return bounds.Contains(e);
-        }
-
-        /// <summary>
-        /// checks collision with a picturebox
-        /// </summary>
-        /// <param name="p">the picturebox to detect collision</param>
-        /// <returns>boolean</returns>
-        public bool CheckInBounds(PictureBox p)
-        {
-            return pb.Bounds.IntersectsWith(p.Bounds);
         }
 
         /// <summary>
@@ -189,6 +170,11 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 (Math.Pow((double)(point1.X - point2.X), (double)2)
                 + Math.Pow((double)(point1.Y - point2.Y), (double)2)
                 ));
+        }
+
+        public virtual void AttackTick(List<IEnemy> enemies)
+        {
+
         }
     }
 }

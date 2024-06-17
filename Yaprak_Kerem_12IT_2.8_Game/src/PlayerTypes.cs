@@ -1,21 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Yaprak_Kerem_12IT_TD_Game
 {
+    public class PlayerAir : PlayerModel
+    {
+        public PlayerAir(PictureBox modelPB, MouseEventHandler click, MouseEventHandler move) : base(modelPB, click, move)
+        {
+            enemiesToAttack = 3;
+        }
+    }
     public class PlayerVehicle : PlayerModel
     {
         uint damage = 100;
         List<TrackingMissile> Missiles;
-        public PlayerVehicle(PictureBox modelPB, MouseEventHandler click, MouseEventHandler move) : base(modelPB, click, move) 
+        public PlayerVehicle(PictureBox modelPB, MouseEventHandler click, MouseEventHandler move) : base(modelPB, click, move)
         {
             enemiesToAttack = 3;
         }
@@ -26,12 +30,12 @@ namespace Yaprak_Kerem_12IT_TD_Game
         /// <param name="enemies">this is a list of targetable enemies</param>
         public void AttackTick(List<EnemyAir> enemies)
         {
-            if(tickCount == null)
+            if (tickCount == null)
             {
                 tickCount = 0;
             }
             tickCount++;
-            if(tickCount >= attackSpeed && placed)
+            if (tickCount >= attackSpeed && placed)
             {
                 Attack(enemies);
                 tickCount = 0;
@@ -46,7 +50,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         {
             List<EnemyAir> enemiesToAttack = new List<EnemyAir>();
             //find nearest air enemies
-            foreach(EnemyAir enemy in e)
+            foreach (EnemyAir enemy in e)
             {
                 if (enemiesToAttack.Count == 3) break;
                 if (DistanceBetweenPoints(enemy.loc, new Point(this.loc.X + 15, this.loc.Y + 15)) <= attackRadius)
@@ -55,7 +59,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 }
             }
             //send missiles
-            foreach(EnemyAir enemy in enemiesToAttack)
+            foreach (EnemyAir enemy in enemiesToAttack)
             {
                 Missiles.Add(new TrackingMissile(enemy, this, damage));
             }
@@ -68,6 +72,31 @@ namespace Yaprak_Kerem_12IT_TD_Game
         public void DeleteMissile(TrackingMissile target)
         {
             Missiles.Remove(target);
+        }
+    }
+    public class PlayerGround : PlayerModel
+    {
+        public PlayerGround(PictureBox modelPB, MouseEventHandler click, MouseEventHandler move) : base(modelPB, click, move)
+        {
+
+        }
+        public void AttackTick()
+        {
+            if (tickCount == null)
+            {
+                tickCount = 0;
+            }
+            tickCount++;
+            if (tickCount >= attackSpeed && placed)
+            {
+                Attack();
+                tickCount = 0;
+            }
+        }
+        private void Attack()
+        {
+            //find nearest vehicle
+            //attack vehicle
         }
     }
 }

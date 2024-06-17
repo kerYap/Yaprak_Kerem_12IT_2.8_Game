@@ -24,9 +24,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         //
 
         //list of enemies
-        private List<EnemyAir> enemysAir = new List<EnemyAir>();
-        private List<EnemyVehicle> enemysVehicle = new List<EnemyVehicle>();
-        private List<EnemyGround> enemysGround = new List<EnemyGround>();
+        List<IEnemy> enemies;
         //
 
         //index of the current player that is being moved
@@ -87,6 +85,9 @@ namespace Yaprak_Kerem_12IT_TD_Game
             coins += money;
         }
         
+        /// <summary>
+        /// runs the level based off of a file of waves and difficulty
+        /// </summary>
         private void Level()
         {
 
@@ -106,91 +107,53 @@ namespace Yaprak_Kerem_12IT_TD_Game
 
         }
 
-        //set tracking to true
-        //need to make each one for each type of enemy
-        private void pictureBoxPlayerModel_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (trackMouse)
-            {
-                this.trackMouse = false;
-                players[(int)playersIndex - 1].SnapGrid(pictureBoxPlayerModel_MouseClick, pictureBoxPlayerModel_MouseMove, grid, true);
-            }
-            else
-            {
-                playersIndex++;
-                players.Add(new PlayerModel(pictureBoxPlayerModel,pictureBoxPlayerModel_MouseClick, pictureBoxPlayerModel_MouseMove));
-                this.Controls.Add(players[(int)playersIndex - 1].pb);
-                players[(int)playersIndex - 1].pb.Visible = true;
-                players[(int)playersIndex - 1].pb.BringToFront();
-
-                this.trackMouse = true;
-            }
-        }
-
-        //do for the current type as well
-        private void MVP_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (trackMouse)
-            {
-                players[(int)playersIndex - 1].UpdatePos(e, false);
-                players[(int)playersIndex - 1].SnapGrid(pictureBoxPlayerModel_MouseClick, pictureBoxPlayerModel_MouseMove, grid, false);
-            }
-        }
-
-        private void pictureBoxPlayerModel_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (trackMouse)
-            {
-                players[(int)playersIndex - 1].UpdatePos(e, true);
-                players[(int)playersIndex - 1].SnapGrid(pictureBoxPlayerModel_MouseClick, pictureBoxPlayerModel_MouseMove, grid, false);
-            }
-        }
-
+        /// <summary>
+        /// game update tick
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Tick(object sender, EventArgs e)
         {
 
         }
 
+        //enemy handling
         /// <summary>
         /// deletes the air enemy from the list
         /// </summary>
         /// <param name="e">enemy to remove</param>
         /// <param name="r">reward for killing enemy</param>
-        public void RemoveEnemy(EnemyAir e, uint r)
+        public void RemoveEnemy(IEnemy e, uint r)
         {
-            enemysAir.Remove(e);
+            enemies.Remove(e);
             coins += r;
         }
 
         /// <summary>
-        /// deletes the ground enemy from the list
+        /// makes the form take damage
         /// </summary>
-        /// <param name="e">enemy to remove</param>
-        /// <param name="r">reward for killing enemy</param>
-        public void RemoveEnemy(EnemyGround e, uint r)
+        /// <param name="damage"></param>
+        public void TakeDamage(uint damage)
         {
-            enemysGround.Remove(e);
-            coins += r;
+            health -= (int)damage;
         }
+        //
 
-        /// <summary>
-        /// deletes the vehicle from the list
-        /// </summary>
-        /// <param name="e">enemy to remove</param>
-        /// <param name="r">reward for killing enemy</param>
-        public void RemoveEnemy(EnemyVehicle e, uint r)
-        {
-            enemysVehicle.Remove(e);
-            coins += r;
-        }
-        
-        /// <summary>
-        /// not even called, just here to get rid of an error
-        /// </summary>
-        /// <param name="e"></param>
-        public void RemoveEnemy(EnemyModel e, uint r)
+        //player movement handling
+        private void PlayerModel_MouseClick(object sender, MouseEventArgs e)
         {
 
         }
+
+        private void PlayerModel_MouseMove(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void MVP_MouseMove(object sender, MouseEventArgs e)
+        {
+
+        }
+        //
     }
 }

@@ -22,4 +22,20 @@ namespace Yaprak_Kerem_12IT_TD_Game
         }
 
     }
+    public class EnemyVehicle : EnemyModel
+    {
+        public EnemyVehicle(PictureBox pb, Grid g) : base(pb, g)
+        {
+
+        }
+    }
+    public class EnemyGround : EnemyModel
+    {
+        public EnemyGround(PictureBox pb, Grid g) : base(pb, g)
+        {
+
+        }
+    }
+
+   
 }

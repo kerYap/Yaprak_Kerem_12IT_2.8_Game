@@ -46,10 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\EnemyAir.cs" />
+    <Compile Include="src\EnemyTypes.cs" />
     <Compile Include="src\EnemyBase.cs" />
-    <Compile Include="src\EnemyGround.cs" />
-    <Compile Include="src\EnemyVehicle.cs" />
     <Compile Include="src\Grid.cs" />
     <Compile Include="forms\Menu.cs">
       <SubType>Form</SubType>
@@ -57,7 +55,9 @@
     <Compile Include="forms\Menu.Designer.cs">
       <DependentUpon>Menu.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\PlayerAir.cs" />
+    <Compile Include="src\IEnemy.cs" />
+    <Compile Include="src\IPlayer.cs" />
+    <Compile Include="src\PlayerTypes.cs" />
     <Compile Include="src\PlayerBase.cs" />
     <Compile Include="src\LevelBase.cs">
       <SubType>Form</SubType>
@@ -65,8 +65,6 @@
     <Compile Include="src\LevelBase.Designer.cs">
       <DependentUpon>LevelBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\PlayerGround.cs" />
-    <Compile Include="src\PlayerVehicle.cs" />
     <Compile Include="src\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\TrackingMissle.cs" />
