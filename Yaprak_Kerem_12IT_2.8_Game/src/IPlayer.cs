@@ -11,5 +11,6 @@ namespace Yaprak_Kerem_12IT_TD_Game
     {
         PictureBox pb { get; }
         void AttackTick(List<IEnemy> enemies);
+        void UpdatePos(MouseEventArgs e, bool add, Grid g, bool finalPlace);
     }
 }

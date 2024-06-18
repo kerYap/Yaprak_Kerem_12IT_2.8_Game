@@ -8,7 +8,6 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Yaprak_Kerem_12IT_TD_Game.src;
 
 namespace Yaprak_Kerem_12IT_TD_Game
 {
@@ -24,13 +23,15 @@ namespace Yaprak_Kerem_12IT_TD_Game
 
         //game data
         public uint cost;
-        public uint attackSpeed;
-        public uint? tickCount = null;
-        public bool placed = false;
-        public uint TargetableEnemies;
-        public float attackRadius;
-        public uint damage;
+        protected uint attackSpeed;
+        protected uint? tickCount = null;
+        protected bool placed = false;
+        protected uint TargetableEnemies;
+        protected float attackRadius;
+        protected uint damage;
         //
+        MouseEventHandler clickEvent;
+        MouseEventHandler moveEvent;
 
         public PlayerModel(PictureBox modelPB, MouseEventHandler clickEventHandler, MouseEventHandler moveEventHandler)
         {
@@ -60,6 +61,8 @@ namespace Yaprak_Kerem_12IT_TD_Game
             //
 
             //add event handlers
+            clickEvent = clickEventHandler;
+            moveEvent = moveEventHandler;
             pb.MouseClick += clickEventHandler;
             pb.MouseMove += moveEventHandler;
         }
@@ -69,7 +72,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         /// </summary>
         /// <param name="e">mouse event args, used to find the location of the mouse</param>
         /// <param name="add">if the mouse moved on the picturebox then the location must be added rather than set. True will mean that the location of e will be added to the location. False is to set</param>
-        public void UpdatePos(MouseEventArgs e, bool add)
+        public virtual void UpdatePos(MouseEventArgs e, bool add, Grid g, bool finalPlace)
         {
             //enable picturebox and make visible
             this.pb.Enabled = true;
@@ -85,6 +88,10 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 this.loc.X -= 15;
                 this.loc.Y -= 15;
                 this.pb.Location = loc;
+                //
+
+                //snap to grid
+                SnapGrid(g, finalPlace);
                 //
 
                 //dont do the addition style
@@ -105,6 +112,10 @@ namespace Yaprak_Kerem_12IT_TD_Game
             //set the location to the new location
             this.pb.Location = loc;
             //
+
+            //snap to grid
+            SnapGrid(g,finalPlace);
+            //
         }
 
         /// <summary>
@@ -114,10 +125,10 @@ namespace Yaprak_Kerem_12IT_TD_Game
         /// <param name="move">mose event handler for the movement</param>
         /// <param name="g">grid manager of the level</param>
         /// <param name="location">the location</param>
-        private void EndPlacementSelection(MouseEventHandler click, MouseEventHandler move, Grid g, (int, int) location)
+        protected void EndPlacementSelection(Grid g, (int, int) location)
         {
-            this.pb.MouseClick -= click;
-            this.pb.MouseMove -= move;
+            this.pb.MouseClick -= clickEvent;
+            this.pb.MouseMove -= moveEvent;
             placed = true;
             if (!g.CanPlace(location))
             {
@@ -130,7 +141,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         /// grid snapping for the player, done by rounding division of location and the grid size. Also checks if the points are placeable.
         /// </summary>
         /// <param name="placeablePoints">this is a bool array of points where the player is placeable</param>
-        public void SnapGrid(MouseEventHandler c, MouseEventHandler m, Grid grid, bool endOfPlacement)
+        protected void SnapGrid(Grid grid, bool endOfPlacement)
         {
             int? x = null;
             int? y = null;
@@ -155,7 +166,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
             }
             if(endOfPlacement)
             {
-                EndPlacementSelection(c, m, grid, ((int)x,(int)y));
+                EndPlacementSelection(grid, ((int)x,(int)y));
             }
         }
 

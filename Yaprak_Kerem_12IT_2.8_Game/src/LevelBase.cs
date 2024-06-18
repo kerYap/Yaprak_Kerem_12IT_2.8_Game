@@ -60,6 +60,20 @@ namespace Yaprak_Kerem_12IT_TD_Game
         public LevelBase(string map, bool tutorial)
         {
             InitializeComponent();
+            //initialise picture box events
+            InitializePicturebox(ref playerModelAir, pictureBoxAir,"f");
+            playerModelAir.MouseClick += AirModelMouseClick;
+            playerModelAir.MouseMove += AirModelMouseMove;
+            //
+            InitializePicturebox(ref playerModelAir, pictureBoxAir,"f");
+            playerModelGround.MouseClick += GroundModelMouseClick;
+            playerModelGround.MouseMove += GroundModelMouseMove;
+            //
+            InitializePicturebox(ref playerModelAir, pictureBoxAir,"f");
+            playerModelVehicle.MouseClick += VehicleModelMouseClick;
+            playerModelVehicle.MouseMove += VehicleModelMouseMove;
+            //
+            
             //make form non re-sizeable
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -67,6 +81,12 @@ namespace Yaprak_Kerem_12IT_TD_Game
             grid = new Grid(map, this);
             if (tutorial) { StartTutorial(); }
             else { Level(); }
+        }
+
+        private void InitializePicturebox(ref PictureBox playerModel, PictureBox copy, string ImagePath)
+        {
+            playerModel = copy;
+            //playerModel.Image = Image.FromFile(ImagePath);
         }
 
         /// <summary>
@@ -139,20 +159,72 @@ namespace Yaprak_Kerem_12IT_TD_Game
         }
         //
 
-        //player movement handling
-        private void PlayerModel_MouseClick(object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void PlayerModel_MouseMove(object sender, MouseEventArgs e)
-        {
-
-        }
-
+        //player movement
+        //All
         private void MVP_MouseMove(object sender, MouseEventArgs e)
         {
-
+            if (players.Count == 0) return;
+            players[players.Count() - 1].UpdatePos(e, false, grid, false);
+        }
+        //Air Model
+        private void AirModelMouseMove(object sender, MouseEventArgs e)
+        {
+            if(players.Count == 0) return;
+            if(trackMouse) players[players.Count()].UpdatePos(e, true, grid, false);
+        }
+        private void AirModelMouseClick(object sender, MouseEventArgs e)
+        {
+            if (!trackMouse)
+            {
+                players.Add(new PlayerAir(playerModelAir, AirModelMouseClick, AirModelMouseMove));
+                trackMouse = !trackMouse;
+            }
+            else
+            {
+                trackMouse = !trackMouse;
+                if (players.Count == 0) return;
+                players[players.Count - 1].UpdatePos(e, true, grid, true);
+            }
+        }
+        //Ground Model
+        private void GroundModelMouseMove(object sender, MouseEventArgs e)
+        {
+            if (players.Count == 0) return;
+            if (trackMouse) players[players.Count()].UpdatePos(e, true, grid, false);
+        }
+        private void GroundModelMouseClick(object sender, MouseEventArgs e)
+        {
+            if (!trackMouse)
+            {
+                players.Add(new PlayerGround(playerModelGround, GroundModelMouseClick, GroundModelMouseMove));
+                trackMouse = !trackMouse;
+            }
+            else
+            {
+                trackMouse = !trackMouse;
+                if (players.Count == 0) return;
+                players[players.Count - 1].UpdatePos(e, true, grid, true);
+            }
+        }
+        //Vehicle Model
+        private void VehicleModelMouseMove(object sender, MouseEventArgs e)
+        {
+            if (players.Count == 0) return;
+            if (trackMouse) players[players.Count()].UpdatePos(e, true, grid, false);
+        }
+        private void VehicleModelMouseClick(object sender, MouseEventArgs e)
+        {
+            if (!trackMouse)
+            {
+                players.Add(new PlayerVehicle(playerModelVehicle, VehicleModelMouseClick, VehicleModelMouseMove));
+                trackMouse = !trackMouse;
+            }
+            else
+            {
+                trackMouse = !trackMouse;
+                if (players.Count == 0) return;
+                players[players.Count - 1].UpdatePos(e, true, grid, true);
+            }
         }
         //
     }

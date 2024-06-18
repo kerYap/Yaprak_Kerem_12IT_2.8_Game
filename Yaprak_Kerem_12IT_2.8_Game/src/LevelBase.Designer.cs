@@ -30,10 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBoxPlayerModel = new System.Windows.Forms.PictureBox();
             this.gameTick = new System.Windows.Forms.Timer(this.components);
+            this.pictureBoxAir = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlayerModel)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAir)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -44,22 +44,20 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // pictureBoxPlayerModel
-            // 
-            this.pictureBoxPlayerModel.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.pictureBoxPlayerModel.Location = new System.Drawing.Point(975, 12);
-            this.pictureBoxPlayerModel.Name = "pictureBoxPlayerModel";
-            this.pictureBoxPlayerModel.Size = new System.Drawing.Size(30, 30);
-            this.pictureBoxPlayerModel.TabIndex = 1;
-            this.pictureBoxPlayerModel.TabStop = false;
-            this.pictureBoxPlayerModel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PlayerModel_MouseClick);
-            this.pictureBoxPlayerModel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PlayerModel_MouseMove);
-            // 
             // gameTick
             // 
             this.gameTick.Enabled = true;
             this.gameTick.Interval = 10;
             this.gameTick.Tick += new System.EventHandler(this.Tick);
+            // 
+            // pictureBoxAir
+            // 
+            this.pictureBoxAir.BackColor = System.Drawing.SystemColors.MenuText;
+            this.pictureBoxAir.Location = new System.Drawing.Point(997, 12);
+            this.pictureBoxAir.Name = "pictureBoxAir";
+            this.pictureBoxAir.Size = new System.Drawing.Size(30, 30);
+            this.pictureBoxAir.TabIndex = 1;
+            this.pictureBoxAir.TabStop = false;
             // 
             // LevelBase
             // 
@@ -67,13 +65,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.WindowFrame;
             this.ClientSize = new System.Drawing.Size(1039, 593);
-            this.Controls.Add(this.pictureBoxPlayerModel);
+            this.Controls.Add(this.pictureBoxAir);
             this.Controls.Add(this.pictureBox1);
             this.Name = "LevelBase";
             this.Text = "Cold War game";
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MVP_MouseMove);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlayerModel)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAir)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -81,8 +79,8 @@
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PictureBox pictureBoxPlayerModel;
         private System.Windows.Forms.Timer gameTick;
+        private System.Windows.Forms.PictureBox pictureBoxAir;
     }
 }
 
