@@ -18,17 +18,11 @@ namespace Yaprak_Kerem_12IT_TD_Game
         //
 
         //list of players
-        List<IPlayer> players;
+        List<IPlayer> players = new List<IPlayer>();
         //
 
         //list of enemies
-        List<IEnemy> enemies;
-        //
-
-        //various constants for the grid
-        const int GRID_WIDTH = 30;
-        const int FORM_WIDTH_PLAYABLE_AREA = 900;
-        const int FORM_HEIGHT_PLAYABLE_AREA = 600;
+        List<IEnemy> enemies = new List<IEnemy>();
         //
 
         //game info
@@ -57,7 +51,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         /// </summary>
         /// <param name="map">specifies the filepath of the .csv file</param>
         /// <param name="tutorial">specifies whether it is the tutorial or not, if it is not, it will read wave data from a file instead of running the tutorial</param>
-        public LevelBase(string map, bool tutorial)
+        public LevelBase(string map, bool tutorial, int levelHealth)
         {
             InitializeComponent();
             //initialise picture box events
@@ -65,18 +59,21 @@ namespace Yaprak_Kerem_12IT_TD_Game
             playerModelAir.MouseClick += AirModelMouseClick;
             playerModelAir.MouseMove += AirModelMouseMove;
             //
-            InitializePicturebox(ref playerModelAir, pictureBoxAir,"f");
-            playerModelGround.MouseClick += GroundModelMouseClick;
-            playerModelGround.MouseMove += GroundModelMouseMove;
+            //InitializePicturebox(ref playerModelAir, pictureBoxAir,"f");
+            //playerModelGround.MouseClick += GroundModelMouseClick;
+            //playerModelGround.MouseMove += GroundModelMouseMove;
             //
-            InitializePicturebox(ref playerModelAir, pictureBoxAir,"f");
-            playerModelVehicle.MouseClick += VehicleModelMouseClick;
-            playerModelVehicle.MouseMove += VehicleModelMouseMove;
+            //InitializePicturebox(ref playerModelAir, pictureBoxAir,"f");
+            //playerModelVehicle.MouseClick += VehicleModelMouseClick;
+            //playerModelVehicle.MouseMove += VehicleModelMouseMove;
             //
             
             //make form non re-sizeable
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
+
+            //set health
+            health = levelHealth;
 
             grid = new Grid(map, this);
             if (tutorial) { StartTutorial(); }
@@ -127,14 +124,27 @@ namespace Yaprak_Kerem_12IT_TD_Game
         /// <param name="e"></param>
         private void Tick(object sender, EventArgs e)
         {
-            foreach(var player in players)
+            if (health <= 0)
             {
-                player.AttackTick(enemies);
+                this.gameTick.Stop();
+                MessageBox.Show("Comrade! We lost!!! Incheon is now taken by the Americans!");
+                this.Dispose();
             }
-            foreach(var enemy in enemies)
+            if(players.Count != 0)
             {
-                enemy.Update(this);
+                foreach (var player in players)
+                {
+                    player.AttackTick(enemies);
+                }
             }
+            if(enemies.Count != 0)
+            {
+                foreach (var enemy in enemies)
+                {
+                    enemy.Update(this);
+                }
+            }
+            
         }
 
         //enemy handling
@@ -170,7 +180,10 @@ namespace Yaprak_Kerem_12IT_TD_Game
         private void AirModelMouseMove(object sender, MouseEventArgs e)
         {
             if(players.Count == 0) return;
-            if(trackMouse) players[players.Count()].UpdatePos(e, true, grid, false);
+            if (trackMouse) { players[players.Count() - 1].UpdatePos(e, true, grid, false);
+                    
+
+                }
         }
         private void AirModelMouseClick(object sender, MouseEventArgs e)
         {
@@ -190,7 +203,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         private void GroundModelMouseMove(object sender, MouseEventArgs e)
         {
             if (players.Count == 0) return;
-            if (trackMouse) players[players.Count()].UpdatePos(e, true, grid, false);
+            if (trackMouse) players[players.Count() - 1].UpdatePos(e, true, grid, false);
         }
         private void GroundModelMouseClick(object sender, MouseEventArgs e)
         {
@@ -210,7 +223,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         private void VehicleModelMouseMove(object sender, MouseEventArgs e)
         {
             if (players.Count == 0) return;
-            if (trackMouse) players[players.Count()].UpdatePos(e, true, grid, false);
+            if (trackMouse) players[players.Count() - 1].UpdatePos(e, true, grid, false);
         }
         private void VehicleModelMouseClick(object sender, MouseEventArgs e)
         {

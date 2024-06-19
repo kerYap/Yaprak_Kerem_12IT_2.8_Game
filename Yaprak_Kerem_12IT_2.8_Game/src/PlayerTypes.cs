@@ -16,7 +16,8 @@ namespace Yaprak_Kerem_12IT_TD_Game
     }
     public class PlayerVehicle : PlayerModel
     {
-        List<TrackingMissile> Missiles;
+        private List<TrackingMissile> Missiles = new List<TrackingMissile>();
+
         public PlayerVehicle(PictureBox modelPB, MouseEventHandler click, MouseEventHandler move) : base(modelPB, click, move)
         {
             TargetableEnemies = 3;
@@ -71,16 +72,6 @@ namespace Yaprak_Kerem_12IT_TD_Game
         }
         public void AttackTick()
         {
-            if (tickCount == null)
-            {
-                tickCount = 0;
-            }
-            tickCount++;
-            if (tickCount >= attackSpeed && placed)
-            {
-                Attack();
-                tickCount = 0;
-            }
         }
         private void Attack()
         {

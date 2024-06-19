@@ -164,7 +164,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 this.loc = buf;
                 this.pb.Location = loc;
             }
-            if(endOfPlacement)
+            if(endOfPlacement && x != null && y != null)
             {
                 EndPlacementSelection(grid, ((int)x,(int)y));
             }
