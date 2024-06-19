@@ -93,5 +93,10 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 level.RemoveEnemy(this, 0);
             }
         }
+
+        public void takeDamage(int damage)
+        {
+            health -= damage;
+        }
     }
 }

@@ -30,6 +30,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         protected float attackRadius;
         protected uint damage;
         //
+
         MouseEventHandler clickEvent;
         MouseEventHandler moveEvent;
 
@@ -152,7 +153,6 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 x = (int?)Math.Round((double)loc.X / 30);
                 y = (int?)Math.Round((double)loc.Y / 30);
             }
-
             //check if it is placeable
             if (x != null && y != null)
             {
@@ -168,6 +168,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
             {
                 EndPlacementSelection(grid, ((int)x,(int)y));
             }
+            
         }
 
         /// <summary>

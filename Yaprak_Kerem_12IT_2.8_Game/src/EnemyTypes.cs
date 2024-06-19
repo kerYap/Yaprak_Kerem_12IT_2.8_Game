@@ -16,10 +16,6 @@ namespace Yaprak_Kerem_12IT_TD_Game
         {
             movementSpeed = 10;
         }
-        public void takeDamage(int damage)
-        {
-            health -= damage;
-        }
 
     }
     public class EnemyVehicle : EnemyModel
