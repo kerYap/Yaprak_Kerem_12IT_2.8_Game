@@ -72,7 +72,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
             //
 
             //initialise enemy pictureboxes
-            InitializePicturebox(ref enemyModelAir, pictureBoxAirE, "..\\..\\data\\images\\EnemyAir.png.png", true);
+            InitializePicturebox(ref enemyModelAir, pictureBoxAirE, "..\\..\\data\\images\\EnemyAir.png", true);
             InitializePicturebox(ref enemyModelGround, pictureBoxGroundE, "f", false);
             InitializePicturebox(ref enemyModelVehicle, pictureBoxVehicleE, "f", false);
             //make form non re-sizeable

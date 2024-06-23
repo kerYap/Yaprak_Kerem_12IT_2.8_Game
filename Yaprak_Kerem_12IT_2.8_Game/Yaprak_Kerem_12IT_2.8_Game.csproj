@@ -103,7 +103,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="data\images\EnemyAir.png.png" />
+    <Content Include="data\images\PlayerVehicle.png" />
+    <Content Include="data\images\EnemyAir.png" />
+    <Content Include="data\images\EnemyVehicle.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

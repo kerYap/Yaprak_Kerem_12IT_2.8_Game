@@ -95,8 +95,10 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 PictureBox.Location = loc;
 
                 //rotate image
-                //Bitmap originalImg = new Bitmap(this.pb.Image);
-                //Bitmap rotation = RotateImage(originalImg, targetPosition);
+                Bitmap originalImg = new Bitmap(this.PictureBox.Image);
+                Bitmap rotation = RotateImage(originalImg, targetPosition);
+                PictureBox.Image = rotation;
+
             }
             else if (currentTargetNode == null)
             {
