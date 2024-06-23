@@ -36,8 +36,11 @@ namespace Yaprak_Kerem_12IT_TD_Game
 
         //player model picture boxes
         PictureBox playerModelAir;
+        int playerCostAir;
         PictureBox playerModelVehicle;
+        int playerCostVehicle;
         PictureBox playerModelGround;
+        int playerCostGround;
         //
 
         //enemy model picture boxes
@@ -55,19 +58,23 @@ namespace Yaprak_Kerem_12IT_TD_Game
         {
             InitializeComponent();
             //initialise picture box events
-            InitializePicturebox(ref playerModelAir, pictureBoxAir,"f");
+            InitializePicturebox(ref playerModelAir, pictureBoxAir,"f", false);
             playerModelAir.MouseClick += AirModelMouseClick;
             playerModelAir.MouseMove += AirModelMouseMove;
             //
-            InitializePicturebox(ref playerModelGround, pictureBoxGround,"f");
+            InitializePicturebox(ref playerModelGround, pictureBoxGround,"f", false);
             playerModelGround.MouseClick += GroundModelMouseClick;
             playerModelGround.MouseMove += GroundModelMouseMove;
             //
-            InitializePicturebox(ref playerModelVehicle, pictureBoxVehicle,"f");
+            InitializePicturebox(ref playerModelVehicle, pictureBoxVehicle,"f", false);
             playerModelVehicle.MouseClick += VehicleModelMouseClick;
             playerModelVehicle.MouseMove += VehicleModelMouseMove;
             //
-            
+
+            //initialise enemy pictureboxes
+            InitializePicturebox(ref enemyModelAir, pictureBoxAirE, "..\\..\\data\\images\\EnemyAir.png.png", true);
+            InitializePicturebox(ref enemyModelGround, pictureBoxGroundE, "f", false);
+            InitializePicturebox(ref enemyModelVehicle, pictureBoxVehicleE, "f", false);
             //make form non re-sizeable
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -80,10 +87,10 @@ namespace Yaprak_Kerem_12IT_TD_Game
             else { Level(); }
         }
 
-        private void InitializePicturebox(ref PictureBox playerModel, PictureBox copy, string ImagePath)
+        private void InitializePicturebox(ref PictureBox playerModel, PictureBox copy, string ImagePath, bool imageFile)
         {
             playerModel = copy;
-            //playerModel.Image = Image.FromFile(ImagePath);
+            if(imageFile)playerModel.Image = Image.FromFile(ImagePath);
         }
 
         /// <summary>
@@ -109,12 +116,14 @@ namespace Yaprak_Kerem_12IT_TD_Game
         private void StartTutorial()
         {
             this.Text += ": Korean War";
+            this.Show();
+           // this.BackgroundImage = Image.FromFile("..\\..\\data\\levels\\tutorialLevel\\backImage.png");
             System.Threading.Thread.Sleep(1000);
             MessageBox.Show("Welcome to the battle general! We are here in Korea fighting the a proxy war against the americans, You must help hold off Incheon from american attack. This is a crucial peice of land in the war, dont fail!");
             System.Threading.Thread.Sleep(1000);
             MessageBox.Show("Here comes an enemy Lockheed XF-90, an early jet powered fighter jet. It is coming quick better place your anti-air missile to hold it off.");
             System.Threading.Thread.Sleep(2000);
-
+            enemies.Add(new EnemyAir(enemyModelAir, grid, this));
         }
 
         /// <summary>
@@ -139,7 +148,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
             }
             if(enemies.Count != 0)
             {
-                foreach (var enemy in enemies)
+                foreach (var enemy in enemies.ToList())
                 {
                     enemy.Update(this);
                 }
@@ -189,7 +198,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         {
             if (!trackMouse)
             {
-                players.Add(new PlayerAir(playerModelAir, AirModelMouseClick, AirModelMouseMove));
+                players.Add(new PlayerAir(playerModelAir, AirModelMouseClick, AirModelMouseMove, this));
                 Controls.Add(players[players.Count - 1].pb);
                 trackMouse = true;
             }

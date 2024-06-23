@@ -13,15 +13,17 @@ namespace Yaprak_Kerem_12IT_TD_Game
 {
     public class PlayerAir : PlayerModel
     {
-        private float roationAngle;
+        private float rotationAngle;
         private float rotationSpeed;
-        private int bulletSpeed;
         private int coneAngle;
         private int damagePerSecond;
         private PictureBox attackAreaPB;
 
-        public PlayerAir(PictureBox modelPB, MouseEventHandler click, MouseEventHandler move) : base(modelPB, click, move)
+        public PlayerAir(PictureBox modelPB, MouseEventHandler click, MouseEventHandler move, LevelBase l) : base(modelPB, click, move)
         {
+            damagePerSecond = 10;
+            rotationSpeed = 10;
+            coneAngle = 10;
             attackAreaPB = new PictureBox
             {
                 Size = new Size((int)(attackRadius * 2), (int)(attackRadius * 2)),
@@ -29,6 +31,8 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 Location = new Point((int)(loc.X - attackRadius), (int)(loc.Y - attackRadius)),
             };
             attackAreaPB.Paint += AttackAreaPB_Paint;
+            this.attackSpeed = 0;
+            l.Controls.Add(attackAreaPB);
         }
         private void AttackAreaPB_Paint(object sender, PaintEventArgs e)
         {
@@ -39,8 +43,67 @@ namespace Yaprak_Kerem_12IT_TD_Game
             Brush brush = new SolidBrush(Color.FromArgb(128, Color.Yellow));
             //make path
             GraphicsPath path = new GraphicsPath();
-            //calculate the points of the cone
-            PointF startOfArc = new PointF(, )
+            //add line 1
+            path.AddLine(attackAreaPB.Width / 2, attackAreaPB.Height / 2, (float)(attackAreaPB.Width / 2 + Math.Cos(Math.PI * (rotationAngle - coneAngle / 2) / 180) * attackAreaPB.Width / 2), (float)(attackAreaPB.Height / 2 + Math.Sin(Math.PI * (rotationAngle - coneAngle / 2) / 180) * attackAreaPB.Height / 2));
+            //add the arc
+            path.AddArc(new RectangleF(0, 0, attackAreaPB.Width, attackAreaPB.Height), rotationAngle - coneAngle / 2, coneAngle);
+            //add last line
+            path.AddLine(attackAreaPB.Width / 2, attackAreaPB.Height / 2, (float)(attackAreaPB.Width / 2 + Math.Cos(Math.PI * (rotationAngle + coneAngle / 2) / 180) * attackAreaPB.Width / 2), (float)(attackAreaPB.Height / 2 + Math.Sin(Math.PI * (rotationAngle + coneAngle / 2) / 180) * attackAreaPB.Height / 2));
+            //draw path
+            g.FillPath(brush, path);
+            brush.Dispose();
+            path.Dispose();
+        }
+
+        public override void UpdatePos(MouseEventArgs e, bool add, Grid g, bool finalPlace)
+        {
+            base.UpdatePos(e, add, g, finalPlace);
+
+            //update attack area position
+            attackAreaPB.Location = new Point(loc.X - attackAreaPB.Width / 2 + pb.Width / 2, loc.Y - attackAreaPB.Height / 2 + pb.Height / 2);
+            attackAreaPB.Invalidate();
+        }
+        public override void AttackTick(List<IEnemy> enemies)
+        {
+            rotationAngle += rotationSpeed;
+            if (rotationAngle >= 360) rotationAngle -= 360;
+            attackAreaPB.Invalidate();
+            base.AttackTick(enemies);
+        }
+        protected override void Attack(List<IEnemy> enemies)
+        {
+            foreach(IEnemy enemy in enemies)
+            {
+                if(enemy is EnemyGround && IsWithinAttack(enemy))
+                {
+                    enemy.TakeDamage(damagePerSecond);
+                }
+            }
+        }
+
+        protected bool IsWithinAttack(IEnemy enemy)
+        {
+            Point enemyPos = enemy.PictureBox.Location;
+            //if it is out of distance, it must be out of range
+            float distance = DistanceBetweenPoints(pb.Location, enemyPos);
+            if (distance > attackRadius) return false;
+
+            //calculate if it is within the radius of the attack
+            float angleToEnemy = CalcAngle(enemyPos);
+            float angleDiff = Math.Abs(angleToEnemy - rotationAngle);
+            if(angleDiff > 180)
+            {
+                //adjust wrap of angle
+                angleDiff = 360 - angleDiff;
+            }
+            return angleDiff <= coneAngle / 2;
+        }
+        private float CalcAngle(Point pos)
+        {
+            Point thisPos = new Point(pb.Location.X + pb.Width / 2, pb.Location.Y + pb.Height / 2);
+            float changeInX = pos.X - thisPos.X;
+            float changeInY = pos.Y - thisPos.Y;
+            return (float)(Math.Atan2(changeInY, changeInX) * (180 / Math.PI));
         }
     }
     public class PlayerVehicle : PlayerModel
@@ -99,13 +162,17 @@ namespace Yaprak_Kerem_12IT_TD_Game
         {
 
         }
-        public void AttackTick()
+        protected override void Attack(List<IEnemy> enemies)
         {
-        }
-        private void Attack()
-        {
-            //find nearest vehicle
-            //attack vehicle
+            foreach(IEnemy enemy in enemies)
+            {
+                Point enemyPosition = enemy.PictureBox.Location;
+                float distance = DistanceBetweenPoints(pb.Location, enemyPosition);
+                if(distance <= attackRadius)
+                {
+                    enemy.TakeDamage((int)damage);
+                }
+            }
         }
     }
 }

@@ -12,22 +12,22 @@ namespace Yaprak_Kerem_12IT_TD_Game
 {
     public class EnemyAir : EnemyModel
     {
-        public EnemyAir(PictureBox pb, Grid g) : base(pb, g)
+        public EnemyAir(PictureBox pb, Grid g, LevelBase l) : base(pb, g, l)
         {
-            movementSpeed = 10;
+            movementSpeed = 0.4f;
+            health = 10;
         }
-
     }
     public class EnemyVehicle : EnemyModel
     {
-        public EnemyVehicle(PictureBox pb, Grid g) : base(pb, g)
+        public EnemyVehicle(PictureBox pb, Grid g, LevelBase l) : base(pb, g, l)
         {
 
         }
     }
     public class EnemyGround : EnemyModel
     {
-        public EnemyGround(PictureBox pb, Grid g) : base(pb, g)
+        public EnemyGround(PictureBox pb, Grid g, LevelBase l) : base(pb, g, l)
         {
 
         }

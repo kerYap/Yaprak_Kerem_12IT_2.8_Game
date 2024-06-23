@@ -57,8 +57,6 @@ namespace Yaprak_Kerem_12IT_TD_Game
 
             //set various location data
             loc = modelPB.Location;
-            size = modelPB.Size;
-            bounds = new Rectangle(loc, size);
             //
 
             //add event handlers
@@ -167,6 +165,11 @@ namespace Yaprak_Kerem_12IT_TD_Game
             if(endOfPlacement && x != null && y != null)
             {
                 EndPlacementSelection(grid, ((int)x,(int)y));
+            }
+            else if (endOfPlacement)
+            {
+                this.pb.Dispose();
+                grid.ReturnMoney(cost);
             }
             
         }

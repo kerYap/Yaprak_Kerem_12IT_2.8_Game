@@ -22,6 +22,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
 
         public TrackingMissile(EnemyAir targetEnemy, PlayerVehicle calledPlayer, uint damage)
         {
+            speed = 0.4f;
             this.targetEnemy = targetEnemy;
             InitializePictureBox();
             InitializePosition();
@@ -32,7 +33,8 @@ namespace Yaprak_Kerem_12IT_TD_Game
         {
             PictureBox = new PictureBox
             {
-                
+                Size = new Size(20,20),
+                Image = Image.FromFile("..\\..\\data\\images\\missile.png")
             };
         }
 
@@ -54,7 +56,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
             {
                 currentPosition = targetPosition;
                 //call damage
-                targetEnemy.takeDamage((int)damage);
+                targetEnemy.TakeDamage((int)damage);
                 //remove this
                 this.PictureBox.Dispose();
                 calledPlayer.DeleteMissile(this);

@@ -11,5 +11,6 @@ namespace Yaprak_Kerem_12IT_TD_Game
     {
         PictureBox PictureBox { get; }
         void Update(LevelBase level);
+        void TakeDamage(int damage);
     }
 }

@@ -22,28 +22,35 @@ namespace Yaprak_Kerem_12IT_TD_Game
         private LinkedList<(int, int)> path;
         private LinkedListNode<(int, int)> currentTargetNode;
         private PointF currentPosition;
-        public PictureBox pb;
-        public Rectangle bounds;
         public Point loc;
         public Size size;
 
-        public EnemyModel(PictureBox modelPB, Grid gridManager)
+        public EnemyModel(PictureBox modelPB, Grid gridManager, LevelBase level)
         {
             path = gridManager.Path;
+            loc = modelPB.Location;
             this.currentTargetNode = path.First;
-            pb = new PictureBox();
             InitializePictureBox(modelPB);
+            InitializePosition();
+            level.Controls.Add(PictureBox);
         }
 
         private void InitializePictureBox(PictureBox modelPictureBox)
         {
             PictureBox = new PictureBox
             {
-                Size = modelPictureBox.Size,
                 Image = modelPictureBox.Image,
+                Size = modelPictureBox.Size,
+                Location = modelPictureBox.Location,
                 SizeMode = modelPictureBox.SizeMode,
                 BackColor = modelPictureBox.BackColor,
-                Location = loc
+                BorderStyle = modelPictureBox.BorderStyle,
+                Anchor = modelPictureBox.Anchor,
+                Dock = modelPictureBox.Dock,
+                Margin = modelPictureBox.Margin,
+                Padding = modelPictureBox.Padding,
+                Visible = modelPictureBox.Visible,
+                Enabled = modelPictureBox.Enabled
             };
         }
 
@@ -51,28 +58,29 @@ namespace Yaprak_Kerem_12IT_TD_Game
         {
             if (currentTargetNode != null)
             {
-                currentPosition = new PointF(currentTargetNode.Value.Item1 * 30, currentTargetNode.Value.Item2 * 30);
+                currentPosition = new PointF(currentTargetNode.Value.Item2 * 30, currentTargetNode.Value.Item1 * 30);
                 PictureBox.Location = new Point((int)currentPosition.X, (int)currentPosition.Y);
             }
         }
 
         public virtual void Update(LevelBase level)
         {
-            if(health >= 0)
+            if(health <= 0)
             {
-                this.pb.Dispose();
+                this.PictureBox.Dispose();
                 this.damage = 0;
                 level.RemoveEnemy(this, reward);
+                return;
             }
             if (currentTargetNode != null && currentTargetNode.Next != null)
             { 
-                PointF targetPosition = new PointF(currentTargetNode.Next.Value.Item1 * 30, currentTargetNode.Next.Value.Item2 * 30);
+                PointF targetPosition = new PointF(currentTargetNode.Next.Value.Item2 * 30, currentTargetNode.Next.Value.Item1 * 30);
                 PointF directionOfTravel = new PointF(targetPosition.X - currentPosition.X, targetPosition.Y - currentPosition.Y);
                 double distance = Math.Sqrt(directionOfTravel.X * directionOfTravel.X + directionOfTravel.Y * directionOfTravel.Y);
                 if(distance <= movementSpeed)
                 {
                     //move straight to target position
-                     currentPosition = targetPosition;
+                    currentPosition = targetPosition;
                     currentTargetNode = currentTargetNode.Next;
                 }
                 else
@@ -84,19 +92,42 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 }
                 //update picturebox
                 loc = new Point((int)currentPosition.X, (int) currentPosition.Y);
-                pb.Location = loc;
+                PictureBox.Location = loc;
+
+                //rotate image
+                //Bitmap originalImg = new Bitmap(this.pb.Image);
+                //Bitmap rotation = RotateImage(originalImg, targetPosition);
             }
             else if (currentTargetNode == null)
             {
                 level.TakeDamage(damage);
-                this.pb.Dispose();
+                this.PictureBox.Dispose();
                 level.RemoveEnemy(this, 0);
             }
         }
 
-        public void takeDamage(int damage)
+        public void TakeDamage(int damage)
         {
             health -= damage;
+        }
+
+        private Bitmap RotateImage(Bitmap bmp, PointF targetPosition)
+        {
+            float angle = (float)(Math.Atan2(targetPosition.Y - PictureBox.Location.Y, targetPosition.X - PictureBox.Location.X) * 180f / Math.PI);
+
+            Bitmap rotatedBmp = new Bitmap(bmp.Width, bmp.Height);
+            rotatedBmp.SetResolution(bmp.HorizontalResolution, bmp.VerticalResolution);
+
+            Graphics g = Graphics.FromImage(rotatedBmp);
+            g.TranslateTransform((float)bmp.Width / 2, (float)bmp.Height / 2);
+
+            g.RotateTransform(angle);
+
+            g.TranslateTransform(-(float)bmp.Width / 2, -(float)bmp.Height / 2);
+
+            g.DrawImage(bmp, new Point(0, 0));
+
+            return rotatedBmp;
         }
     }
 }

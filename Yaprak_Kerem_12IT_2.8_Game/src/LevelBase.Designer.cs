@@ -34,10 +34,24 @@
             this.pictureBoxAir = new System.Windows.Forms.PictureBox();
             this.pictureBoxVehicle = new System.Windows.Forms.PictureBox();
             this.pictureBoxGround = new System.Windows.Forms.PictureBox();
+            this.labelPlayers = new System.Windows.Forms.Label();
+            this.labelVehicle = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.labelEnemies = new System.Windows.Forms.Label();
+            this.pictureBoxVehicleE = new System.Windows.Forms.PictureBox();
+            this.labelVehicleE = new System.Windows.Forms.Label();
+            this.pictureBoxAirE = new System.Windows.Forms.PictureBox();
+            this.labelAirE = new System.Windows.Forms.Label();
+            this.pictureBoxGroundE = new System.Windows.Forms.PictureBox();
+            this.labelGroundE = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAir)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxVehicle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGround)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxVehicleE)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAirE)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGroundE)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -57,7 +71,7 @@
             // pictureBoxAir
             // 
             this.pictureBoxAir.BackColor = System.Drawing.SystemColors.MenuText;
-            this.pictureBoxAir.Location = new System.Drawing.Point(997, 12);
+            this.pictureBoxAir.Location = new System.Drawing.Point(898, 123);
             this.pictureBoxAir.Name = "pictureBoxAir";
             this.pictureBoxAir.Size = new System.Drawing.Size(30, 30);
             this.pictureBoxAir.TabIndex = 1;
@@ -66,7 +80,7 @@
             // pictureBoxVehicle
             // 
             this.pictureBoxVehicle.BackColor = System.Drawing.SystemColors.MenuText;
-            this.pictureBoxVehicle.Location = new System.Drawing.Point(942, 12);
+            this.pictureBoxVehicle.Location = new System.Drawing.Point(898, 25);
             this.pictureBoxVehicle.Name = "pictureBoxVehicle";
             this.pictureBoxVehicle.Size = new System.Drawing.Size(30, 30);
             this.pictureBoxVehicle.TabIndex = 2;
@@ -75,11 +89,110 @@
             // pictureBoxGround
             // 
             this.pictureBoxGround.BackColor = System.Drawing.SystemColors.MenuText;
-            this.pictureBoxGround.Location = new System.Drawing.Point(997, 74);
+            this.pictureBoxGround.Location = new System.Drawing.Point(898, 74);
             this.pictureBoxGround.Name = "pictureBoxGround";
             this.pictureBoxGround.Size = new System.Drawing.Size(30, 30);
             this.pictureBoxGround.TabIndex = 3;
             this.pictureBoxGround.TabStop = false;
+            // 
+            // labelPlayers
+            // 
+            this.labelPlayers.AutoSize = true;
+            this.labelPlayers.Location = new System.Drawing.Point(895, 9);
+            this.labelPlayers.Name = "labelPlayers";
+            this.labelPlayers.Size = new System.Drawing.Size(44, 13);
+            this.labelPlayers.TabIndex = 4;
+            this.labelPlayers.Text = "Players:";
+            // 
+            // labelVehicle
+            // 
+            this.labelVehicle.AutoSize = true;
+            this.labelVehicle.Location = new System.Drawing.Point(895, 58);
+            this.labelVehicle.Name = "labelVehicle";
+            this.labelVehicle.Size = new System.Drawing.Size(109, 13);
+            this.labelVehicle.TabIndex = 5;
+            this.labelVehicle.Text = "Vehicle: 2K 12, Cost: ";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(895, 107);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(86, 13);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "Air: Mil-24, Cost: ";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(895, 156);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(122, 13);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Ground: Spetsnaz, Cost:";
+            // 
+            // labelEnemies
+            // 
+            this.labelEnemies.AutoSize = true;
+            this.labelEnemies.Location = new System.Drawing.Point(895, 199);
+            this.labelEnemies.Name = "labelEnemies";
+            this.labelEnemies.Size = new System.Drawing.Size(50, 13);
+            this.labelEnemies.TabIndex = 8;
+            this.labelEnemies.Text = "Enemies:";
+            // 
+            // pictureBoxVehicleE
+            // 
+            this.pictureBoxVehicleE.BackColor = System.Drawing.SystemColors.MenuText;
+            this.pictureBoxVehicleE.Location = new System.Drawing.Point(898, 215);
+            this.pictureBoxVehicleE.Name = "pictureBoxVehicleE";
+            this.pictureBoxVehicleE.Size = new System.Drawing.Size(30, 30);
+            this.pictureBoxVehicleE.TabIndex = 9;
+            this.pictureBoxVehicleE.TabStop = false;
+            // 
+            // labelVehicleE
+            // 
+            this.labelVehicleE.AutoSize = true;
+            this.labelVehicleE.Location = new System.Drawing.Point(895, 248);
+            this.labelVehicleE.Name = "labelVehicleE";
+            this.labelVehicleE.Size = new System.Drawing.Size(106, 13);
+            this.labelVehicleE.TabIndex = 10;
+            this.labelVehicleE.Text = "Vehicle: M24 Chafee";
+            // 
+            // pictureBoxAirE
+            // 
+            this.pictureBoxAirE.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBoxAirE.Location = new System.Drawing.Point(898, 264);
+            this.pictureBoxAirE.Name = "pictureBoxAirE";
+            this.pictureBoxAirE.Size = new System.Drawing.Size(30, 30);
+            this.pictureBoxAirE.TabIndex = 11;
+            this.pictureBoxAirE.TabStop = false;
+            // 
+            // labelAirE
+            // 
+            this.labelAirE.AutoSize = true;
+            this.labelAirE.Location = new System.Drawing.Point(895, 297);
+            this.labelAirE.Name = "labelAirE";
+            this.labelAirE.Size = new System.Drawing.Size(104, 13);
+            this.labelAirE.TabIndex = 12;
+            this.labelAirE.Text = "Air: Lockheed XF-90";
+            // 
+            // pictureBoxGroundE
+            // 
+            this.pictureBoxGroundE.BackColor = System.Drawing.SystemColors.MenuText;
+            this.pictureBoxGroundE.Location = new System.Drawing.Point(898, 313);
+            this.pictureBoxGroundE.Name = "pictureBoxGroundE";
+            this.pictureBoxGroundE.Size = new System.Drawing.Size(30, 30);
+            this.pictureBoxGroundE.TabIndex = 13;
+            this.pictureBoxGroundE.TabStop = false;
+            // 
+            // labelGroundE
+            // 
+            this.labelGroundE.AutoSize = true;
+            this.labelGroundE.Location = new System.Drawing.Point(895, 346);
+            this.labelGroundE.Name = "labelGroundE";
+            this.labelGroundE.Size = new System.Drawing.Size(122, 13);
+            this.labelGroundE.TabIndex = 14;
+            this.labelGroundE.Text = "Gorund: Special Service";
             // 
             // LevelBase
             // 
@@ -87,6 +200,17 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.WindowFrame;
             this.ClientSize = new System.Drawing.Size(1039, 593);
+            this.Controls.Add(this.labelGroundE);
+            this.Controls.Add(this.pictureBoxGroundE);
+            this.Controls.Add(this.labelAirE);
+            this.Controls.Add(this.pictureBoxAirE);
+            this.Controls.Add(this.labelVehicleE);
+            this.Controls.Add(this.pictureBoxVehicleE);
+            this.Controls.Add(this.labelEnemies);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.labelVehicle);
+            this.Controls.Add(this.labelPlayers);
             this.Controls.Add(this.pictureBoxGround);
             this.Controls.Add(this.pictureBoxVehicle);
             this.Controls.Add(this.pictureBoxAir);
@@ -98,7 +222,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAir)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxVehicle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGround)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxVehicleE)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAirE)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGroundE)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -109,6 +237,17 @@
         private System.Windows.Forms.PictureBox pictureBoxAir;
         private System.Windows.Forms.PictureBox pictureBoxVehicle;
         private System.Windows.Forms.PictureBox pictureBoxGround;
+        private System.Windows.Forms.Label labelPlayers;
+        private System.Windows.Forms.Label labelVehicle;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label labelEnemies;
+        private System.Windows.Forms.PictureBox pictureBoxVehicleE;
+        private System.Windows.Forms.Label labelVehicleE;
+        private System.Windows.Forms.PictureBox pictureBoxAirE;
+        private System.Windows.Forms.Label labelAirE;
+        private System.Windows.Forms.PictureBox pictureBoxGroundE;
+        private System.Windows.Forms.Label labelGroundE;
     }
 }
 
