@@ -31,13 +31,13 @@
             this.components = new System.ComponentModel.Container();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.gameTick = new System.Windows.Forms.Timer(this.components);
-            this.pictureBoxAir = new System.Windows.Forms.PictureBox();
-            this.pictureBoxVehicle = new System.Windows.Forms.PictureBox();
             this.pictureBoxGround = new System.Windows.Forms.PictureBox();
+            this.pictureBoxVehicle = new System.Windows.Forms.PictureBox();
+            this.pictureBoxAir = new System.Windows.Forms.PictureBox();
             this.labelPlayers = new System.Windows.Forms.Label();
             this.labelVehicle = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.labelAir = new System.Windows.Forms.Label();
+            this.labelGround = new System.Windows.Forms.Label();
             this.labelEnemies = new System.Windows.Forms.Label();
             this.pictureBoxVehicleE = new System.Windows.Forms.PictureBox();
             this.labelVehicleE = new System.Windows.Forms.Label();
@@ -45,10 +45,12 @@
             this.labelAirE = new System.Windows.Forms.Label();
             this.pictureBoxGroundE = new System.Windows.Forms.PictureBox();
             this.labelGroundE = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.labelCoins = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAir)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxVehicle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGround)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxVehicle)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAir)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxVehicleE)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAirE)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGroundE)).BeginInit();
@@ -68,14 +70,14 @@
             this.gameTick.Interval = 10;
             this.gameTick.Tick += new System.EventHandler(this.Tick);
             // 
-            // pictureBoxAir
+            // pictureBoxGround
             // 
-            this.pictureBoxAir.BackColor = System.Drawing.SystemColors.MenuText;
-            this.pictureBoxAir.Location = new System.Drawing.Point(898, 123);
-            this.pictureBoxAir.Name = "pictureBoxAir";
-            this.pictureBoxAir.Size = new System.Drawing.Size(30, 30);
-            this.pictureBoxAir.TabIndex = 1;
-            this.pictureBoxAir.TabStop = false;
+            this.pictureBoxGround.BackColor = System.Drawing.SystemColors.MenuText;
+            this.pictureBoxGround.Location = new System.Drawing.Point(898, 123);
+            this.pictureBoxGround.Name = "pictureBoxGround";
+            this.pictureBoxGround.Size = new System.Drawing.Size(30, 30);
+            this.pictureBoxGround.TabIndex = 1;
+            this.pictureBoxGround.TabStop = false;
             // 
             // pictureBoxVehicle
             // 
@@ -86,14 +88,14 @@
             this.pictureBoxVehicle.TabIndex = 2;
             this.pictureBoxVehicle.TabStop = false;
             // 
-            // pictureBoxGround
+            // pictureBoxAir
             // 
-            this.pictureBoxGround.BackColor = System.Drawing.SystemColors.MenuText;
-            this.pictureBoxGround.Location = new System.Drawing.Point(898, 74);
-            this.pictureBoxGround.Name = "pictureBoxGround";
-            this.pictureBoxGround.Size = new System.Drawing.Size(30, 30);
-            this.pictureBoxGround.TabIndex = 3;
-            this.pictureBoxGround.TabStop = false;
+            this.pictureBoxAir.BackColor = System.Drawing.SystemColors.MenuText;
+            this.pictureBoxAir.Location = new System.Drawing.Point(898, 74);
+            this.pictureBoxAir.Name = "pictureBoxAir";
+            this.pictureBoxAir.Size = new System.Drawing.Size(30, 30);
+            this.pictureBoxAir.TabIndex = 3;
+            this.pictureBoxAir.TabStop = false;
             // 
             // labelPlayers
             // 
@@ -113,23 +115,23 @@
             this.labelVehicle.TabIndex = 5;
             this.labelVehicle.Text = "Vehicle: 2K 12, Cost: ";
             // 
-            // label2
+            // labelAir
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(895, 107);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(86, 13);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "Air: Mil-24, Cost: ";
+            this.labelAir.AutoSize = true;
+            this.labelAir.Location = new System.Drawing.Point(895, 107);
+            this.labelAir.Name = "labelAir";
+            this.labelAir.Size = new System.Drawing.Size(86, 13);
+            this.labelAir.TabIndex = 6;
+            this.labelAir.Text = "Air: Mil-24, Cost: ";
             // 
-            // label3
+            // labelGround
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(895, 156);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(122, 13);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Ground: Spetsnaz, Cost:";
+            this.labelGround.AutoSize = true;
+            this.labelGround.Location = new System.Drawing.Point(895, 156);
+            this.labelGround.Name = "labelGround";
+            this.labelGround.Size = new System.Drawing.Size(122, 13);
+            this.labelGround.TabIndex = 7;
+            this.labelGround.Text = "Ground: Spetsnaz, Cost:";
             // 
             // labelEnemies
             // 
@@ -194,12 +196,32 @@
             this.labelGroundE.TabIndex = 14;
             this.labelGroundE.Text = "Gorund: Special Service";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(39, 13);
+            this.label1.TabIndex = 15;
+            this.label1.Text = "Coins: ";
+            // 
+            // labelCoins
+            // 
+            this.labelCoins.AutoSize = true;
+            this.labelCoins.Location = new System.Drawing.Point(45, 0);
+            this.labelCoins.Name = "labelCoins";
+            this.labelCoins.Size = new System.Drawing.Size(13, 13);
+            this.labelCoins.TabIndex = 16;
+            this.labelCoins.Text = "0";
+            // 
             // LevelBase
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.WindowFrame;
             this.ClientSize = new System.Drawing.Size(1039, 593);
+            this.Controls.Add(this.labelCoins);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.labelGroundE);
             this.Controls.Add(this.pictureBoxGroundE);
             this.Controls.Add(this.labelAirE);
@@ -207,21 +229,21 @@
             this.Controls.Add(this.labelVehicleE);
             this.Controls.Add(this.pictureBoxVehicleE);
             this.Controls.Add(this.labelEnemies);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.labelGround);
+            this.Controls.Add(this.labelAir);
             this.Controls.Add(this.labelVehicle);
             this.Controls.Add(this.labelPlayers);
-            this.Controls.Add(this.pictureBoxGround);
-            this.Controls.Add(this.pictureBoxVehicle);
             this.Controls.Add(this.pictureBoxAir);
+            this.Controls.Add(this.pictureBoxVehicle);
+            this.Controls.Add(this.pictureBoxGround);
             this.Controls.Add(this.pictureBox1);
             this.Name = "LevelBase";
             this.Text = "Cold War game";
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MVP_MouseMove);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAir)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxVehicle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGround)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxVehicle)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAir)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxVehicleE)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAirE)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGroundE)).EndInit();
@@ -234,13 +256,13 @@
 
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Timer gameTick;
-        private System.Windows.Forms.PictureBox pictureBoxAir;
-        private System.Windows.Forms.PictureBox pictureBoxVehicle;
         private System.Windows.Forms.PictureBox pictureBoxGround;
+        private System.Windows.Forms.PictureBox pictureBoxVehicle;
+        private System.Windows.Forms.PictureBox pictureBoxAir;
         private System.Windows.Forms.Label labelPlayers;
         private System.Windows.Forms.Label labelVehicle;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label labelAir;
+        private System.Windows.Forms.Label labelGround;
         private System.Windows.Forms.Label labelEnemies;
         private System.Windows.Forms.PictureBox pictureBoxVehicleE;
         private System.Windows.Forms.Label labelVehicleE;
@@ -248,6 +270,8 @@
         private System.Windows.Forms.Label labelAirE;
         private System.Windows.Forms.PictureBox pictureBoxGroundE;
         private System.Windows.Forms.Label labelGroundE;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelCoins;
     }
 }
 

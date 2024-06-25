@@ -26,7 +26,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         //
 
         //game info
-        private uint coins = 0;
+        private int coins = 0;
         private int health = 0;
         //
 
@@ -58,11 +58,11 @@ namespace Yaprak_Kerem_12IT_TD_Game
         {
             InitializeComponent();
             //initialise picture box events
-            InitializePicturebox(ref playerModelAir, pictureBoxAir,"f", false);
+            InitializePicturebox(ref playerModelAir, pictureBoxGround,"f", false);
             playerModelAir.MouseClick += AirModelMouseClick;
             playerModelAir.MouseMove += AirModelMouseMove;
             //
-            InitializePicturebox(ref playerModelGround, pictureBoxGround,"f", false);
+            InitializePicturebox(ref playerModelGround, pictureBoxAir,"f", false);
             playerModelGround.MouseClick += GroundModelMouseClick;
             playerModelGround.MouseMove += GroundModelMouseMove;
             //
@@ -99,7 +99,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         /// <param name="money">the amount of coins to return</param>
         public void ReturnMoney(uint money)
         {
-            coins += money;
+            coins += (int)money;
         }
         
         /// <summary>
@@ -115,9 +115,16 @@ namespace Yaprak_Kerem_12IT_TD_Game
         /// </summary>
         private void StartTutorial()
         {
+            this.coins = 300;
             this.Text += ": Korean War";
             this.Show();
-           // this.BackgroundImage = Image.FromFile("..\\..\\data\\levels\\tutorialLevel\\backImage.png");
+            //this.BackgroundImage = Image.FromFile("..\\..\\data\\levels\\tutorialLevel\\backImage.png");
+            playerCostVehicle = 100;
+            labelVehicle.Text += playerCostVehicle.ToString();
+            playerCostAir = 200;
+            labelAir.Text += playerCostAir.ToString();
+            playerCostGround = 50;
+            labelGround.Text += playerCostGround.ToString();
             System.Threading.Thread.Sleep(1000);
             MessageBox.Show("Welcome to the battle general! We are here in Korea fighting the a proxy war against the americans, You must help hold off Incheon from american attack. This is a crucial peice of land in the war, dont fail!");
             System.Threading.Thread.Sleep(1000);
@@ -153,7 +160,9 @@ namespace Yaprak_Kerem_12IT_TD_Game
                     enemy.Update(this);
                 }
             }
-            
+
+            //sort out money
+            labelCoins.Text = coins.ToString();
         }
 
         //enemy handling
@@ -165,7 +174,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         public void RemoveEnemy(IEnemy e, uint r)
         {
             enemies.Remove(e);
-            coins += r;
+            coins += (int)r;
         }
 
         /// <summary>
@@ -198,9 +207,18 @@ namespace Yaprak_Kerem_12IT_TD_Game
         {
             if (!trackMouse)
             {
-                players.Add(new PlayerAir(playerModelAir, AirModelMouseClick, AirModelMouseMove, this));
-                Controls.Add(players[players.Count - 1].pb);
-                trackMouse = true;
+                //check for if there is enough money
+                if(coins > playerCostAir)
+                {
+                    players.Add(new PlayerAir(playerModelAir, AirModelMouseClick, AirModelMouseMove, this));
+                    Controls.Add(players[players.Count - 1].pb);
+                    trackMouse = true;
+                    coins -= playerCostAir;
+                }
+                else
+                {
+                    return;
+                }
             }
             else
             {
@@ -219,9 +237,17 @@ namespace Yaprak_Kerem_12IT_TD_Game
         {
             if (!trackMouse)
             {
-                players.Add(new PlayerGround(playerModelGround, GroundModelMouseClick, GroundModelMouseMove));
-                Controls.Add(players[players.Count - 1].pb);
-                trackMouse = true;
+                if (coins > playerCostGround)
+                {
+                    players.Add(new PlayerGround(playerModelGround, GroundModelMouseClick, GroundModelMouseMove));
+                    Controls.Add(players[players.Count - 1].pb);
+                    trackMouse = true;
+                    coins -= playerCostGround;
+                }
+                else
+                {
+                    return;
+                }
             }
             else
             {
@@ -240,9 +266,17 @@ namespace Yaprak_Kerem_12IT_TD_Game
         {
             if (!trackMouse)
             {
-                players.Add(new PlayerVehicle(playerModelVehicle, VehicleModelMouseClick, VehicleModelMouseMove));
-                Controls.Add(players[players.Count - 1].pb);
-                trackMouse = true;
+                if (coins > playerCostVehicle)
+                {
+                    players.Add(new PlayerVehicle(playerModelVehicle, VehicleModelMouseClick, VehicleModelMouseMove));
+                    Controls.Add(players[players.Count - 1].pb);
+                    trackMouse = true;
+                    coins -= playerCostVehicle;
+                }
+                else
+                {
+                    return;
+                }
             }
             else
             {

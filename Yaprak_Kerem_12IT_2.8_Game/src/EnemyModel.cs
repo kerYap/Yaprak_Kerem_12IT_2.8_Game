@@ -25,6 +25,11 @@ namespace Yaprak_Kerem_12IT_TD_Game
         public Point loc;
         public Size size;
 
+        private Bitmap right;
+        private Bitmap left;
+        private Bitmap up;
+        private Bitmap down;
+
         public EnemyModel(PictureBox modelPB, Grid gridManager, LevelBase level)
         {
             path = gridManager.Path;
@@ -32,7 +37,16 @@ namespace Yaprak_Kerem_12IT_TD_Game
             this.currentTargetNode = path.First;
             InitializePictureBox(modelPB);
             InitializePosition();
+
             level.Controls.Add(PictureBox);
+            right = new Bitmap(modelPB.Image);
+            down = (Bitmap)right.Clone();
+            down.RotateFlip(RotateFlipType.Rotate90FlipNone);
+            left = (Bitmap)down.Clone();
+            left.RotateFlip(RotateFlipType.Rotate90FlipNone);
+            up = (Bitmap)left.Clone();
+            up.RotateFlip(RotateFlipType.Rotate90FlipNone);
+
         }
 
         private void InitializePictureBox(PictureBox modelPictureBox)
@@ -94,10 +108,23 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 loc = new Point((int)currentPosition.X, (int) currentPosition.Y);
                 PictureBox.Location = loc;
 
-                //rotate image
-                Bitmap originalImg = new Bitmap(this.PictureBox.Image);
-                Bitmap rotation = RotateImage(originalImg, targetPosition);
-                PictureBox.Image = rotation;
+                //determine direction of movement
+                if(currentTargetNode.Value.Item2 > currentTargetNode.Next.Value.Item2)
+                {
+                    PictureBox.Image = left;
+                }
+                else if(currentTargetNode.Value.Item2 < currentTargetNode.Next.Value.Item2)
+                {
+                    PictureBox.Image = right;
+                }
+                else if(currentTargetNode.Value.Item1 > currentTargetNode.Next.Value.Item1)
+                {
+                    PictureBox.Image = up;
+                }
+                else
+                {
+                    PictureBox.Image = down;
+                }
 
             }
             else if (currentTargetNode == null)
@@ -111,25 +138,6 @@ namespace Yaprak_Kerem_12IT_TD_Game
         public void TakeDamage(int damage)
         {
             health -= damage;
-        }
-
-        private Bitmap RotateImage(Bitmap bmp, PointF targetPosition)
-        {
-            float angle = (float)(Math.Atan2(targetPosition.Y - PictureBox.Location.Y, targetPosition.X - PictureBox.Location.X) * 180f / Math.PI);
-
-            Bitmap rotatedBmp = new Bitmap(bmp.Width, bmp.Height);
-            rotatedBmp.SetResolution(bmp.HorizontalResolution, bmp.VerticalResolution);
-
-            Graphics g = Graphics.FromImage(rotatedBmp);
-            g.TranslateTransform((float)bmp.Width / 2, (float)bmp.Height / 2);
-
-            g.RotateTransform(angle);
-
-            g.TranslateTransform(-(float)bmp.Width / 2, -(float)bmp.Height / 2);
-
-            g.DrawImage(bmp, new Point(0, 0));
-
-            return rotatedBmp;
         }
     }
 }
