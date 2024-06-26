@@ -103,6 +103,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="data\images\PlayerAir.png" />
+    <Content Include="data\images\PlayerGround.png" />
+    <Content Include="data\images\EnemyGround.png" />
     <Content Include="data\images\PlayerVehicle.png" />
     <Content Include="data\images\EnemyAir.png" />
     <Content Include="data\images\EnemyVehicle.png" />

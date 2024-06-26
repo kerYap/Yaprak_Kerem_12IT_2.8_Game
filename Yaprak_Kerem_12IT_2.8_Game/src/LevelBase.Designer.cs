@@ -81,7 +81,7 @@
             // 
             // pictureBoxVehicle
             // 
-            this.pictureBoxVehicle.BackColor = System.Drawing.SystemColors.MenuText;
+            this.pictureBoxVehicle.BackColor = System.Drawing.Color.Transparent;
             this.pictureBoxVehicle.Location = new System.Drawing.Point(898, 25);
             this.pictureBoxVehicle.Name = "pictureBoxVehicle";
             this.pictureBoxVehicle.Size = new System.Drawing.Size(30, 30);
@@ -144,7 +144,7 @@
             // 
             // pictureBoxVehicleE
             // 
-            this.pictureBoxVehicleE.BackColor = System.Drawing.SystemColors.MenuText;
+            this.pictureBoxVehicleE.BackColor = System.Drawing.Color.Transparent;
             this.pictureBoxVehicleE.Location = new System.Drawing.Point(898, 215);
             this.pictureBoxVehicleE.Name = "pictureBoxVehicleE";
             this.pictureBoxVehicleE.Size = new System.Drawing.Size(30, 30);
@@ -180,7 +180,7 @@
             // 
             // pictureBoxGroundE
             // 
-            this.pictureBoxGroundE.BackColor = System.Drawing.SystemColors.MenuText;
+            this.pictureBoxGroundE.BackColor = System.Drawing.Color.Transparent;
             this.pictureBoxGroundE.Location = new System.Drawing.Point(898, 313);
             this.pictureBoxGroundE.Name = "pictureBoxGroundE";
             this.pictureBoxGroundE.Size = new System.Drawing.Size(30, 30);

@@ -113,6 +113,8 @@ namespace Yaprak_Kerem_12IT_TD_Game
         public PlayerVehicle(PictureBox modelPB, MouseEventHandler click, MouseEventHandler move) : base(modelPB, click, move)
         {
             TargetableEnemies = 3;
+            damage = 100;
+            attackRadius = 100;
         }
 
         public override void AttackTick(List<IEnemy> enemies)

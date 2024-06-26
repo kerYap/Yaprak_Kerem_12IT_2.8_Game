@@ -58,23 +58,23 @@ namespace Yaprak_Kerem_12IT_TD_Game
         {
             InitializeComponent();
             //initialise picture box events
-            InitializePicturebox(ref playerModelAir, pictureBoxGround,"f", false);
+            InitializePicturebox(ref playerModelAir, pictureBoxAir,"..\\..\\data\\images\\PlayerAir.png", true);
             playerModelAir.MouseClick += AirModelMouseClick;
             playerModelAir.MouseMove += AirModelMouseMove;
             //
-            InitializePicturebox(ref playerModelGround, pictureBoxAir,"f", false);
+            InitializePicturebox(ref playerModelGround, pictureBoxGround,"..\\..\\data\\images\\PlayerGround.png", true);
             playerModelGround.MouseClick += GroundModelMouseClick;
             playerModelGround.MouseMove += GroundModelMouseMove;
             //
-            InitializePicturebox(ref playerModelVehicle, pictureBoxVehicle,"f", false);
+            InitializePicturebox(ref playerModelVehicle, pictureBoxVehicle,"..\\..\\data\\images\\PlayerVehicle.png", true);
             playerModelVehicle.MouseClick += VehicleModelMouseClick;
             playerModelVehicle.MouseMove += VehicleModelMouseMove;
             //
 
             //initialise enemy pictureboxes
             InitializePicturebox(ref enemyModelAir, pictureBoxAirE, "..\\..\\data\\images\\EnemyAir.png", true);
-            InitializePicturebox(ref enemyModelGround, pictureBoxGroundE, "f", false);
-            InitializePicturebox(ref enemyModelVehicle, pictureBoxVehicleE, "f", false);
+            InitializePicturebox(ref enemyModelGround, pictureBoxGroundE, "..\\..\\data\\images\\EnemyGround.png", true);
+            InitializePicturebox(ref enemyModelVehicle, pictureBoxVehicleE, "..\\..\\data\\images\\EnemyVehicle.png", true);
             //make form non re-sizeable
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
