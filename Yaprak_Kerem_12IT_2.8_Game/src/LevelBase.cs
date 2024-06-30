@@ -219,7 +219,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 players[players.Count() - 1].UpdatePos(e, false, grid, false);
             }
         }
-        //Air Model
+        //Air Modelw
         private void AirModelMouseMove(object sender, MouseEventArgs e)
         {
             if(players.Count == 0) return;
