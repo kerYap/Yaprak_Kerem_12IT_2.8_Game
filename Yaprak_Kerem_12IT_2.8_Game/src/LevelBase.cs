@@ -14,15 +14,18 @@ namespace Yaprak_Kerem_12IT_TD_Game
     public partial class LevelBase : Form
     {
         //grid manager
-        Grid grid;
+        public Grid grid;
         //
 
+        //list of waves
+        public List<Wave> waves = new List<Wave>();
+
         //list of players
-        List<IPlayer> players = new List<IPlayer>();
+        public List<IPlayer> players = new List<IPlayer>();
         //
 
         //list of enemies
-        List<IEnemy> enemies = new List<IEnemy>();
+        public List<IEnemy> enemies = new List<IEnemy>();
         //
 
         //game info
@@ -44,9 +47,9 @@ namespace Yaprak_Kerem_12IT_TD_Game
         //
 
         //enemy model picture boxes
-        PictureBox enemyModelAir;
-        PictureBox enemyModelVehicle;
-        PictureBox enemyModelGround;
+        public PictureBox enemyModelAir;
+        public PictureBox enemyModelVehicle;
+        public PictureBox enemyModelGround;
         //
 
         /// <summary>
@@ -98,6 +101,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
             players.Remove(p);
         }
 
+
         /// <summary>
         /// if the player places a picturebox in the same grid location, this should be called to return the wasted coins
         /// </summary>
@@ -132,12 +136,10 @@ namespace Yaprak_Kerem_12IT_TD_Game
             labelGround.Text += playerCostGround.ToString();
             System.Threading.Thread.Sleep(1000);
             MessageBox.Show("Welcome to the battle general! We are here in Korea fighting the a proxy war against the americans, You must help hold off Incheon from american attack. This is a crucial peice of land in the war, dont fail!");
-            System.Threading.Thread.Sleep(1000);
-            MessageBox.Show("Here comes an enemy Lockheed XF-90, an early jet powered fighter. It is coming quick better place your anti-air missile to hold it off.");
-            System.Threading.Thread.Sleep(2000);
-            //enemies.Add(new EnemyAir(enemyModelAir, grid, this));
-            MessageBox.Show("Here now comes some enemy special services to attack the outcome, quick defend their attack with your Mil-24 Attack Helicopter.");
-            enemies.Add(new EnemyGround(enemyModelGround, grid, this));
+            waves.Add(new Wave(3, 0, 0, 0, this));
+            MessageBox.Show("Here comes an enemy Lockheed XF-90, an early jet powered fighter. It is coming quick, you must place your 2K-12 surface to air missiles");
+            waves.Add(new Wave(0, 0, 3, 0, this));
+            MessageBox.Show("Here now comes some enemy special services to attack us, quick defend their attack with your Mil-24 Attack Helicopter.");
         }
 
         /// <summary>
@@ -147,10 +149,12 @@ namespace Yaprak_Kerem_12IT_TD_Game
         /// <param name="e"></param>
         private void Tick(object sender, EventArgs e)
         {
+            //update wave
+            waves[0].update(this);
             if (health <= 0)
             {
                 this.gameTick.Stop();
-                MessageBox.Show("Comrade! We lost!!! Incheon is now taken by the Americans!");
+                MessageBox.Show("Comrade! We lost!!!");
                 this.Dispose();
             }
             if(players.Count != 0)
@@ -167,7 +171,16 @@ namespace Yaprak_Kerem_12IT_TD_Game
                     enemy.Update(this);
                 }
             }
-
+            //check for end of wave
+            if (waves[0].waveComplete())
+            {
+                waves.RemoveAt(0);
+            }
+            //check for end of waves
+            if(waves.Count() == 0)
+            {
+                //wfaoiehpawoieh
+            }
             //sort out money
             labelCoins.Text = coins.ToString();
             //sort out health
@@ -292,7 +305,6 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 trackMouse = false;
                 if (players.Count == 0) return;
                 players[players.Count - 1].UpdatePos(e, true, grid, true);
-                new Exception("placed item");
             }
         }
         //

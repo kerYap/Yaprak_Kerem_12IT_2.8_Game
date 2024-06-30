@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\Wave.cs" />
     <Compile Include="src\EnemyTypes.cs" />
     <Compile Include="src\EnemyModel.cs" />
     <Compile Include="src\Grid.cs" />

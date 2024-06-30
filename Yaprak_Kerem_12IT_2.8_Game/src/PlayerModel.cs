@@ -133,12 +133,17 @@ namespace Yaprak_Kerem_12IT_TD_Game
             
             if (!g.CanPlace(location))
             {
-                this.pb.Dispose();
-                g.thisLevel.removePlayer(this);
-                g.ReturnMoney((uint)cost);
+                Dispose(g);
                 return;
             }
             g.placeTile(location);
+        }
+        
+        protected virtual void Dispose(Grid g)
+        {
+            this.pb.Dispose();
+            g.thisLevel.removePlayer(this);
+            g.ReturnMoney((uint)cost);
         }
 
         /// <summary>
@@ -159,13 +164,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
             //check if it is placeable
             if (x != null && y != null)
             {
-                if (!grid.CanPlace(((int)x, (int)y)))
-                {
-                    x = x;
-                    y = y;
-                }
-                //else set position to grid
-                else
+                if (grid.CanPlace(((int)x, (int)y)))
                 {
                     Point buf = new Point(((int)x * 30), ((int)y * 30));
                     this.loc = buf;
@@ -180,7 +179,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
             {
                 this.pb.MouseMove -= moveEvent;
                 this.pb.MouseClick -= clickEvent;
-                this.pb.Dispose();
+                Dispose(grid);
                 grid.ReturnMoney((uint)cost);
                 grid.thisLevel.removePlayer(this);
             }

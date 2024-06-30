@@ -59,6 +59,12 @@ namespace Yaprak_Kerem_12IT_TD_Game
             path.Dispose();
         }
 
+        protected override void Dispose(Grid g)
+        {
+            base.Dispose(g);
+            //delete the area picturebox
+            attackAreaPB.Dispose();
+        }
         public override void UpdatePos(MouseEventArgs e, bool add, Grid g, bool finalPlace)
         {
             attackAreaPB.SendToBack();

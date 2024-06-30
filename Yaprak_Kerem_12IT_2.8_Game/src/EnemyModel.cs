@@ -18,6 +18,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         public int health;
         public uint reward;
 
+        Wave thisWave;
         public PictureBox pictureBox { get; private set; }
         private LinkedList<(int, int)> path;
         private LinkedListNode<(int, int)> currentTargetNode;
@@ -30,7 +31,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         private Bitmap up;
         private Bitmap down;
 
-        public EnemyModel(PictureBox modelPB, Grid gridManager, LevelBase level)
+        public EnemyModel(PictureBox modelPB, Grid gridManager, LevelBase level, int r, int h, int d, float s, Wave thisWave)
         {
             path = gridManager.Path;
             loc = modelPB.Location;
@@ -47,6 +48,11 @@ namespace Yaprak_Kerem_12IT_TD_Game
             up = (Bitmap)left.Clone();
             up.RotateFlip(RotateFlipType.Rotate90FlipNone);
 
+            reward = (uint)r;
+            health = h;
+            movementSpeed = s;
+            damage = (uint)d;
+            this.thisWave = thisWave;
         }
 
         private void InitializePictureBox(PictureBox modelPictureBox)
@@ -84,6 +90,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 this.pictureBox.Dispose();
                 this.damage = 0;
                 level.RemoveEnemy(this, reward);
+                thisWave.removeEnemy(this);
                 return;
             }
             if (currentTargetNode != null && currentTargetNode.Next != null)
@@ -125,15 +132,16 @@ namespace Yaprak_Kerem_12IT_TD_Game
                     {
                         pictureBox.Image = down;
                     }
-
                 }
 
             }
-            else if (currentTargetNode == null)
+            else if (currentTargetNode.Next == null)
             {
                 level.TakeDamage(damage);
                 this.pictureBox.Dispose();
                 level.RemoveEnemy(this, 0);
+                thisWave.removeEnemy(this);
+
             }
         }
 
