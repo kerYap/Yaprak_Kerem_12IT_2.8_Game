@@ -19,6 +19,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
 
         //list of waves
         public List<Wave> waves = new List<Wave>();
+        //
 
         //list of players
         public List<IPlayer> players = new List<IPlayer>();
@@ -136,10 +137,9 @@ namespace Yaprak_Kerem_12IT_TD_Game
             labelGround.Text += playerCostGround.ToString();
             System.Threading.Thread.Sleep(1000);
             MessageBox.Show("Welcome to the battle general! We are here in Korea fighting the a proxy war against the americans, You must help hold off Incheon from american attack. This is a crucial peice of land in the war, dont fail!");
-            waves.Add(new Wave(3, 0, 0, 0, this));
             MessageBox.Show("Here comes an enemy Lockheed XF-90, an early jet powered fighter. It is coming quick, you must place your 2K-12 surface to air missiles");
-            waves.Add(new Wave(0, 0, 3, 0, this));
-            MessageBox.Show("Here now comes some enemy special services to attack us, quick defend their attack with your Mil-24 Attack Helicopter.");
+            waves.Add(new Wave(3, 0, 0, 0, this));
+            
         }
 
         /// <summary>
@@ -150,7 +150,10 @@ namespace Yaprak_Kerem_12IT_TD_Game
         private void Tick(object sender, EventArgs e)
         {
             //update wave
-            waves[0].update(this);
+            if(waves.Count > 0)
+            {
+                waves[0].update(this);
+            }
             if (health <= 0)
             {
                 this.gameTick.Stop();
@@ -172,19 +175,32 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 }
             }
             //check for end of wave
-            if (waves[0].waveComplete())
+            if(waves.Count > 0)
             {
-                waves.RemoveAt(0);
+                if (waves[0].waveComplete())
+                {
+                    waves.RemoveAt(0);
+                }
             }
             //check for end of waves
             if(waves.Count() == 0)
             {
-                //wfaoiehpawoieh
+                //you win ....
             }
             //sort out money
             labelCoins.Text = coins.ToString();
             //sort out health
             labelHealth.Text = health.ToString();
+        }
+
+        private void EndOfGame()
+        {
+            //show the fact in the messagebox
+
+            //open the menu
+
+            //dispose this form
+            
         }
 
         //enemy handling

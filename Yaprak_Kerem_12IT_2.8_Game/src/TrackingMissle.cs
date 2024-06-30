@@ -71,10 +71,11 @@ namespace Yaprak_Kerem_12IT_TD_Game
 
         public void Update(PlayerVehicle calledPlayer)
         {
+            //bring to fromt
             if (targetEnemy == null || targetEnemy.pictureBox == null)
                 return;
 
-            var targetPosition = new PointF(targetEnemy.pictureBox.Location.X, targetEnemy.pictureBox.Location.Y);
+            var targetPosition = new Point(targetEnemy.pictureBox.Location.X, targetEnemy.pictureBox.Location.Y);
             var direction = new PointF(targetPosition.X - currentPosition.X, targetPosition.Y - currentPosition.Y);
             var distance = Math.Sqrt(direction.X * direction.X + direction.Y * direction.Y);
 
@@ -84,8 +85,8 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 //call damage
                 targetEnemy.TakeDamage((int)damage);
                 //remove this
-                this.pictureBox.Dispose();
                 calledPlayer.DeleteMissile(this);
+                this.pictureBox.Dispose();
             }
             else
             {

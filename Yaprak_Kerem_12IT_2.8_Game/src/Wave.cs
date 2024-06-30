@@ -6,16 +6,17 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Yaprak_Kerem_12IT_TD_Game
 {
     public class Wave
     {
         Random r = new Random();
-        const int delay = 1000;
+        const int delay = 60;
         int counter = 0;
-        List<IEnemy> enemiesInWave;
-        List<IEnemy> unSpawnedEnemies;
+        List<IEnemy> enemiesInWave = new List<IEnemy>();
+        List<IEnemy> unSpawnedEnemies = new List<IEnemy>();
         private int enemyRwdAir = 20;
         private int enemyRwdVeh = 40;
         private int enemyRwdGrd = 10;
@@ -31,7 +32,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         public Wave(int enemyAir, int enemyVeh, int enemyGrd, float difficulty, LevelBase lev)
         {
             //update unspawned enemies list based on the numbers of the enemies to add to list
-            for(int i = 0; i < (enemyAir + enemyGrd + enemyVeh); i++)
+            while(enemyAir != 0 || enemyVeh != 0 || enemyGrd != 0)
             {
                 //generate random:
                 int n = r.Next(0, 3);
@@ -87,7 +88,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
                     }
                     else
                     {
-                        unSpawnedEnemies.Add(new EnemyAir(lev.enemyModelAir, lev.grid, lev, enemyRwdAir - (int)(enemyRwdAir * difficulty), enemyHthAir + (int)(enemyHthAir * difficulty), enemyDmgAir + (int)(enemyDmgAir * difficulty), enemySpdAir + (enemySpdAir * difficulty),this));
+                        unSpawnedEnemies.Add((new EnemyAir(lev.enemyModelAir, lev.grid, lev, enemyRwdAir - (int)(enemyRwdAir * difficulty), enemyHthAir + (int)(enemyHthAir * difficulty), enemyDmgAir + (int)(enemyDmgAir * difficulty), enemySpdAir + (enemySpdAir * difficulty),this)));
                         enemyAir--;
                     }
                 }
@@ -95,7 +96,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         }
         public void update(LevelBase l)
         {
-            if(counter >= delay && unSpawnedEnemies.Count() != 0)
+            if (counter >= delay && unSpawnedEnemies.Count() != 0)
             {
                 spawnNextEnemy();
                 counter = 0;
@@ -115,7 +116,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         }
         public bool waveComplete()
         {
-            if(enemiesInWave.Count() == 0)
+            if(enemiesInWave.Count() == 0 && unSpawnedEnemies.Count == 0)
             {
                 return true;
             }
