@@ -18,7 +18,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         public int health;
         public uint reward;
 
-        public PictureBox PictureBox { get; private set; }
+        public PictureBox pictureBox { get; private set; }
         private LinkedList<(int, int)> path;
         private LinkedListNode<(int, int)> currentTargetNode;
         private PointF currentPosition;
@@ -38,7 +38,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
             InitializePictureBox(modelPB);
             InitializePosition();
 
-            level.Controls.Add(PictureBox);
+            level.Controls.Add(pictureBox);
             right = new Bitmap(modelPB.Image);
             down = (Bitmap)right.Clone();
             down.RotateFlip(RotateFlipType.Rotate90FlipNone);
@@ -51,7 +51,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
 
         private void InitializePictureBox(PictureBox modelPictureBox)
         {
-            PictureBox = new PictureBox
+            pictureBox = new PictureBox
             {
                 Image = modelPictureBox.Image,
                 Size = modelPictureBox.Size,
@@ -73,7 +73,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
             if (currentTargetNode != null)
             {
                 currentPosition = new PointF(currentTargetNode.Value.Item2 * 30, currentTargetNode.Value.Item1 * 30);
-                PictureBox.Location = new Point((int)currentPosition.X, (int)currentPosition.Y);
+                pictureBox.Location = new Point((int)currentPosition.X, (int)currentPosition.Y);
             }
         }
 
@@ -81,7 +81,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         {
             if(health <= 0)
             {
-                this.PictureBox.Dispose();
+                this.pictureBox.Dispose();
                 this.damage = 0;
                 level.RemoveEnemy(this, reward);
                 return;
@@ -106,31 +106,33 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 }
                 //update picturebox
                 loc = new Point((int)currentPosition.X, (int) currentPosition.Y);
-                PictureBox.Location = loc;
+                pictureBox.Location = loc;
+                if (currentTargetNode != null && currentTargetNode.Next != null) {
+                    //determine direction of movement
+                    if (currentTargetNode.Value.Item2 > currentTargetNode.Next.Value.Item2)
+                    {
+                        pictureBox.Image = left;
+                    }
+                    else if (currentTargetNode.Value.Item2 < currentTargetNode.Next.Value.Item2)
+                    {
+                        pictureBox.Image = right;
+                    }
+                    else if (currentTargetNode.Value.Item1 > currentTargetNode.Next.Value.Item1)
+                    {
+                        pictureBox.Image = up;
+                    }
+                    else
+                    {
+                        pictureBox.Image = down;
+                    }
 
-                //determine direction of movement
-                if(currentTargetNode.Value.Item2 > currentTargetNode.Next.Value.Item2)
-                {
-                    PictureBox.Image = left;
-                }
-                else if(currentTargetNode.Value.Item2 < currentTargetNode.Next.Value.Item2)
-                {
-                    PictureBox.Image = right;
-                }
-                else if(currentTargetNode.Value.Item1 > currentTargetNode.Next.Value.Item1)
-                {
-                    PictureBox.Image = up;
-                }
-                else
-                {
-                    PictureBox.Image = down;
                 }
 
             }
             else if (currentTargetNode == null)
             {
                 level.TakeDamage(damage);
-                this.PictureBox.Dispose();
+                this.pictureBox.Dispose();
                 level.RemoveEnemy(this, 0);
             }
         }

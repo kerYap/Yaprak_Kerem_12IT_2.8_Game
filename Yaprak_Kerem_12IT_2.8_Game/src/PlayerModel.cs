@@ -22,7 +22,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         //
 
         //game data
-        public uint cost;
+        public int cost;
         protected uint attackSpeed;
         protected uint? tickCount = null;
         protected bool placed = false;
@@ -34,7 +34,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         MouseEventHandler clickEvent;
         MouseEventHandler moveEvent;
 
-        public PlayerModel(PictureBox modelPB, MouseEventHandler clickEventHandler, MouseEventHandler moveEventHandler)
+        public PlayerModel(PictureBox modelPB, MouseEventHandler clickEventHandler, MouseEventHandler moveEventHandler, int cost)
         {
             //make a new picturebox
             pb = new PictureBox();
@@ -64,6 +64,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
             moveEvent = moveEventHandler;
             pb.MouseClick += clickEventHandler;
             pb.MouseMove += moveEventHandler;
+            this.cost = cost;
         }
 
         /// <summary>
@@ -128,12 +129,16 @@ namespace Yaprak_Kerem_12IT_TD_Game
         {
             this.pb.MouseClick -= clickEvent;
             this.pb.MouseMove -= moveEvent;
-            placed = true;
+            this.placed = true;
+            
             if (!g.CanPlace(location))
             {
                 this.pb.Dispose();
-                g.ReturnMoney(cost);
+                g.thisLevel.removePlayer(this);
+                g.ReturnMoney((uint)cost);
+                return;
             }
+            g.placeTile(location);
         }
 
         /// <summary>
@@ -156,22 +161,29 @@ namespace Yaprak_Kerem_12IT_TD_Game
             {
                 if (!grid.CanPlace(((int)x, (int)y)))
                 {
-                    return;
+                    x = x;
+                    y = y;
                 }
-                Point buf = new Point(((int)x * 30), ((int)y * 30));
-                this.loc = buf;
-                this.pb.Location = loc;
+                //else set position to grid
+                else
+                {
+                    Point buf = new Point(((int)x * 30), ((int)y * 30));
+                    this.loc = buf;
+                    this.pb.Location = loc;
+                }
             }
             if(endOfPlacement && x != null && y != null)
             {
                 EndPlacementSelection(grid, ((int)x,(int)y));
             }
-            else if (endOfPlacement)
+            else if ((endOfPlacement) && (x == null && y==null))//placed out of range, return the cost and delete the picturebox
             {
+                this.pb.MouseMove -= moveEvent;
+                this.pb.MouseClick -= clickEvent;
                 this.pb.Dispose();
-                grid.ReturnMoney(cost);
+                grid.ReturnMoney((uint)cost);
+                grid.thisLevel.removePlayer(this);
             }
-            
         }
 
         /// <summary>

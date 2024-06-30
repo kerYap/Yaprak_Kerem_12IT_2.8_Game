@@ -9,7 +9,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
 {
     public interface IEnemy
     {
-        PictureBox PictureBox { get; }
+        PictureBox pictureBox { get; }
         void Update(LevelBase level);
         void TakeDamage(int damage);
     }

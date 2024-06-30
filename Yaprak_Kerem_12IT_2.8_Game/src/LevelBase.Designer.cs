@@ -47,6 +47,8 @@
             this.labelGroundE = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.labelCoins = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.labelHealth = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGround)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxVehicle)).BeginInit();
@@ -72,7 +74,7 @@
             // 
             // pictureBoxGround
             // 
-            this.pictureBoxGround.BackColor = System.Drawing.SystemColors.MenuText;
+            this.pictureBoxGround.BackColor = System.Drawing.Color.Transparent;
             this.pictureBoxGround.Location = new System.Drawing.Point(898, 123);
             this.pictureBoxGround.Name = "pictureBoxGround";
             this.pictureBoxGround.Size = new System.Drawing.Size(30, 30);
@@ -90,7 +92,7 @@
             // 
             // pictureBoxAir
             // 
-            this.pictureBoxAir.BackColor = System.Drawing.SystemColors.MenuText;
+            this.pictureBoxAir.BackColor = System.Drawing.Color.Transparent;
             this.pictureBoxAir.Location = new System.Drawing.Point(898, 74);
             this.pictureBoxAir.Name = "pictureBoxAir";
             this.pictureBoxAir.Size = new System.Drawing.Size(30, 30);
@@ -214,12 +216,32 @@
             this.labelCoins.TabIndex = 16;
             this.labelCoins.Text = "0";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(399, -1);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(44, 13);
+            this.label2.TabIndex = 17;
+            this.label2.Text = "Health: ";
+            // 
+            // labelHealth
+            // 
+            this.labelHealth.AutoSize = true;
+            this.labelHealth.Location = new System.Drawing.Point(449, -1);
+            this.labelHealth.Name = "labelHealth";
+            this.labelHealth.Size = new System.Drawing.Size(13, 13);
+            this.labelHealth.TabIndex = 18;
+            this.labelHealth.Text = "0";
+            // 
             // LevelBase
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.WindowFrame;
             this.ClientSize = new System.Drawing.Size(1039, 593);
+            this.Controls.Add(this.labelHealth);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.labelCoins);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.labelGroundE);
@@ -272,6 +294,8 @@
         private System.Windows.Forms.Label labelGroundE;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label labelCoins;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label labelHealth;
     }
 }
 

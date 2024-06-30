@@ -19,18 +19,22 @@ namespace Yaprak_Kerem_12IT_TD_Game
         private int damagePerSecond;
         private PictureBox attackAreaPB;
 
-        public PlayerAir(PictureBox modelPB, MouseEventHandler click, MouseEventHandler move, LevelBase l) : base(modelPB, click, move)
+        public PlayerAir(PictureBox modelPB, MouseEventHandler click, MouseEventHandler move, LevelBase l, int cost) : base(modelPB, click, move,cost)
         {
-            damagePerSecond = 10;
-            rotationSpeed = 10;
-            coneAngle = 10;
+            damagePerSecond = 100;
+            rotationSpeed = 3;
+            coneAngle = 40;
+            attackRadius = 50;
             attackAreaPB = new PictureBox
             {
                 Size = new Size((int)(attackRadius * 2), (int)(attackRadius * 2)),
                 BackColor = Color.Transparent,
                 Location = new Point((int)(loc.X - attackRadius), (int)(loc.Y - attackRadius)),
             };
+            
             attackAreaPB.Paint += AttackAreaPB_Paint;
+            attackAreaPB.MouseMove += move;
+            attackAreaPB.MouseClick += click;
             this.attackSpeed = 0;
             l.Controls.Add(attackAreaPB);
         }
@@ -57,6 +61,8 @@ namespace Yaprak_Kerem_12IT_TD_Game
 
         public override void UpdatePos(MouseEventArgs e, bool add, Grid g, bool finalPlace)
         {
+            attackAreaPB.SendToBack();
+            pb.BringToFront();
             base.UpdatePos(e, add, g, finalPlace);
 
             //update attack area position
@@ -83,7 +89,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
 
         protected bool IsWithinAttack(IEnemy enemy)
         {
-            Point enemyPos = enemy.PictureBox.Location;
+            Point enemyPos = enemy.pictureBox.Location;
             //if it is out of distance, it must be out of range
             float distance = DistanceBetweenPoints(pb.Location, enemyPos);
             if (distance > attackRadius) return false;
@@ -109,17 +115,18 @@ namespace Yaprak_Kerem_12IT_TD_Game
     public class PlayerVehicle : PlayerModel
     {
         private List<TrackingMissile> Missiles = new List<TrackingMissile>();
-
-        public PlayerVehicle(PictureBox modelPB, MouseEventHandler click, MouseEventHandler move) : base(modelPB, click, move)
+        LevelBase lev;
+        public PlayerVehicle(PictureBox modelPB, MouseEventHandler click, MouseEventHandler move, LevelBase l, int cost) : base(modelPB, click, move, cost)
         {
             TargetableEnemies = 3;
             damage = 100;
             attackRadius = 100;
+            lev = l;
         }
 
         public override void AttackTick(List<IEnemy> enemies)
         {
-            foreach (var missile in Missiles)
+            foreach (var missile in Missiles.ToList<TrackingMissile>())
             {
                 missile.Update(this);
             }
@@ -145,7 +152,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
             //send missiles
             foreach (EnemyAir enemy in enemiesToAttack)
             {
-                Missiles.Add(new TrackingMissile(enemy, this, damage));
+                Missiles.Add(new TrackingMissile(enemy, this, damage, lev));
             }
         }
 
@@ -160,15 +167,15 @@ namespace Yaprak_Kerem_12IT_TD_Game
     }
     public class PlayerGround : PlayerModel
     {
-        public PlayerGround(PictureBox modelPB, MouseEventHandler click, MouseEventHandler move) : base(modelPB, click, move)
+        public PlayerGround(PictureBox modelPB, MouseEventHandler click, MouseEventHandler move, int cost) : base(modelPB, click, move, cost)
         {
 
         }
         protected override void Attack(List<IEnemy> enemies)
         {
-            foreach(IEnemy enemy in enemies)
+            foreach(EnemyVehicle enemy in enemies.OfType<EnemyVehicle>())
             {
-                Point enemyPosition = enemy.PictureBox.Location;
+                Point enemyPosition = enemy.pictureBox.Location;
                 float distance = DistanceBetweenPoints(pb.Location, enemyPosition);
                 if(distance <= attackRadius)
                 {

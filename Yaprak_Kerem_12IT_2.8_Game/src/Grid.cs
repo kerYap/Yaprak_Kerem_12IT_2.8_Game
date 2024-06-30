@@ -16,7 +16,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         public LinkedList<(int, int)> Path { get; private set; }
         private bool[,] visited;
         //
-        LevelBase thisLevel; 
+        public LevelBase thisLevel; 
 
         private uint returnMoney;
 
@@ -117,7 +117,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
 
         public void placeTile((int,int) index)
         {
-            grid[index.Item1, index.Item2] = -2;
+            grid[index.Item2, index.Item1] = -2;
         }
 
         public (int, int)? nextTile((int,int) currentPosition)
@@ -136,12 +136,13 @@ namespace Yaprak_Kerem_12IT_TD_Game
 
         public bool CanPlace((int,int) index)
         {
-            if (index.Item1 > grid.GetLength(1) || index.Item2 > grid.GetLength(0)) return false;
-            if(index.Item1 > 0 && index.Item2 > 0)
-            {
-                if (grid[index.Item2 - 1, index.Item1 - 1] == -1) return true;
-            }
+            if (index.Item2 > grid.GetLength(0) - 1 || index.Item1 > grid.GetLength(1) - 1 || index.Item2 <0||index.Item1 <0) return false;
+            if (grid[index.Item2, index.Item1] == -1) return true;
             return false;
+        }
+        public void deleteTile((int,int) index)
+        {
+            grid[index.Item2, index.Item1] = -1;
         }
     }
 }
