@@ -85,6 +85,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
 
         public virtual void Update(LevelBase level)
         {
+            this.pictureBox.BringToFront();
             if(health <= 0)
             {
                 this.pictureBox.Dispose();

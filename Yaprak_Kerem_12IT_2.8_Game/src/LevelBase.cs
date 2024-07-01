@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,8 @@ namespace Yaprak_Kerem_12IT_TD_Game
         public Grid grid;
         //
 
+        private bool tutorialOrNot = false;
+
         //list of waves
         public List<Wave> waves = new List<Wave>();
         //
@@ -29,9 +32,12 @@ namespace Yaprak_Kerem_12IT_TD_Game
         public List<IEnemy> enemies = new List<IEnemy>();
         //
 
+        private Form CalledForm;
+
         //game info
         private int coins = 0;
         private int health = 0;
+        private int round = 0;
         //
 
         //for tracking
@@ -58,7 +64,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         /// </summary>
         /// <param name="map">specifies the filepath of the .csv file</param>
         /// <param name="tutorial">specifies whether it is the tutorial or not, if it is not, it will read wave data from a file instead of running the tutorial</param>
-        public LevelBase(string map, bool tutorial, int levelHealth)
+        public LevelBase(string map, bool tutorial, int levelHealth, Form calledFrom)
         {
             InitializeComponent();
             //initialise picture box events
@@ -82,13 +88,17 @@ namespace Yaprak_Kerem_12IT_TD_Game
             //make form non re-sizeable
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
+            this.DoubleBuffered = true;
 
             //set health
             health = levelHealth;
 
+            CalledForm = calledFrom;
+
             grid = new Grid(map, this);
-            if (tutorial) { StartTutorial(); }
+            if (tutorial) { StartTutorial(); tutorialOrNot = true; }
             else { Level(); }
+            gameTick.Enabled = true;
         }
 
         private void InitializePicturebox(ref PictureBox playerModel, PictureBox copy, string ImagePath, bool imageFile)
@@ -125,20 +135,37 @@ namespace Yaprak_Kerem_12IT_TD_Game
         /// </summary>
         private void StartTutorial()
         {
-            this.coins = 300;
-            this.Text += ": Korean War";
-            this.Show();
-            //this.BackgroundImage = Image.FromFile("..\\..\\data\\levels\\tutorialLevel\\backImage.png");
-            playerCostVehicle = 100;
-            labelVehicle.Text += playerCostVehicle.ToString();
-            playerCostAir = 200;
-            labelAir.Text += playerCostAir.ToString();
-            playerCostGround = 50;
-            labelGround.Text += playerCostGround.ToString();
-            System.Threading.Thread.Sleep(1000);
-            MessageBox.Show("Welcome to the battle general! We are here in Korea fighting the a proxy war against the americans, You must help hold off Incheon from american attack. This is a crucial peice of land in the war, dont fail!");
-            MessageBox.Show("Here comes an enemy Lockheed XF-90, an early jet powered fighter. It is coming quick, you must place your 2K-12 surface to air missiles");
-            waves.Add(new Wave(3, 0, 0, 0, this));
+            if (round == 0)
+            {
+                this.coins = 300;
+                this.Text += ": Korean War";
+                this.Show();
+                //this.BackgroundImage = Image.FromFile("..\\..\\data\\levels\\tutorialLevel\\backImage.png");
+                playerCostVehicle = 100;
+                labelVehicle.Text += playerCostVehicle.ToString();
+                playerCostAir = 200;
+                labelAir.Text += playerCostAir.ToString();
+                playerCostGround = 50;
+                labelGround.Text += playerCostGround.ToString();
+                System.Threading.Thread.Sleep(1000);
+                MessageBox.Show("Welcome to the battle general! We are here in Korea fighting the a proxy war against the americans, You must help hold off Incheon from american attack. This is a crucial peice of land in the war, dont fail!");
+                MessageBox.Show("Here comes an enemy Lockheed XF-90, an early jet powered fighter. It is coming quick, you must place your 2K-12 surface to air missiles. To place a unit, you have to click on it once, then drag it to the position that you want to drop it onto and then you should click again to place it. You can not place on the enemies path.");
+                waves.Add(new Wave(3, 0, 0, 0, this));
+            }
+            else if(round == 1)
+            {
+                this.coins += 200;
+                MessageBox.Show("Well done on defending us from that attack, now we have seen some special operators making their way to us. To defend us from them you need to place your mil-24 attack helicopter, the yellow cone shows its attack zone.");
+                waves.Add(new Wave(0, 0, 2, 0, this));
+            }
+            else if (round == 2)
+            {
+                this.coins += 150;
+                MessageBox.Show("Good Job! The enemies last resort are their tanks, we can see them rolling this way now. Place down your spetznaz toops to attack the tanks. However, just waringing you, spetznaz have to be quite close to do any damage to enemies.");
+                waves.Add(new Wave(0, 2, 0, 0, this));
+            }
+
+            
             
         }
 
@@ -156,9 +183,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
             }
             if (health <= 0)
             {
-                this.gameTick.Stop();
-                MessageBox.Show("Comrade! We lost!!!");
-                this.Dispose();
+                EndOfGame(false);
             }
             if(players.Count != 0)
             {
@@ -180,27 +205,44 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 if (waves[0].waveComplete())
                 {
                     waves.RemoveAt(0);
+                    if (tutorialOrNot)
+                    {
+                        round++;
+                        StartTutorial();
+                    }
                 }
             }
             //check for end of waves
             if(waves.Count() == 0)
             {
-                //you win ....
+                if(!tutorialOrNot) EndOfGame(true);
             }
             //sort out money
             labelCoins.Text = coins.ToString();
             //sort out health
             labelHealth.Text = health.ToString();
+
+            this.Invalidate();
         }
 
-        private void EndOfGame()
+        private void EndOfGame(bool win)
         {
+            string message = "sigma";
+            //using (StreamReader s = new StreamReader("..\\..\\data\\facts\\facts.txt"))
+            //{
+
+            //}
+            this.gameTick.Stop();
             //show the fact in the messagebox
+            if (win)
+            {
 
+            }
+            else { MessageBox.Show($"Comrade! We lost!!! + {message}"); }
             //open the menu
-
+            CalledForm.Show();
             //dispose this form
-            
+            this.Dispose();
         }
 
         //enemy handling
@@ -248,7 +290,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 //check for if there is enough money
                 if(coins >= playerCostAir)
                 {
-                    players.Add(new PlayerAir(playerModelAir, AirModelMouseClick, AirModelMouseMove, this, playerCostAir));
+                    players.Add(new PlayerAir(playerModelAir, AirModelMouseClick, AirModelMouseMove, this, playerCostAir, AirModelMouseMoveOnAttackArea));
                     Controls.Add(players[players.Count - 1].pb);
                     trackMouse = true;
                     coins -= playerCostAir;
@@ -264,6 +306,11 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 if (players.Count == 0) return;
                 players[players.Count - 1].UpdatePos(e, true, grid, true);
             }
+        }
+        private void AirModelMouseMoveOnAttackArea(object sender, MouseEventArgs e)
+        {
+            if (players.Count == 0) return;
+            if(trackMouse == true) { players[players.Count() - 1].UpdatePos(e, null, grid, false); }
         }
         //Ground Model
         private void GroundModelMouseMove(object sender, MouseEventArgs e)

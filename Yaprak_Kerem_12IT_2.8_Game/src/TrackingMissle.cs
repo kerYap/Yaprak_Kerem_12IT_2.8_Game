@@ -75,7 +75,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
             if (targetEnemy == null || targetEnemy.pictureBox == null)
                 return;
 
-            var targetPosition = new Point(targetEnemy.pictureBox.Location.X, targetEnemy.pictureBox.Location.Y);
+            var targetPosition = new PointF(targetEnemy.pictureBox.Location.X, targetEnemy.pictureBox.Location.Y);
             var direction = new PointF(targetPosition.X - currentPosition.X, targetPosition.Y - currentPosition.Y);
             var distance = Math.Sqrt(direction.X * direction.X + direction.Y * direction.Y);
 
@@ -91,8 +91,8 @@ namespace Yaprak_Kerem_12IT_TD_Game
             else
             {
                 var normalizedDirection = new PointF(direction.X / (float)distance, direction.Y / (float)distance);
-                currentPosition.X += normalizedDirection.X * speed;
-                currentPosition.Y += normalizedDirection.Y * speed;
+                currentPosition.X += (int)Math.Round(normalizedDirection.X * speed);
+                currentPosition.Y += (int)Math.Round(normalizedDirection.Y * speed);
             }
 
             //handle rotation of the image
@@ -101,6 +101,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
             //rotatedBmp.Dispose();
             //
             pictureBox.Location = new Point((int)currentPosition.X, (int)currentPosition.Y);
+            calledPlayer.lev.Invalidate();
         }
     }
 }

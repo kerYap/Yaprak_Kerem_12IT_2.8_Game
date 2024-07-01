@@ -72,14 +72,15 @@ namespace Yaprak_Kerem_12IT_TD_Game
         /// </summary>
         /// <param name="e">mouse event args, used to find the location of the mouse</param>
         /// <param name="add">if the mouse moved on the picturebox then the location must be added rather than set. True will mean that the location of e will be added to the location. False is to set</param>
-        public virtual void UpdatePos(MouseEventArgs e, bool add, Grid g, bool finalPlace)
+        public virtual void UpdatePos(MouseEventArgs e, bool? add, Grid g, bool finalPlace)
         {
+            this.pb.BringToFront();
             //enable picturebox and make visible
             this.pb.Enabled = true;
             this.pb.Visible = true;
             //
 
-            if (!add)    //if the mouse moves on the form, we set to the location of the mouse
+            if (!(bool)add)    //if the mouse moves on the form, we set to the location of the mouse
             {
                 //set the location to the location on the form
                 this.loc = e.Location;
@@ -125,7 +126,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         /// <param name="move">mose event handler for the movement</param>
         /// <param name="g">grid manager of the level</param>
         /// <param name="location">the location</param>
-        protected void EndPlacementSelection(Grid g, (int, int) location)
+        protected virtual void EndPlacementSelection(Grid g, (int, int) location)
         {
             this.pb.MouseClick -= clickEvent;
             this.pb.MouseMove -= moveEvent;

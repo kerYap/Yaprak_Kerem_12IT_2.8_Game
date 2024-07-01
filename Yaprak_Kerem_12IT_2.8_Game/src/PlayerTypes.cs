@@ -18,13 +18,14 @@ namespace Yaprak_Kerem_12IT_TD_Game
         private int coneAngle;
         private int damagePerSecond;
         private PictureBox attackAreaPB;
+        private MouseEventHandler M;
 
-        public PlayerAir(PictureBox modelPB, MouseEventHandler click, MouseEventHandler move, LevelBase l, int cost) : base(modelPB, click, move,cost)
+        public PlayerAir(PictureBox modelPB, MouseEventHandler click, MouseEventHandler move, LevelBase l, int cost, MouseEventHandler moveArea) : base(modelPB, click, move,cost)
         {
             damagePerSecond = 100;
             rotationSpeed = 3;
             coneAngle = 40;
-            attackRadius = 50;
+            attackRadius = 95;
             attackAreaPB = new PictureBox
             {
                 Size = new Size((int)(attackRadius * 2), (int)(attackRadius * 2)),
@@ -33,10 +34,15 @@ namespace Yaprak_Kerem_12IT_TD_Game
             };
             
             attackAreaPB.Paint += AttackAreaPB_Paint;
-            attackAreaPB.MouseMove += move;
-            attackAreaPB.MouseClick += click;
+            attackAreaPB.MouseMove += moveArea;
+            M = moveArea;
             this.attackSpeed = 0;
             l.Controls.Add(attackAreaPB);
+        }
+        protected override void EndPlacementSelection(Grid g, (int, int) location)
+        {
+            base.EndPlacementSelection(g, location);
+            attackAreaPB.MouseMove -= M;
         }
         private void AttackAreaPB_Paint(object sender, PaintEventArgs e)
         {
@@ -65,14 +71,34 @@ namespace Yaprak_Kerem_12IT_TD_Game
             //delete the area picturebox
             attackAreaPB.Dispose();
         }
-        public override void UpdatePos(MouseEventArgs e, bool add, Grid g, bool finalPlace)
+        public override void UpdatePos(MouseEventArgs e, bool? add, Grid g, bool finalPlace)
         {
             attackAreaPB.SendToBack();
             pb.BringToFront();
+            if(add == null)//we have moved on the attack area picturebox
+            {
+                //set the location to the location on the form
+                this.loc = e.Location;
+
+                //set the picturebox to the middle of the mouse
+                this.loc.X -= attackAreaPB.Width/2;
+                this.loc.Y -= attackAreaPB.Height/2;
+                this.pb.Location = loc;
+                this.attackAreaPB.Location = loc;
+                attackAreaPB.Invalidate();
+                //
+
+                //snap to grid
+                SnapGrid(g, finalPlace);
+                //
+
+                //dont do the addition style
+                return;
+            }
             base.UpdatePos(e, add, g, finalPlace);
 
             //update attack area position
-            attackAreaPB.Location = new Point(loc.X - attackAreaPB.Width / 2 + pb.Width / 2, loc.Y - attackAreaPB.Height / 2 + pb.Height / 2);
+            attackAreaPB.Location = new Point(loc.X - attackAreaPB.Width / 2 + pb.Width /2, loc.Y - attackAreaPB.Height / 2 + pb.Height /2);
             attackAreaPB.Invalidate();
         }
         public override void AttackTick(List<IEnemy> enemies)
@@ -121,13 +147,14 @@ namespace Yaprak_Kerem_12IT_TD_Game
     public class PlayerVehicle : PlayerModel
     {
         private List<TrackingMissile> Missiles = new List<TrackingMissile>();
-        LevelBase lev;
+        public LevelBase lev;
         public PlayerVehicle(PictureBox modelPB, MouseEventHandler click, MouseEventHandler move, LevelBase l, int cost) : base(modelPB, click, move, cost)
         {
             TargetableEnemies = 3;
             damage = 100;
             attackRadius = 100;
             lev = l;
+            attackSpeed = 100;
         }
 
         public override void AttackTick(List<IEnemy> enemies)
@@ -175,7 +202,9 @@ namespace Yaprak_Kerem_12IT_TD_Game
     {
         public PlayerGround(PictureBox modelPB, MouseEventHandler click, MouseEventHandler move, int cost) : base(modelPB, click, move, cost)
         {
-
+            attackRadius = 60;
+            damage = 30;
+            attackSpeed = 30;
         }
         protected override void Attack(List<IEnemy> enemies)
         {
