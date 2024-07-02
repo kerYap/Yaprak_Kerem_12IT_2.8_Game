@@ -21,7 +21,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         {
             this.Hide();
             MessageBox.Show("Hello comrade! You are the new millitary commander for the USSR, your job is to protect significant locations for the Red Army from the American scum. Good Luck commander!");
-            LevelBase tutorial = new LevelBase("..\\..\\data\\levels\\tutorialLevel\\", true, 100, this);
+            LevelBase tutorial = new LevelBase("..\\..\\data\\levels\\tutorialLevel\\", true, this);
             tutorial.Show();
         }
     }

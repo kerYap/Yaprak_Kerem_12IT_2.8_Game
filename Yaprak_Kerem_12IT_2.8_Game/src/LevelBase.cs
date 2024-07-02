@@ -64,7 +64,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         /// </summary>
         /// <param name="map">specifies the filepath of the .csv file</param>
         /// <param name="tutorial">specifies whether it is the tutorial or not, if it is not, it will read wave data from a file instead of running the tutorial</param>
-        public LevelBase(string map, bool tutorial, int levelHealth, Form calledFrom)
+        public LevelBase(string map, bool tutorial, Form calledFrom)
         {
             InitializeComponent();
             //initialise picture box events
@@ -90,13 +90,10 @@ namespace Yaprak_Kerem_12IT_TD_Game
             this.MaximizeBox = false;
             this.DoubleBuffered = true;
 
-            //set health
-            health = levelHealth;
-
             CalledForm = calledFrom;
 
             grid = new Grid(map, this);
-            if (tutorial) { StartTutorial(); tutorialOrNot = true; }
+            if (tutorial) { StartTutorial(); tutorialOrNot = true; health = 1000; }
             else { Level(); }
             gameTick.Enabled = true;
         }
@@ -155,7 +152,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
             else if(round == 1)
             {
                 this.coins += 200;
-                MessageBox.Show("Well done on defending us from that attack, now we have seen some special operators making their way to us. To defend us from them you need to place your mil-24 attack helicopter, the yellow cone shows its attack zone.");
+                MessageBox.Show("Well done on defending us from that attack, now we have seen some special operators making their way to us. To defend us from them you need to place your mil-24 attack helicopter, the yellow cone shows its attack zone. As well as this, you must place them far enough apart so they do not crash");
                 waves.Add(new Wave(0, 0, 2, 0, this));
             }
             else if (round == 2)
@@ -164,9 +161,16 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 MessageBox.Show("Good Job! The enemies last resort are their tanks, we can see them rolling this way now. Place down your spetznaz toops to attack the tanks. However, just waringing you, spetznaz have to be quite close to do any damage to enemies.");
                 waves.Add(new Wave(0, 2, 0, 0, this));
             }
-
-            
-            
+            else if(round == 3)
+            {
+                this.coins += 500;
+                MessageBox.Show("Here comes the last lot of enemies, there are a few of them be prepared!");
+                waves.Add(new Wave(4, 5, 4, 0, this));
+            }
+            else
+            {
+                EndOfGame(true);
+            }
         }
 
         /// <summary>
@@ -290,7 +294,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 //check for if there is enough money
                 if(coins >= playerCostAir)
                 {
-                    players.Add(new PlayerAir(playerModelAir, AirModelMouseClick, AirModelMouseMove, this, playerCostAir, AirModelMouseMoveOnAttackArea));
+                    players.Add(new PlayerAir(playerModelAir, AirModelMouseClick, AirModelMouseMove, this, playerCostAir));
                     Controls.Add(players[players.Count - 1].pb);
                     trackMouse = true;
                     coins -= playerCostAir;
@@ -306,11 +310,6 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 if (players.Count == 0) return;
                 players[players.Count - 1].UpdatePos(e, true, grid, true);
             }
-        }
-        private void AirModelMouseMoveOnAttackArea(object sender, MouseEventArgs e)
-        {
-            if (players.Count == 0) return;
-            if(trackMouse == true) { players[players.Count() - 1].UpdatePos(e, null, grid, false); }
         }
         //Ground Model
         private void GroundModelMouseMove(object sender, MouseEventArgs e)

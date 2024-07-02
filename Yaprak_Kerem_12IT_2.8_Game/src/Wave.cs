@@ -13,7 +13,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
     public class Wave
     {
         Random r = new Random();
-        const int delay = 60;
+        const int delay = 160;
         int counter = 0;
         List<IEnemy> enemiesInWave = new List<IEnemy>();
         List<IEnemy> unSpawnedEnemies = new List<IEnemy>();

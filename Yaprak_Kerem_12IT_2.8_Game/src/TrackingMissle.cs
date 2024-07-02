@@ -59,7 +59,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
             bmp = (Bitmap)Image.FromFile("..\\..\\data\\images\\missile.png");
             pictureBox = new PictureBox
             {
-                Size = new Size(20, 20),
+                Size = new Size(9, 9),
                 Image = bmp,
                 Location = new Point(calledPlayer.pb.Location.X + calledPlayer.pb.Width / 2, calledPlayer.pb.Location.Y + calledPlayer.pb.Height / 2)
             };
@@ -72,10 +72,13 @@ namespace Yaprak_Kerem_12IT_TD_Game
         public void Update(PlayerVehicle calledPlayer)
         {
             //bring to fromt
+            this.pictureBox.BringToFront();
             if (targetEnemy == null || targetEnemy.pictureBox == null)
                 return;
 
             var targetPosition = new PointF(targetEnemy.pictureBox.Location.X, targetEnemy.pictureBox.Location.Y);
+            targetPosition.X += targetEnemy.pictureBox.Width / 2;
+            targetPosition.Y += targetEnemy.pictureBox.Height / 2;
             var direction = new PointF(targetPosition.X - currentPosition.X, targetPosition.Y - currentPosition.Y);
             var distance = Math.Sqrt(direction.X * direction.X + direction.Y * direction.Y);
 

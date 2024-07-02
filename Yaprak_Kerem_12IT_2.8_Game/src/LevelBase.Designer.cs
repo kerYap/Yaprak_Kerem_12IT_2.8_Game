@@ -74,7 +74,7 @@
             // pictureBoxGround
             // 
             this.pictureBoxGround.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBoxGround.Location = new System.Drawing.Point(909, 123);
+            this.pictureBoxGround.Location = new System.Drawing.Point(915, 123);
             this.pictureBoxGround.Name = "pictureBoxGround";
             this.pictureBoxGround.Size = new System.Drawing.Size(30, 30);
             this.pictureBoxGround.TabIndex = 1;
@@ -83,7 +83,7 @@
             // pictureBoxVehicle
             // 
             this.pictureBoxVehicle.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBoxVehicle.Location = new System.Drawing.Point(909, 25);
+            this.pictureBoxVehicle.Location = new System.Drawing.Point(915, 25);
             this.pictureBoxVehicle.Name = "pictureBoxVehicle";
             this.pictureBoxVehicle.Size = new System.Drawing.Size(30, 30);
             this.pictureBoxVehicle.TabIndex = 2;
@@ -92,7 +92,7 @@
             // pictureBoxAir
             // 
             this.pictureBoxAir.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBoxAir.Location = new System.Drawing.Point(909, 74);
+            this.pictureBoxAir.Location = new System.Drawing.Point(915, 74);
             this.pictureBoxAir.Name = "pictureBoxAir";
             this.pictureBoxAir.Size = new System.Drawing.Size(30, 30);
             this.pictureBoxAir.TabIndex = 3;
@@ -101,7 +101,7 @@
             // labelPlayers
             // 
             this.labelPlayers.AutoSize = true;
-            this.labelPlayers.Location = new System.Drawing.Point(906, 9);
+            this.labelPlayers.Location = new System.Drawing.Point(912, 9);
             this.labelPlayers.Name = "labelPlayers";
             this.labelPlayers.Size = new System.Drawing.Size(44, 13);
             this.labelPlayers.TabIndex = 4;
@@ -110,7 +110,7 @@
             // labelVehicle
             // 
             this.labelVehicle.AutoSize = true;
-            this.labelVehicle.Location = new System.Drawing.Point(906, 58);
+            this.labelVehicle.Location = new System.Drawing.Point(913, 58);
             this.labelVehicle.Name = "labelVehicle";
             this.labelVehicle.Size = new System.Drawing.Size(109, 13);
             this.labelVehicle.TabIndex = 5;
@@ -119,7 +119,7 @@
             // labelAir
             // 
             this.labelAir.AutoSize = true;
-            this.labelAir.Location = new System.Drawing.Point(906, 107);
+            this.labelAir.Location = new System.Drawing.Point(912, 107);
             this.labelAir.Name = "labelAir";
             this.labelAir.Size = new System.Drawing.Size(86, 13);
             this.labelAir.TabIndex = 6;

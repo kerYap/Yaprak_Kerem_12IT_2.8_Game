@@ -2,11 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Text;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Yaprak_Kerem_12IT_TD_Game
@@ -18,14 +14,12 @@ namespace Yaprak_Kerem_12IT_TD_Game
         private int coneAngle;
         private int damagePerSecond;
         private PictureBox attackAreaPB;
-        private MouseEventHandler M;
-
-        public PlayerAir(PictureBox modelPB, MouseEventHandler click, MouseEventHandler move, LevelBase l, int cost, MouseEventHandler moveArea) : base(modelPB, click, move,cost)
+        public PlayerAir(PictureBox modelPB, MouseEventHandler click, MouseEventHandler move, LevelBase l, int cost) : base(modelPB, click, move,cost)
         {
-            damagePerSecond = 100;
-            rotationSpeed = 3;
-            coneAngle = 40;
-            attackRadius = 95;
+            damagePerSecond = 5;
+            rotationSpeed = 2.2f;
+            coneAngle = 35;
+            attackRadius = 90;
             attackAreaPB = new PictureBox
             {
                 Size = new Size((int)(attackRadius * 2), (int)(attackRadius * 2)),
@@ -34,15 +28,103 @@ namespace Yaprak_Kerem_12IT_TD_Game
             };
             
             attackAreaPB.Paint += AttackAreaPB_Paint;
-            attackAreaPB.MouseMove += moveArea;
-            M = moveArea;
             this.attackSpeed = 0;
             l.Controls.Add(attackAreaPB);
+            attackAreaPB.Enabled = false;
         }
-        protected override void EndPlacementSelection(Grid g, (int, int) location)
+
+        private void UpdateAttackAreaPosition()
         {
-            base.EndPlacementSelection(g, location);
-            attackAreaPB.MouseMove -= M;
+            attackAreaPB.Location = new Point(this.loc.X - (attackAreaPB.Width / 2) + (this.pb.Width / 2),
+                                            this.loc.Y - (attackAreaPB.Height / 2) + (this.pb.Height / 2));
+        }
+        protected override void Dispose(Grid g)
+        {
+            base.Dispose(g);
+            //delete the area picturebox
+            attackAreaPB.Dispose();
+        }
+        public override void UpdatePos(MouseEventArgs e, bool add, Grid g, bool finalPlace)
+        {
+            this.pb.BringToFront();
+            // Temporarily store the original location
+            Point originalLoc = this.loc;
+            Point newLoc;
+
+            if (!add)    // If the mouse moves on the form, we set to the location of the mouse
+            {
+                // Set the location to the location on the form
+                newLoc = e.Location;
+
+                // Set the picturebox to the middle of the mouse
+                newLoc.X -= this.pb.Width / 2;
+                newLoc.Y -= this.pb.Height / 2;
+            }
+            else
+            {
+                newLoc = new Point();
+                // If the mouse moves on the picturebox, we offset the current location by the location on the picturebox
+                newLoc.X = this.loc.X + e.Location.X - this.pb.Width / 2;
+                newLoc.Y = this.loc.Y + e.Location.Y - this.pb.Height / 2;
+            }
+
+            // Check if the new location results in an overlap
+            if (!IsAttackAreaOverlapping(newLoc, g))
+            {
+                // If no overlap, update the position
+                this.loc = newLoc;
+                SnapGrid(g, finalPlace);
+                this.pb.Location = loc;
+                UpdateAttackAreaPosition();
+            }
+            else
+            {
+                // If overlap and final placement, show a message and reset
+                if (finalPlace)
+                {
+                    // Reset to original position
+                    this.loc = originalLoc;
+                    SnapGrid(g, finalPlace);
+                    this.pb.Location = loc;
+                    UpdateAttackAreaPosition();
+                }
+            }
+        }
+        private bool IsAttackAreaOverlapping(Point potentialLocation, Grid g)
+        {
+            // Temporarily set the attack area to the new location to check for overlap
+            Rectangle potentialAttackAreaBounds = new Rectangle(
+                potentialLocation.X - (attackAreaPB.Width / 2) + (this.pb.Width / 2),
+                potentialLocation.Y - (attackAreaPB.Height / 2) + (this.pb.Height / 2),
+                attackAreaPB.Width,
+                attackAreaPB.Height
+            );
+
+            foreach (var otherPlayer in g.thisLevel.players.OfType<PlayerAir>())
+            {
+                if (otherPlayer != this && potentialAttackAreaBounds.IntersectsWith(otherPlayer.attackAreaPB.Bounds))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public override void AttackTick(List<IEnemy> enemies)
+        {
+            rotationAngle += rotationSpeed;
+            if (rotationAngle >= 360) rotationAngle -= 360;
+            attackAreaPB.Invalidate();
+            base.AttackTick(enemies);
+        }
+        protected override void Attack(List<IEnemy> enemies)
+        {
+            foreach(IEnemy enemy in enemies)
+            {
+                if(enemy is EnemyGround && IsWithinAttack(enemy))
+                {
+                    enemy.TakeDamage(damagePerSecond);
+                }
+            }
         }
         private void AttackAreaPB_Paint(object sender, PaintEventArgs e)
         {
@@ -65,63 +147,10 @@ namespace Yaprak_Kerem_12IT_TD_Game
             path.Dispose();
         }
 
-        protected override void Dispose(Grid g)
-        {
-            base.Dispose(g);
-            //delete the area picturebox
-            attackAreaPB.Dispose();
-        }
-        public override void UpdatePos(MouseEventArgs e, bool? add, Grid g, bool finalPlace)
-        {
-            attackAreaPB.SendToBack();
-            pb.BringToFront();
-            if(add == null)//we have moved on the attack area picturebox
-            {
-                //set the location to the location on the form
-                this.loc = e.Location;
-
-                //set the picturebox to the middle of the mouse
-                this.loc.X -= attackAreaPB.Width/2;
-                this.loc.Y -= attackAreaPB.Height/2;
-                this.pb.Location = loc;
-                this.attackAreaPB.Location = loc;
-                attackAreaPB.Invalidate();
-                //
-
-                //snap to grid
-                SnapGrid(g, finalPlace);
-                //
-
-                //dont do the addition style
-                return;
-            }
-            base.UpdatePos(e, add, g, finalPlace);
-
-            //update attack area position
-            attackAreaPB.Location = new Point(loc.X - attackAreaPB.Width / 2 + pb.Width /2, loc.Y - attackAreaPB.Height / 2 + pb.Height /2);
-            attackAreaPB.Invalidate();
-        }
-        public override void AttackTick(List<IEnemy> enemies)
-        {
-            rotationAngle += rotationSpeed;
-            if (rotationAngle >= 360) rotationAngle -= 360;
-            attackAreaPB.Invalidate();
-            base.AttackTick(enemies);
-        }
-        protected override void Attack(List<IEnemy> enemies)
-        {
-            foreach(IEnemy enemy in enemies)
-            {
-                if(enemy is EnemyGround && IsWithinAttack(enemy))
-                {
-                    enemy.TakeDamage(damagePerSecond);
-                }
-            }
-        }
-
         protected bool IsWithinAttack(IEnemy enemy)
         {
             Point enemyPos = enemy.pictureBox.Location;
+            enemyPos.Offset(enemy.pictureBox.Width / 2, enemy.pictureBox.Height / 2);
             //if it is out of distance, it must be out of range
             float distance = DistanceBetweenPoints(pb.Location, enemyPos);
             if (distance > attackRadius) return false;
