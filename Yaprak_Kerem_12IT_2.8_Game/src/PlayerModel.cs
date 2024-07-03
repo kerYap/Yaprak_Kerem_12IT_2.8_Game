@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Yaprak_Kerem_12IT_TD_Game
@@ -53,6 +47,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
             pb.Padding = modelPB.Padding;
             pb.Visible = modelPB.Visible;
             pb.Enabled = modelPB.Enabled;
+            
             //
 
             //set various location data
@@ -65,6 +60,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
             pb.MouseClick += clickEventHandler;
             pb.MouseMove += moveEventHandler;
             this.cost = cost;
+            
         }
 
         /// <summary>
@@ -75,49 +71,20 @@ namespace Yaprak_Kerem_12IT_TD_Game
         public virtual void UpdatePos(MouseEventArgs e, bool add, Grid g, bool finalPlace)
         {
             this.pb.BringToFront();
-            //enable picturebox and make visible
-            this.pb.Visible = true;
-            this.pb.Enabled = true;
-            //
-
-            if (!add)    //if the mouse moves on the form, we set to the location of the mouse
+            Point newPosition;
+            if (!add)
             {
-                
-                //set the location to the location on the form
-                this.loc = e.Location;
-
-                //set the picturebox to the middle of the mouse
-                this.loc.X -= 15;
-                this.loc.Y -= 15;
-                this.pb.Location = loc;
-                //
-
-                //snap to grid
-                SnapGrid(g, finalPlace);
-                //
-
-                //dont do the addition style
-                return;
+                newPosition = new Point(e.Location.X,e.Location.Y);
             }
+            else
+            {
+                newPosition = new Point(pb.Location.X + e.Location.X, pb.Location.Y + e.Location.Y);
+            }
+            // Adjust to center of the mouse cursor
+            newPosition.Offset(-pb.Width / 2, -pb.Height / 2);
 
-            //if the mouse moves on the picturebox, we offset the current location by the location on the picturebox
-            this.loc.X += e.Location.X;
-            this.loc.Y += e.Location.Y;
-            //
-
-
-            //set the picturebox to the middle of the mouse
-            this.loc.X -= 15;
-            this.loc.Y -= 15;
-            //
-
-            //set the location to the new location
-            this.pb.Location = loc;
-            //
-
-            //snap to grid
+            loc = newPosition;
             SnapGrid(g,finalPlace);
-            //
         }
 
         /// <summary>

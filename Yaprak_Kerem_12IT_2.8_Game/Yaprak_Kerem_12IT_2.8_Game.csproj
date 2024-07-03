@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\BackgroundPathDrawer.cs" />
     <Compile Include="src\Wave.cs" />
     <Compile Include="src\EnemyTypes.cs" />
     <Compile Include="src\EnemyModel.cs" />
@@ -89,6 +90,7 @@
     <None Include="data\images\Enemy Ground-20240620-211448.piskel" />
     <None Include="data\images\Mil 24-20240622-213618.piskel" />
     <None Include="data\levels\tutorialLevel\tutorialLevel.csv" />
+    <None Include="data\levels\vietnamWar\vietnam.csv" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -102,16 +104,18 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="data\facts\" />
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="data\facts\facts.txt" />
+    <Content Include="data\images\background.png" />
+    <Content Include="data\images\tile.png" />
     <Content Include="data\images\PlayerAir.png" />
     <Content Include="data\images\PlayerGround.png" />
     <Content Include="data\images\EnemyGround.png" />
     <Content Include="data\images\PlayerVehicle.png" />
     <Content Include="data\images\EnemyAir.png" />
     <Content Include="data\images\EnemyVehicle.png" />
+    <Content Include="data\levels\vietnamWar\waves.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

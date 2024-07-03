@@ -134,6 +134,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
                         pictureBox.Image = down;
                     }
                 }
+                this.pictureBox.Invalidate();
 
             }
             else if (currentTargetNode.Next == null)

@@ -163,7 +163,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 //adjust wrap of angle
                 angleDiff = 360 - angleDiff;
             }
-            return angleDiff <= coneAngle / 2;
+            return angleDiff <= coneAngle;
         }
         private float CalcAngle(Point pos)
         {
@@ -208,13 +208,8 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 if (enemiesToAttack.Count == 3) break;
                 if (DistanceBetweenPoints(enemy.loc, new Point(this.loc.X + 15, this.loc.Y + 15)) <= attackRadius)
                 {
-                    enemiesToAttack.Add(enemy);
+                    Missiles.Add(new TrackingMissile(enemy, this, damage, lev));
                 }
-            }
-            //send missiles
-            foreach (EnemyAir enemy in enemiesToAttack)
-            {
-                Missiles.Add(new TrackingMissile(enemy, this, damage, lev));
             }
         }
 

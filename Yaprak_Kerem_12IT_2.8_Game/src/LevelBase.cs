@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Windows.Forms;
 
 namespace Yaprak_Kerem_12IT_TD_Game
@@ -17,6 +18,10 @@ namespace Yaprak_Kerem_12IT_TD_Game
         //grid manager
         public Grid grid;
         //
+
+        private int tickCount = 0;
+
+        private bool waitTicks = false;
 
         private bool tutorialOrNot = false;
 
@@ -92,9 +97,17 @@ namespace Yaprak_Kerem_12IT_TD_Game
 
             CalledForm = calledFrom;
 
+            playerCostVehicle = 100;
+            labelVehicle.Text += playerCostVehicle.ToString();
+            playerCostAir = 200;
+            labelAir.Text += playerCostAir.ToString();
+            playerCostGround = 50;
+            labelGround.Text += playerCostGround.ToString();
+
             grid = new Grid(map, this);
+            InitializeBackground(grid);
             if (tutorial) { StartTutorial(); tutorialOrNot = true; health = 1000; }
-            else { Level(); }
+            else { Level(map); }
             gameTick.Enabled = true;
         }
 
@@ -102,6 +115,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         {
             playerModel = copy;
             if(imageFile)playerModel.Image = Image.FromFile(ImagePath);
+            playerModel.BackColor = Color.SaddleBrown;
         }
 
         public void removePlayer(IPlayer p)
@@ -109,6 +123,16 @@ namespace Yaprak_Kerem_12IT_TD_Game
             players.Remove(p);
         }
 
+        private void InitializeBackground(Grid g)
+        {
+            string backgroundImgPath = "..\\..\\data\\images\\background.png"; 
+            string pathTileImgPath = "..\\..\\data\\images\\tile.png";
+
+            BackgroundPathDrawer b = new BackgroundPathDrawer(backgroundImgPath, pathTileImgPath);
+
+            b.DrawPathOnBackground(g.Path);
+            this.BackgroundImage = b.GetFinalBackground();
+        }
 
         /// <summary>
         /// if the player places a picturebox in the same grid location, this should be called to return the wasted coins
@@ -122,9 +146,14 @@ namespace Yaprak_Kerem_12IT_TD_Game
         /// <summary>
         /// runs the level based off of a file of waves and difficulty
         /// </summary>
-        private void Level()
+        private void Level(string filePath)
         {
-
+            this.Show();
+            int coins;
+            string text;
+            waves = ReadWavesFromFile(filePath, out coins, out text, out health);
+            this.coins = coins;
+            this.Text += text;
         }
 
         /// <summary>
@@ -137,22 +166,14 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 this.coins = 300;
                 this.Text += ": Korean War";
                 this.Show();
-                //this.BackgroundImage = Image.FromFile("..\\..\\data\\levels\\tutorialLevel\\backImage.png");
-                playerCostVehicle = 100;
-                labelVehicle.Text += playerCostVehicle.ToString();
-                playerCostAir = 200;
-                labelAir.Text += playerCostAir.ToString();
-                playerCostGround = 50;
-                labelGround.Text += playerCostGround.ToString();
-                System.Threading.Thread.Sleep(1000);
-                MessageBox.Show("Welcome to the battle general! We are here in Korea fighting the a proxy war against the americans, You must help hold off Incheon from american attack. This is a crucial peice of land in the war, dont fail!");
-                MessageBox.Show("Here comes an enemy Lockheed XF-90, an early jet powered fighter. It is coming quick, you must place your 2K-12 surface to air missiles. To place a unit, you have to click on it once, then drag it to the position that you want to drop it onto and then you should click again to place it. You can not place on the enemies path.");
+                MessageBox.Show("Welcome to the battle general! We are here in Korea fighting the first proxy war against the Americans. You must help hold off Incheon from American attack. This is a crucial peice of land in the war, don't fail!");
+                MessageBox.Show("Here comes an enemy Lockheed XF-90, an early jet powered fighter from America. It is coming quick, you must place your 2K-12 surface to air missiles. To place a unit, you have to click on it once, then move your mouse to the position that you want to drop it onto and then you should click again to place it. You can not place on the enemies path.");
                 waves.Add(new Wave(3, 0, 0, 0, this));
             }
             else if(round == 1)
             {
                 this.coins += 200;
-                MessageBox.Show("Well done on defending us from that attack, now we have seen some special operators making their way to us. To defend us from them you need to place your mil-24 attack helicopter, the yellow cone shows its attack zone. As well as this, you must place them far enough apart so they do not crash");
+                MessageBox.Show("Well done on defending us from that attack, now we have seen some American special service operators making their way to us. To defend Incheon from them you need to place your Mil-24 attack helicopter, the yellow cone shows its attack zone. As well as this, you must place them far enough apart so they do not crash");
                 waves.Add(new Wave(0, 0, 2, 0, this));
             }
             else if (round == 2)
@@ -180,7 +201,20 @@ namespace Yaprak_Kerem_12IT_TD_Game
         /// <param name="e"></param>
         private void Tick(object sender, EventArgs e)
         {
+            tickCount++;
             //update wave
+            if(waitTicks && tickCount < 2000)
+            {
+                foreach(var PlayerAir in players.OfType<PlayerAir>())
+                {
+                    PlayerAir.AttackTick(enemies);//call this so that the attack cone still spins
+                }
+                return;
+            }
+            else if(waitTicks && tickCount >=2000)
+            {
+                waitTicks = false;
+            }
             if(waves.Count > 0)
             {
                 waves[0].update(this);
@@ -191,17 +225,21 @@ namespace Yaprak_Kerem_12IT_TD_Game
             }
             if(players.Count != 0)
             {
+                this.SuspendLayout();
                 foreach (var player in players)
                 {
                     player.AttackTick(enemies);
                 }
+                this.ResumeLayout(true);
             }
             if(enemies.Count != 0)
             {
+                this.SuspendLayout();
                 foreach (var enemy in enemies.ToList())
                 {
                     enemy.Update(this);
                 }
+                this.ResumeLayout(true);
             }
             //check for end of wave
             if(waves.Count > 0)
@@ -209,6 +247,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 if (waves[0].waveComplete())
                 {
                     waves.RemoveAt(0);
+                    waitTicks = true;
                     if (tutorialOrNot)
                     {
                         round++;
@@ -225,24 +264,74 @@ namespace Yaprak_Kerem_12IT_TD_Game
             labelCoins.Text = coins.ToString();
             //sort out health
             labelHealth.Text = health.ToString();
-
-            this.Invalidate();
         }
+        private List<Wave> ReadWavesFromFile(string filePath, out int coins, out string text, out int health)
+        {
+            List<Wave> waves = new List<Wave>();
+            string[] lines = File.ReadAllLines(filePath + "waves.txt");
+            text = lines[0];
+            coins = int.Parse(lines[1]);
+            health = int.Parse(lines[2]);
 
+            double? D = null, A = null, V = null, G = null;
+
+            foreach (var line in lines)
+            {
+                var parts = line.Split(' ');
+                if (parts.Length != 2) continue;
+        
+                var key = parts[0];
+                if (double.TryParse(parts[1], out var value))
+                {
+                    switch (key)
+                    {
+                        case "D":
+                            D = value;
+                            break;
+                        case "A":
+                            A = value;
+                            break;
+                        case "V":
+                            V = value;
+                            break;
+                        case "G":
+                            G = value;
+                            break;
+                        case "W":
+                            // When encountering a new wave number, create a new Wave object if all values are set
+                            if (D.HasValue && A.HasValue && V.HasValue && G.HasValue)
+                            {
+                                waves.Add(new Wave((int)A.Value, (int)V.Value, (int)G.Value, (float)D.Value, this));
+                            }
+
+                            // Reset values for the next wave
+                            D = A = V = G = null;
+                            break;
+                    }
+                }
+            }
+
+                // Add the last wave if file ends without a new "W" entry
+                if (D.HasValue && A.HasValue && V.HasValue && G.HasValue)
+                {
+                    waves.Add(new Wave((int)A.Value, (int)V.Value, (int)G.Value, (float)D.Value, this));
+                }
+
+                return waves;
+    }
         private void EndOfGame(bool win)
         {
-            string message = "sigma";
-            //using (StreamReader s = new StreamReader("..\\..\\data\\facts\\facts.txt"))
-            //{
-
-            //}
+            string message;
+            string[] lines = File.ReadAllLines("..\\..\\data\\facts\\facts.txt");
+            Random r = new Random();
+            message = lines[r.Next(0,lines.Length)];
             this.gameTick.Stop();
             //show the fact in the messagebox
             if (win)
             {
-
+                MessageBox.Show($"Well done, we held off their attack. Did you know? : {message}");
             }
-            else { MessageBox.Show($"Comrade! We lost!!! + {message}"); }
+            else { MessageBox.Show($"Comrade! We lost!!! Did you know? : {message}"); }
             //open the menu
             CalledForm.Show();
             //dispose this form

@@ -20,15 +20,15 @@ namespace Yaprak_Kerem_12IT_TD_Game
         private int enemyRwdAir = 20;
         private int enemyRwdVeh = 40;
         private int enemyRwdGrd = 10;
-        private int enemyHthAir = 300;
-        private int enemyHthVeh = 600;
-        private int enemyHthGrd = 200;
+        private int enemyHthAir = 500;
+        private int enemyHthVeh = 800;
+        private int enemyHthGrd = 400;
         private int enemyDmgAir = 400;
         private int enemyDmgVeh = 500;
         private int enemyDmgGrd = 100;
-        private float enemySpdAir = 0.5f;
-        private float enemySpdVeh = 0.2f;
-        private float enemySpdGrd = 0.35f;
+        private float enemySpdAir = 0.7f;
+        private float enemySpdVeh = 0.4f;
+        private float enemySpdGrd = 0.5f;
         public Wave(int enemyAir, int enemyVeh, int enemyGrd, float difficulty, LevelBase lev)
         {
             //update unspawned enemies list based on the numbers of the enemies to add to list
@@ -96,7 +96,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         }
         public void update(LevelBase l)
         {
-            if (counter >= delay && unSpawnedEnemies.Count() != 0)
+            if (counter >= delay && unSpawnedEnemies.Count() != 0 && !filledPlayersAlready())
             {
                 spawnNextEnemy();
                 counter = 0;
@@ -105,6 +105,17 @@ namespace Yaprak_Kerem_12IT_TD_Game
             counter++;
             //update level enemy list
             l.enemies = enemiesInWave;
+        }
+        private bool filledPlayersAlready()
+        {
+            if(enemiesInWave.Count <= 4)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
         public void removeEnemy(IEnemy e)
         {

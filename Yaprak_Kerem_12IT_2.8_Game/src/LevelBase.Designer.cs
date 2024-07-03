@@ -128,7 +128,7 @@
             // labelGround
             // 
             this.labelGround.AutoSize = true;
-            this.labelGround.Location = new System.Drawing.Point(905, 156);
+            this.labelGround.Location = new System.Drawing.Point(912, 156);
             this.labelGround.Name = "labelGround";
             this.labelGround.Size = new System.Drawing.Size(122, 13);
             this.labelGround.TabIndex = 7;
@@ -237,8 +237,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.WindowFrame;
-            this.ClientSize = new System.Drawing.Size(1039, 593);
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.ClientSize = new System.Drawing.Size(1052, 593);
             this.Controls.Add(this.labelHealth);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.labelCoins);
