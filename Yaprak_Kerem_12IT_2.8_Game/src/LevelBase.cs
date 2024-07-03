@@ -115,7 +115,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         {
             playerModel = copy;
             if (imageFile) playerModel.Image = Image.FromFile(ImagePath);
-            playerModel.BackColor = Color.SaddleBrown;
+            playerModel.BackColor = Color.Transparent;
         }
 
         public void removePlayer(IPlayer p)
