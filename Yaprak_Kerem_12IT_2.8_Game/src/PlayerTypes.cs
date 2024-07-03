@@ -226,7 +226,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
     {
         public PlayerGround(PictureBox modelPB, MouseEventHandler click, MouseEventHandler move, int cost) : base(modelPB, click, move, cost)
         {
-            attackRadius = 60;
+            attackRadius = 80;
             damage = 30;
             attackSpeed = 30;
         }
