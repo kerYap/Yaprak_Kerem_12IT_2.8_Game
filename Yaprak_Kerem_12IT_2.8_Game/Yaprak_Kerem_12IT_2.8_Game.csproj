@@ -89,6 +89,7 @@
     <None Include="data\images\2K12-20240622-224501.piskel" />
     <None Include="data\images\Enemy Ground-20240620-211448.piskel" />
     <None Include="data\images\Mil 24-20240622-213618.piskel" />
+    <None Include="data\levels\afghanWar\afghan.csv" />
     <None Include="data\levels\tutorialLevel\tutorialLevel.csv" />
     <None Include="data\levels\vietnamWar\vietnam.csv" />
     <None Include="Properties\Settings.settings">
@@ -115,6 +116,7 @@
     <Content Include="data\images\PlayerVehicle.png" />
     <Content Include="data\images\EnemyAir.png" />
     <Content Include="data\images\EnemyVehicle.png" />
+    <Content Include="data\levels\afghanWar\waves.txt" />
     <Content Include="data\levels\vietnamWar\waves.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

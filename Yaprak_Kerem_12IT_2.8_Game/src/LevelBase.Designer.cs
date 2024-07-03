@@ -238,7 +238,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(1052, 593);
+            this.ClientSize = new System.Drawing.Size(1052, 609);
             this.Controls.Add(this.labelHealth);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.labelCoins);

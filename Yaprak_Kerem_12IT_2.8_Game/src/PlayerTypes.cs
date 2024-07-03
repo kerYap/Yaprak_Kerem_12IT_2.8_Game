@@ -163,7 +163,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 //adjust wrap of angle
                 angleDiff = 360 - angleDiff;
             }
-            return angleDiff <= coneAngle;
+            return angleDiff <= coneAngle / 2;
         }
         private float CalcAngle(Point pos)
         {

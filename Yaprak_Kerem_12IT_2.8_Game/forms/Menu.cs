@@ -30,7 +30,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         {
             this.Hide();
             MessageBox.Show("You have finally made it to the Soviet-Afghan War, this is the last of the 3 major proxy wars of the ");
-            LevelBase afg = new LevelBase("..\\..\\data\\levels\\vietnamWar\\", false, this);
+            LevelBase afg = new LevelBase("..\\..\\data\\levels\\afghanWar\\", false, this);
             afg.Show();
         }
     }

@@ -1,0 +1,18 @@
+: Soviet-Afghan War
+3000
+1500
+W 1
+D 0.35
+A 8
+V 6
+G 18
+W 2
+D 0.3
+A 6
+V 3
+G 13
+W 3
+D 0.4
+A 9
+V 5
+G 12
