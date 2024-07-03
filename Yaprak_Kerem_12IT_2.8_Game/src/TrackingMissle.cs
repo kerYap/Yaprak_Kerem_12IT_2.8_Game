@@ -62,7 +62,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 Size = new Size(9, 9),
                 Image = bmp,
                 Location = new Point(calledPlayer.pb.Location.X + calledPlayer.pb.Width / 2, calledPlayer.pb.Location.Y + calledPlayer.pb.Height / 2),
-                BackColor = Color.SaddleBrown
+                BackColor = Color.Transparent
             };
         }
         private void InitializePosition()

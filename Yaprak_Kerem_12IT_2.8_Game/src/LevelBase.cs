@@ -73,15 +73,15 @@ namespace Yaprak_Kerem_12IT_TD_Game
         {
             InitializeComponent();
             //initialise picture box events
-            InitializePicturebox(ref playerModelAir, pictureBoxAir,"..\\..\\data\\images\\PlayerAir.png", true);
+            InitializePicturebox(ref playerModelAir, pictureBoxAir, "..\\..\\data\\images\\PlayerAir.png", true);
             playerModelAir.MouseClick += AirModelMouseClick;
             playerModelAir.MouseMove += AirModelMouseMove;
             //
-            InitializePicturebox(ref playerModelGround, pictureBoxGround,"..\\..\\data\\images\\PlayerGround.png", true);
+            InitializePicturebox(ref playerModelGround, pictureBoxGround, "..\\..\\data\\images\\PlayerGround.png", true);
             playerModelGround.MouseClick += GroundModelMouseClick;
             playerModelGround.MouseMove += GroundModelMouseMove;
             //
-            InitializePicturebox(ref playerModelVehicle, pictureBoxVehicle,"..\\..\\data\\images\\PlayerVehicle.png", true);
+            InitializePicturebox(ref playerModelVehicle, pictureBoxVehicle, "..\\..\\data\\images\\PlayerVehicle.png", true);
             playerModelVehicle.MouseClick += VehicleModelMouseClick;
             playerModelVehicle.MouseMove += VehicleModelMouseMove;
             //
@@ -114,7 +114,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         private void InitializePicturebox(ref PictureBox playerModel, PictureBox copy, string ImagePath, bool imageFile)
         {
             playerModel = copy;
-            if(imageFile)playerModel.Image = Image.FromFile(ImagePath);
+            if (imageFile) playerModel.Image = Image.FromFile(ImagePath);
             playerModel.BackColor = Color.SaddleBrown;
         }
 
@@ -125,7 +125,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
 
         private void InitializeBackground(Grid g)
         {
-            string backgroundImgPath = "..\\..\\data\\images\\background.png"; 
+            string backgroundImgPath = "..\\..\\data\\images\\background.png";
             string pathTileImgPath = "..\\..\\data\\images\\tile.png";
 
             BackgroundPathDrawer b = new BackgroundPathDrawer(backgroundImgPath, pathTileImgPath);
@@ -142,7 +142,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         {
             coins += (int)money;
         }
-        
+
         /// <summary>
         /// runs the level based off of a file of waves and difficulty
         /// </summary>
@@ -170,7 +170,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 MessageBox.Show("Here comes an enemy Lockheed XF-90, an early jet powered fighter from America. It is coming quick, you must place your 2K-12 surface to air missiles. To place a unit, you have to click on it once, then move your mouse to the position that you want to drop it onto and then you should click again to place it. You can not place on the enemies path.");
                 waves.Add(new Wave(3, 0, 0, 0, this));
             }
-            else if(round == 1)
+            else if (round == 1)
             {
                 this.coins += 200;
                 MessageBox.Show("Well done on defending us from that attack, now we have seen some American special service operators making their way to us. To defend Incheon from them you need to place your Mil-24 attack helicopter, the yellow cone shows its attack zone. As well as this, you must place them far enough apart so they do not crash");
@@ -182,7 +182,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 MessageBox.Show("Good Job! The enemies last resort are their tanks, we can see them rolling this way now. Place down your spetznaz toops to attack the tanks. However, just waringing you, spetznaz have to be quite close to do any damage to enemies.");
                 waves.Add(new Wave(0, 2, 0, 0, this));
             }
-            else if(round == 3)
+            else if (round == 3)
             {
                 this.coins += 500;
                 MessageBox.Show("Here comes the last lot of enemies, there are a few of them be prepared!");
@@ -201,21 +201,25 @@ namespace Yaprak_Kerem_12IT_TD_Game
         /// <param name="e"></param>
         private void Tick(object sender, EventArgs e)
         {
-            tickCount++;
-            //update wave
-            if(waitTicks && tickCount < 2000)
+            if (waitTicks)
             {
-                foreach(var PlayerAir in players.OfType<PlayerAir>())
+                tickCount++;
+            }
+
+            //update wave
+            if (waitTicks && tickCount < 2000)
+            {
+                foreach (var PlayerAir in players.OfType<PlayerAir>())
                 {
                     PlayerAir.AttackTick(enemies);//call this so that the attack cone still spins
                 }
                 return;
             }
-            else if(waitTicks && tickCount >=2000)
+            else if (waitTicks && tickCount >= 2000)
             {
                 waitTicks = false;
             }
-            if(waves.Count > 0)
+            if (waves.Count > 0)
             {
                 waves[0].update(this);
             }
@@ -223,7 +227,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
             {
                 EndOfGame(false);
             }
-            if(players.Count != 0)
+            if (players.Count != 0)
             {
                 this.SuspendLayout();
                 foreach (var player in players)
@@ -232,7 +236,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 }
                 this.ResumeLayout(true);
             }
-            if(enemies.Count != 0)
+            if (enemies.Count != 0)
             {
                 this.SuspendLayout();
                 foreach (var enemy in enemies.ToList())
@@ -242,13 +246,17 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 this.ResumeLayout(true);
             }
             //check for end of wave
-            if(waves.Count > 0)
+            if (waves.Count > 0)
             {
                 if (waves[0].waveComplete())
                 {
                     waves.RemoveAt(0);
                     waitTicks = true;
-                    if (tutorialOrNot)
+                    if (health < 0)
+                    {
+                        EndOfGame(false);
+                    }
+                    if (tutorialOrNot && health > 0)
                     {
                         round++;
                         StartTutorial();
@@ -256,9 +264,9 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 }
             }
             //check for end of waves
-            if(waves.Count() == 0)
+            if (waves.Count() == 0)
             {
-                if(!tutorialOrNot) EndOfGame(true);
+                if (!tutorialOrNot) EndOfGame(true);
             }
             //sort out money
             labelCoins.Text = coins.ToString();
@@ -279,7 +287,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
             {
                 var parts = line.Split(' ');
                 if (parts.Length != 2) continue;
-        
+
                 var key = parts[0];
                 if (double.TryParse(parts[1], out var value))
                 {
@@ -311,20 +319,20 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 }
             }
 
-                // Add the last wave if file ends without a new "W" entry
-                if (D.HasValue && A.HasValue && V.HasValue && G.HasValue)
-                {
-                    waves.Add(new Wave((int)A.Value, (int)V.Value, (int)G.Value, (float)D.Value, this));
-                }
+            // Add the last wave if file ends without a new "W" entry
+            if (D.HasValue && A.HasValue && V.HasValue && G.HasValue)
+            {
+                waves.Add(new Wave((int)A.Value, (int)V.Value, (int)G.Value, (float)D.Value, this));
+            }
 
-                return waves;
-    }
+            return waves;
+        }
         private void EndOfGame(bool win)
         {
             string message;
             string[] lines = File.ReadAllLines("..\\..\\data\\facts\\facts.txt");
             Random r = new Random();
-            message = lines[r.Next(0,lines.Length)];
+            message = lines[r.Next(0, lines.Length)];
             this.gameTick.Stop();
             //show the fact in the messagebox
             if (win)
@@ -373,15 +381,15 @@ namespace Yaprak_Kerem_12IT_TD_Game
         //Air Modelw
         private void AirModelMouseMove(object sender, MouseEventArgs e)
         {
-            if(players.Count == 0) return;
-            if (trackMouse == true) { players[players.Count() - 1].UpdatePos(e, true, grid, false);}
+            if (players.Count == 0) return;
+            if (trackMouse == true) { players[players.Count() - 1].UpdatePos(e, true, grid, false); }
         }
         private void AirModelMouseClick(object sender, MouseEventArgs e)
         {
             if (!trackMouse)
             {
                 //check for if there is enough money
-                if(coins >= playerCostAir)
+                if (coins >= playerCostAir)
                 {
                     players.Add(new PlayerAir(playerModelAir, AirModelMouseClick, AirModelMouseMove, this, playerCostAir));
                     Controls.Add(players[players.Count - 1].pb);

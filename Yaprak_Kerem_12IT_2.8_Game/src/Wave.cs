@@ -32,20 +32,20 @@ namespace Yaprak_Kerem_12IT_TD_Game
         public Wave(int enemyAir, int enemyVeh, int enemyGrd, float difficulty, LevelBase lev)
         {
             //update unspawned enemies list based on the numbers of the enemies to add to list
-            while(enemyAir != 0 || enemyVeh != 0 || enemyGrd != 0)
+            while (enemyAir != 0 || enemyVeh != 0 || enemyGrd != 0)
             {
                 //generate random:
                 int n = r.Next(0, 3);
-                if(n == 0)  //spawn an air enemy
+                if (n == 0)  //spawn an air enemy
                 {
                     //check if there are still more air enemies to be added to list
-                    if(enemyAir != 0)
+                    if (enemyAir != 0)
                     {
                         //add the enemy to list
-                        unSpawnedEnemies.Add(new EnemyAir(lev.enemyModelAir,lev.grid, lev, enemyRwdAir - (int)(enemyRwdAir * difficulty), enemyHthAir + (int)(enemyHthAir * difficulty), enemyDmgAir + (int)(enemyDmgAir * difficulty), enemySpdAir + (enemySpdAir * difficulty), this));
+                        unSpawnedEnemies.Add(new EnemyAir(lev.enemyModelAir, lev.grid, lev, enemyRwdAir - (int)(enemyRwdAir * difficulty), enemyHthAir + (int)(enemyHthAir * difficulty), enemyDmgAir + (int)(enemyDmgAir * difficulty), enemySpdAir + (enemySpdAir * difficulty), this));
                         enemyAir--;
                     }
-                    else if(enemyVeh != 0)
+                    else if (enemyVeh != 0)
                     {
                         unSpawnedEnemies.Add(new EnemyVehicle(lev.enemyModelVehicle, lev.grid, lev, enemyRwdVeh - (int)(enemyRwdVeh * difficulty), enemyHthVeh + (int)(enemyHthVeh * difficulty), enemyDmgVeh + (int)(enemyDmgVeh * difficulty), enemySpdVeh + (enemySpdVeh * difficulty), this));
                         enemyVeh--;
@@ -56,14 +56,14 @@ namespace Yaprak_Kerem_12IT_TD_Game
                         enemyGrd--;
                     }
                 }
-                else if(n == 1) //spawn a vehicle enemy
+                else if (n == 1) //spawn a vehicle enemy
                 {
-                    if(enemyVeh != 0)
+                    if (enemyVeh != 0)
                     {
                         unSpawnedEnemies.Add(new EnemyVehicle(lev.enemyModelVehicle, lev.grid, lev, enemyRwdVeh - (int)(enemyRwdVeh * difficulty), enemyHthVeh + (int)(enemyHthVeh * difficulty), enemyDmgVeh + (int)(enemyDmgVeh * difficulty), enemySpdVeh + (enemySpdVeh * difficulty), this));
                         enemyVeh--;
                     }
-                    else if(enemyAir != 0)
+                    else if (enemyAir != 0)
                     {
                         unSpawnedEnemies.Add(new EnemyAir(lev.enemyModelAir, lev.grid, lev, enemyRwdAir - (int)(enemyRwdAir * difficulty), enemyHthAir + (int)(enemyHthAir * difficulty), enemyDmgAir + (int)(enemyDmgAir * difficulty), enemySpdAir + (enemySpdAir * difficulty), this));
                         enemyAir--;
@@ -76,19 +76,19 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 }
                 else //spawn a ground enemy
                 {
-                    if(enemyGrd != 0)
+                    if (enemyGrd != 0)
                     {
                         unSpawnedEnemies.Add(new EnemyGround(lev.enemyModelGround, lev.grid, lev, enemyRwdGrd - (int)(enemyRwdGrd * difficulty), enemyHthGrd + (int)(enemyHthGrd * difficulty), enemyDmgGrd + (int)(enemyDmgGrd * difficulty), enemySpdGrd + (enemySpdGrd * difficulty), this));
                         enemyGrd--;
                     }
-                    else if(enemyVeh != 0)
+                    else if (enemyVeh != 0)
                     {
                         unSpawnedEnemies.Add(new EnemyVehicle(lev.enemyModelVehicle, lev.grid, lev, enemyRwdVeh - (int)(enemyRwdVeh * difficulty), enemyHthVeh + (int)(enemyHthVeh * difficulty), enemyDmgVeh + (int)(enemyDmgVeh * difficulty), enemySpdVeh + (enemySpdVeh * difficulty), this));
                         enemyVeh--;
                     }
                     else
                     {
-                        unSpawnedEnemies.Add((new EnemyAir(lev.enemyModelAir, lev.grid, lev, enemyRwdAir - (int)(enemyRwdAir * difficulty), enemyHthAir + (int)(enemyHthAir * difficulty), enemyDmgAir + (int)(enemyDmgAir * difficulty), enemySpdAir + (enemySpdAir * difficulty),this)));
+                        unSpawnedEnemies.Add((new EnemyAir(lev.enemyModelAir, lev.grid, lev, enemyRwdAir - (int)(enemyRwdAir * difficulty), enemyHthAir + (int)(enemyHthAir * difficulty), enemyDmgAir + (int)(enemyDmgAir * difficulty), enemySpdAir + (enemySpdAir * difficulty), this)));
                         enemyAir--;
                     }
                 }
@@ -108,7 +108,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
         }
         private bool filledPlayersAlready()
         {
-            if(enemiesInWave.Count <= 4)
+            if (enemiesInWave.Count <= 4)
             {
                 return false;
             }
@@ -121,13 +121,14 @@ namespace Yaprak_Kerem_12IT_TD_Game
         {
             enemiesInWave.Remove(e);
         }
-        private void spawnNextEnemy() {
+        private void spawnNextEnemy()
+        {
             enemiesInWave.Add(unSpawnedEnemies[0]);
             unSpawnedEnemies.RemoveAt(0);
         }
         public bool waveComplete()
         {
-            if(enemiesInWave.Count() == 0 && unSpawnedEnemies.Count == 0)
+            if (enemiesInWave.Count() == 0 && unSpawnedEnemies.Count == 0)
             {
                 return true;
             }
