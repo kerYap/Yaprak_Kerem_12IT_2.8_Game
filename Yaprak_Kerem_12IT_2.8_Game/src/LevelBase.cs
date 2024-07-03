@@ -207,7 +207,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
             }
 
             //update wave
-            if (waitTicks && tickCount < 2000)
+            if (waitTicks && tickCount < 1000)
             {
                 foreach (var PlayerAir in players.OfType<PlayerAir>())
                 {
@@ -215,7 +215,7 @@ namespace Yaprak_Kerem_12IT_TD_Game
                 }
                 return;
             }
-            else if (waitTicks && tickCount >= 2000)
+            else if (waitTicks && tickCount >= 1000)
             {
                 waitTicks = false;
             }
